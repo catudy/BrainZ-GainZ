@@ -1,15 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerCollision.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TestMove.js">
     <Files>
-      <File FileName="Assets/Scripts/PlayerCollision.cs" Line="11" Column="2" />
-      <File FileName="Assets/Scripts/Oscillate.cs" Line="10" Column="40" />
-      <File FileName="Assets/Scripts/EnemyAI.cs" Line="2" Column="66" />
-      <File FileName="Assets/Scripts/EnemyCollision.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GameState.cs" Line="12" Column="23" />
       <File FileName="Assets/Scripts/PlayerMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Spawner.cs" Line="26" Column="19" />
-      <File FileName="Assets/Scripts/PlayerState.cs" Line="25" Column="18" />
+      <File FileName="Assets/Standard Assets/Character Controllers/Sources/Scripts/FPSInputController.js" Line="2" Column="1" />
+      <File FileName="Assets/TestMove.js" Line="12" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
