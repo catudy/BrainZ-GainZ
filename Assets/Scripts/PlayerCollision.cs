@@ -23,7 +23,6 @@ public class PlayerCollision : MonoBehaviour {
 		} else if (collision.gameObject.tag == "Deadly") { // Game over if you run into something deadly
 			GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
 			gameState.game_over = true;
-			Destroy (collision.gameObject);
 		} else if (collision.gameObject.tag == "Brainz"){
 			GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
 			gameState.brainz++;
