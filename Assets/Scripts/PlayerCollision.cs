@@ -30,7 +30,7 @@ public class PlayerCollision : MonoBehaviour {
 			Destroy (collision.gameObject);
 		} else if (collision.gameObject.tag == "Gainz"){
 			GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
-			GameState.gainz++;
+			gameState.gainz++;
 			Destroy (collision.gameObject);
 		}
 	}

@@ -7,7 +7,6 @@ using UnityEngine;
 using System.Collections;
 
 public class EnemyAI : MonoBehaviour {
-	public GameObject enemy;
 	public float aggro_range = 5.0f;
 	public float max_speed = 2.0f;
 	public float acceleration = 1.0f;
@@ -22,7 +21,7 @@ public class EnemyAI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Vector3 player_pos = player.transform.position;
-		Vector3 enemy_pos = enemy.transform.position;
+		Vector3 enemy_pos = transform.position;
 		if ((player_pos - enemy_pos).magnitude < aggro_range) {
 			velocity = velocity + ((player_pos - enemy_pos).normalized)*acceleration;
 			if(velocity.magnitude > max_speed){ // if higher than max speed, set velocity to max speed
