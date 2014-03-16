@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// Controls Enemy AI.  Current Behavior is to just chase player.
+/// 
+/// Author: Albert Wohletz
+/// </summary>
+using UnityEngine;
 using System.Collections;
 
 public class EnemyAI : MonoBehaviour {

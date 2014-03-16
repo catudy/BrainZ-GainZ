@@ -1,15 +1,21 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// Spawns game objects at a specific timer, and to a max count.
+/// 
+/// Author: Albert Wohletz
+/// </summary>
+
+using UnityEngine;
 using System.Collections;
 
 
 public class Spawner : MonoBehaviour {
-	public int max_count = 100;
-	public float spawn_frequency = 1;
-	public GameObject enemy;
-	public float min_distance = 0;
-	public float max_distance = 0;
-	public int counter = 0;
-	public GameObject spawn_object;	
+	public int max_count = 100; // Max number of things to spawn.
+	public float spawn_frequency = 1; // How often we will spawn
+	public GameObject enemy; // what we will spawn
+	public float min_distance = 0; // How close can we spawn
+	public float max_distance = 0; // How far away can we spawn
+	public GameObject spawn_object; // Around What we are Spawning
+	private int counter = 0;	
 	private float timer = 0.0f;
 	// Use this for initialization
 	void Start () {

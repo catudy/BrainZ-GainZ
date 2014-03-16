@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// Handles game state variables.
+/// 
+/// Author: Albert Wohletz
+/// </summary>
+using UnityEngine;
 using System.Collections;
 
 public class GameState : MonoBehaviour {
