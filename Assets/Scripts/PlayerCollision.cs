@@ -12,8 +12,11 @@ public class PlayerCollision : MonoBehaviour {
 	void OnCollisionEnter(Collision collision) {
 		Debug.Log ("Collided with " + collision.gameObject.name);
 		if (collision.gameObject.name == "PowerupBlink") {
-			playerState.power_up = PowerUp.BLINK;
-			Destroy(collision.gameObject);
+						playerState.power_up = PowerUp.BLINK;
+						Destroy (collision.gameObject);
+		} else if (collision.gameObject.tag == "Deadly") { // Game over if you run into something deadly
+			GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
+			gameState.game_over = true;
 		}
 	}
 	// Use this for initialization
