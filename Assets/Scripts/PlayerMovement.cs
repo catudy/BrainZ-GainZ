@@ -26,8 +26,8 @@ public class PlayerMovement : MonoBehaviour
 	void FixedUpdate ()
 	{
 		// Cache the inputs.
-		float h = Input.GetAxis("Horizontal");
-		float v = Input.GetAxis("Vertical");
+		float h = 1;//Input.GetAxis("Horizontal");
+		float v = 1;//Input.GetAxis("Vertical");
 		bool sneak = Input.GetButton("Sneak");
 		
 		MovementManagement(h, v, sneak);
@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
 		if(horizontal != 0f || vertical != 0f)
 		{
 			// ... set the players rotation and set the speed parameter to 5.5f.
-			Rotating(horizontal, vertical);
+		//	Rotating(horizontal, vertical);
 			anim.SetFloat(hash.speedFloat, 5.5f, speedDampTime, Time.deltaTime);
 		}
 		else

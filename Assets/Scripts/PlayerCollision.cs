@@ -8,7 +8,7 @@ using System.Collections;
 
 public class PlayerCollision : MonoBehaviour {
 	private PlayerState playerState; 
-	void OnControllerColliderHit(ControllerColliderHit hit) {
+	void OnControllerColliderHit(ControllerColliderHit collision) {
 		Debug.Log ("Collided with " + collision.gameObject.name);
 		if (collision.gameObject.name == "PowerupBlink") {
 						playerState.power_up = PowerUp.BLINK;
