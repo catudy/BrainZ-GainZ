@@ -17,10 +17,7 @@ public class PlayerCollision : MonoBehaviour {
 		Debug.Log ("Collided with " + collision.gameObject.name);
 
 		// Filter through the collisions
-		if (collision.gameObject.name == "PowerupBlink") {
-			playerState.power_up = PowerUp.BLINK;
-			Destroy (collision.gameObject);
-		} else if (collision.gameObject.tag == "Deadly") { // Game over if you run into something deadly
+		if (collision.gameObject.tag == "Deadly") { // Game over if you run into something deadly
 			GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
 			gameState.game_over = true;
 		} else if (collision.gameObject.tag == "Brainz"){
@@ -31,6 +28,11 @@ public class PlayerCollision : MonoBehaviour {
 			GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
 			gameState.gainz++;
 			Destroy (collision.gameObject);
+		} else if (collision.gameObject.tag == "Powerup"){
+			if (collision.gameObject.name == "PowerupBlink(Clone)") {
+				playerState.power_up = PowerUp.BLINK;
+				Destroy (collision.gameObject);
+			}
 		}
 	}
 	// Use this for initialization

@@ -8,6 +8,7 @@ using System.Collections;
 
 public class Oscillate : MonoBehaviour {
 	public float oscillation_length = 1.0f;
+	public float spin_frequency = 1.0f;
 	private float start_y;
 	// Use this for initialization
 	void Start () {
@@ -16,9 +17,9 @@ public class Oscillate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//transform.Translate (Vector3 (0, 1, 0));
 		transform.position = new Vector3(transform.position.x,
 		                                 start_y + Mathf.Sin (Time.time) * oscillation_length,
 		                                 transform.position.z);
+		transform.Rotate (0, 1, 0);
 	}
 }
