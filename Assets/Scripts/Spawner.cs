@@ -11,10 +11,10 @@ using System.Collections;
 public class Spawner : MonoBehaviour {
 	public int max_count = 100; // Max number of things to spawn.
 	public float spawn_frequency = 1; // How often we will spawn
-	public GameObject enemy; // what we will spawn
+	public GameObject[] objects; // what we will spawn
 	public float min_distance = 0; // How close can we spawn
 	public float max_distance = 0; // How far away can we spawn
-	public GameObject spawn_object; // Around What we are Spawning
+	public GameObject spawn_point; // Around What we are Spawning
 	private int counter = 0;	
 	private float timer = 0.0f;
 	// Use this for initialization
@@ -27,7 +27,8 @@ public class Spawner : MonoBehaviour {
 		// If we are ready to spawn a new entity, due so
 		if (timer < Time.time && counter < max_count) {
 			counter++;
-			Spawn (GetValidRandomEnemySpawnPoint(),enemy);
+			int index = Random.Range(0,objects.Length);
+			Spawn (GetValidRandomEnemySpawnPoint(),objects[index]);
 			timer = Time.time + spawn_frequency;
 		}
 	}
@@ -41,7 +42,7 @@ public class Spawner : MonoBehaviour {
 	Vector3 GetValidRandomEnemySpawnPoint(){
 		// Get Player Position
 	//	GameObject player = GameObject.Find("Player");
-		Vector3 spawn_pos = spawn_object.transform.position;
+		Vector3 spawn_pos = spawn_point.transform.position;
 
 		// Pick a point within circle around player
 		Vector3 enemy_pos;

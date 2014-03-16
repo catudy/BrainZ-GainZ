@@ -32,6 +32,9 @@ public class PlayerCollision : MonoBehaviour {
 			if (collision.gameObject.name == "PowerupBlink(Clone)") {
 				playerState.power_up = PowerUp.BLINK;
 				Destroy (collision.gameObject);
+			} else if(collision.gameObject.name == "PowerupBB(Clone)") {
+				playerState.power_up = PowerUp.INVISIBILITY;
+				Destroy (collision.gameObject);
 			}
 		}
 	}
