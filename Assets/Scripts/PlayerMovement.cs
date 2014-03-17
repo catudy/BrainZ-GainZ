@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 	public AudioClip shoutingClip;      // Audio clip of the player shouting.
 	public float turnSmoothing = 15f;   // A smoothing value for turning the player.
 	public float speedDampTime = 0.1f;  // The damping for the speed parameter
-	
+	public float base_speed = 5.0f;
 	
 	private Animator anim;              // Reference to the animator component.
 	private HashIDs hash;               // Reference to the HashIDs.
@@ -26,11 +26,9 @@ public class PlayerMovement : MonoBehaviour
 	void FixedUpdate ()
 	{
 		// Cache the inputs.
-		float h = 1;//Input.GetAxis("Horizontal");
-		float v = 1;//Input.GetAxis("Vertical");
 		bool sneak = Input.GetButton("Sneak");
-		
-		MovementManagement(h, v, sneak);
+		bool sprint = Input.GetButton ("Sprint");
+		MovementManagement(sneak, sprint);
 	}
 	
 	
@@ -46,37 +44,17 @@ public class PlayerMovement : MonoBehaviour
 	}
 	
 	
-	void MovementManagement (float horizontal, float vertical, bool sneaking)
+	void MovementManagement (bool sneaking, bool sprinting)
 	{
+		float current_speed = base_speed;
+		if (sneaking) {
+			current_speed = base_speed / 2.0f;
+		} else if (sprinting) {
+			current_speed = base_speed * 1.5f;
+		}
 		// Set the sneaking parameter to the sneak input.
 		anim.SetBool(hash.sneakingBool, sneaking);
-		
-		// If there is some axis input...
-		if(horizontal != 0f || vertical != 0f)
-		{
-			// ... set the players rotation and set the speed parameter to 5.5f.
-		//	Rotating(horizontal, vertical);
-			anim.SetFloat(hash.speedFloat, 5.5f, speedDampTime, Time.deltaTime);
-		}
-		else
-			// Otherwise set the speed parameter to 0.
-			anim.SetFloat(hash.speedFloat, 0);
-	}
-	
-	
-	void Rotating (float horizontal, float vertical)
-	{
-		// Create a new vector of the horizontal and vertical inputs.
-		Vector3 targetDirection = new Vector3(horizontal, 0f, vertical);
-		
-		// Create a rotation based on this new vector assuming that up is the global y axis.
-		Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
-		
-		// Create a rotation that is an increment closer to the target rotation from the player's rotation.
-		Quaternion newRotation = Quaternion.Lerp(rigidbody.rotation, targetRotation, turnSmoothing * Time.deltaTime);
-		
-		// Change the players rotation to this new rotation.
-		rigidbody.MoveRotation(newRotation);
+		anim.SetFloat (hash.speedFloat, current_speed, speedDampTime, Time.deltaTime);
 	}
 	
 	
