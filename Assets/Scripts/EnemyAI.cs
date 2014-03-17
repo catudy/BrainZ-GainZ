@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour {
 	void Update () {
 		Vector3 player_pos = player.transform.position;
 		Vector3 enemy_pos = transform.position;
-		if ((player_pos - enemy_pos).magnitude < aggro_range) {
+		if (IsAggroed(player_pos,enemy_pos)) {
 			velocity = velocity + ((player_pos - enemy_pos).normalized)*acceleration;
 			if(velocity.magnitude > max_speed){ // if higher than max speed, set velocity to max speed
 				velocity = velocity.normalized * max_speed;
@@ -34,5 +34,15 @@ public class EnemyAI : MonoBehaviour {
 			CharacterController cc = GetComponent<CharacterController> ();
 			cc.SimpleMove (velocity);
 		}
+	}
+
+	private bool IsAggroed(Vector3 player_pos, Vector3 enemy_pos){
+		float mod_aggro_range = aggro_range;
+		if (player.GetComponent<PlayerState> ().sneaking) {
+			mod_aggro_range = aggro_range / 2;
+		} else if (player.GetComponent<PlayerState> ().running) {
+			mod_aggro_range = aggro_range * 2;
+		}
+		return ((player_pos - enemy_pos).magnitude < mod_aggro_range);
 	}
 }

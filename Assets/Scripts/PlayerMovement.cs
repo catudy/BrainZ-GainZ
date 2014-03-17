@@ -7,10 +7,13 @@ public class PlayerMovement : MonoBehaviour
 	public float turnSmoothing = 15f;   // A smoothing value for turning the player.
 	public float speedDampTime = 0.1f;  // The damping for the speed parameter
 	public float base_speed = 5.0f;
-	
+	private PlayerState playerState;
 	private Animator anim;              // Reference to the animator component.
 	private HashIDs hash;               // Reference to the HashIDs.
-	
+
+	void Start() {
+		playerState = GetComponent<PlayerState>();
+	}
 	
 	void Awake ()
 	{
@@ -49,8 +52,10 @@ public class PlayerMovement : MonoBehaviour
 		float current_speed = base_speed;
 		if (sneaking) {
 			current_speed = base_speed / 2.0f;
+			playerState.SetSneaking();
 		} else if (sprinting) {
 			current_speed = base_speed * 1.5f;
+			playerState.SetRunning();
 		}
 		// Set the sneaking parameter to the sneak input.
 		anim.SetBool(hash.sneakingBool, sneaking);
