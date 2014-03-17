@@ -56,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
 		} else if (sprinting) {
 			current_speed = base_speed * 1.5f;
 			playerState.SetRunning();
+		} else {
+			playerState.SetWalking();
 		}
 		// Set the sneaking parameter to the sneak input.
 		anim.SetBool(hash.sneakingBool, sneaking);

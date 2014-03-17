@@ -18,16 +18,16 @@ public class PlayerState : MonoBehaviour {
 	private float cooldown  = 0.0f;
 	// Use this for initialization
 	void Start () {
-		if (power_up != PowerUp.NONE) {
-				power_up_time_remaining -= Time.deltaTime;
-				if (power_up_time_remaining < 0.0f) {
-						DeletePowerup();
-				}
-		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (power_up != PowerUp.NONE) {
+			power_up_time_remaining = power_up_time_remaining - Time.deltaTime;
+			if (power_up_time_remaining < 0.0f) {
+				DeletePowerup();
+			}
+		}
 		if (cooldown > 0.0f) {
 			cooldown -= Time.deltaTime;
 		} else {
@@ -47,6 +47,8 @@ public class PlayerState : MonoBehaviour {
 	public void DeletePowerup(){
 		if (power_up == PowerUp.INVISIBILITY) {
 			GameObject.Find("char_ethan_body").GetComponent<SkinnedMeshRenderer>().enabled = true;
+		} else if (power_up == PowerUp.INVULNERABLE) {
+			GetComponent<ParticleSystem>().enableEmission = false;
 		}
 		power_up = PowerUp.NONE;
 		power_up_time_remaining = 0.0f;
@@ -56,7 +58,9 @@ public class PlayerState : MonoBehaviour {
 		power_up = set;
 		power_up_time_remaining = 15.0f;
 		if (power_up == PowerUp.INVISIBILITY) {
-			GameObject.Find("char_ethan_body").GetComponent<SkinnedMeshRenderer>().enabled = false;
+			GameObject.Find ("char_ethan_body").GetComponent<SkinnedMeshRenderer> ().enabled = false;
+		} else if (power_up == PowerUp.INVULNERABLE) {
+			GetComponent<ParticleSystem>().enableEmission = true;
 		}
 	}
 
@@ -67,6 +71,11 @@ public class PlayerState : MonoBehaviour {
 
 	public void SetRunning(){
 		running = true;
+		sneaking = false;
+	}
+
+	public void SetWalking(){
+		running = false;
 		sneaking = false;
 	}
 }
