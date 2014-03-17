@@ -14,7 +14,7 @@ public class PlayerCollision : MonoBehaviour {
 		}
 
 		// Log the collision
-		Debug.Log ("Collided with " + collision.gameObject.name);
+		Debug.Log ("Collided with " + collision.gameObject.name + " " + collision.gameObject.tag);
 
 		// Filter through the collisions
 		if (collision.gameObject.tag == "Deadly") { // Game over if you run into something deadly
