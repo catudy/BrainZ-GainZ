@@ -18,8 +18,13 @@ public class PlayerCollision : MonoBehaviour {
 
 		// Filter through the collisions
 		if (collision.gameObject.tag == "Deadly") { // Game over if you run into something deadly
-			GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
-			gameState.game_over = true;
+			if(playerState.power_up == PowerUp.INVULNERABLE){ 
+				// Fuck you Zambie
+				Destroy (collision.gameObject);
+			} else {
+				GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
+				gameState.game_over = true;
+			}
 		} else if (collision.gameObject.tag == "Brainz"){
 			GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
 			gameState.brainz++;
@@ -29,11 +34,15 @@ public class PlayerCollision : MonoBehaviour {
 			gameState.gainz++;
 			Destroy (collision.gameObject);
 		} else if (collision.gameObject.tag == "Powerup"){
+			playerState.DeletePowerup();
 			if (collision.gameObject.name == "PowerupBlink(Clone)") {
-				playerState.power_up = PowerUp.BLINK;
+				playerState.SetPowerUp(PowerUp.BLINK);
 				Destroy (collision.gameObject);
-			} else if(collision.gameObject.name == "PowerupBB(Clone)") {
-				playerState.power_up = PowerUp.INVISIBILITY;
+			} else if(collision.gameObject.name == "PowerupInvuln(Clone)") {
+				playerState.SetPowerUp(PowerUp.INVULNERABLE);
+				Destroy (collision.gameObject);
+			} else if(collision.gameObject.name == "PowerupInvis(Clone)") {
+				playerState.SetPowerUp(PowerUp.INVISIBILITY);
 				Destroy (collision.gameObject);
 			}
 		}

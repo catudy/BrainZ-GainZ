@@ -12,12 +12,18 @@ public enum PowerUp{
 
 public class PlayerState : MonoBehaviour {
 	public PowerUp power_up = PowerUp.NONE;
+	public float power_up_time_remaining = 0.0f;
 	public bool sneaking = false;
 	public bool running = false;
 	private float cooldown  = 0.0f;
 	// Use this for initialization
 	void Start () {
-	
+		if (power_up != PowerUp.NONE) {
+				power_up_time_remaining -= Time.deltaTime;
+				if (power_up_time_remaining < 0.0f) {
+						DeletePowerup();
+				}
+		}
 	}
 	
 	// Update is called once per frame
@@ -38,8 +44,20 @@ public class PlayerState : MonoBehaviour {
 				}
 		}
 	}
+	public void DeletePowerup(){
+		if (power_up == PowerUp.INVISIBILITY) {
+			GameObject.Find("char_ethan_body").GetComponent<SkinnedMeshRenderer>().enabled = true;
+		}
+		power_up = PowerUp.NONE;
+		power_up_time_remaining = 0.0f;
+	}
+
 	public void SetPowerUp(PowerUp set){
 		power_up = set;
+		power_up_time_remaining = 15.0f;
+		if (power_up == PowerUp.INVISIBILITY) {
+			GameObject.Find("char_ethan_body").GetComponent<SkinnedMeshRenderer>().enabled = false;
+		}
 	}
 
 	public void SetSneaking(){

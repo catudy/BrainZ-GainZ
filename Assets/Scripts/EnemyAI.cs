@@ -38,7 +38,10 @@ public class EnemyAI : MonoBehaviour {
 
 	private bool IsAggroed(Vector3 player_pos, Vector3 enemy_pos){
 		float mod_aggro_range = aggro_range;
-		if (player.GetComponent<PlayerState> ().sneaking) {
+		if (player.GetComponent<PlayerState> ().power_up == PowerUp.INVISIBILITY) {
+			mod_aggro_range = 0.0f;
+		}
+		else if (player.GetComponent<PlayerState> ().sneaking) {
 			mod_aggro_range = aggro_range / 2;
 		} else if (player.GetComponent<PlayerState> ().running) {
 			mod_aggro_range = aggro_range * 2;
