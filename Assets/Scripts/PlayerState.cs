@@ -13,12 +13,13 @@ public enum PowerUp{
 public class PlayerState : MonoBehaviour {
 	public PowerUp power_up = PowerUp.NONE;
 	public float power_up_time_remaining = 0.0f;
-	public float stamina_recovery_rate = 1.0f;
-	public float max_stamina = 15.0f;
-	public float stamina;
+	public float stamina_recovery_rate = 1.0f; // how much stamina you recover per WaitForSeconds.
+	public float max_stamina = 5.0f; 
+	public float stamina; // How much stamina you currently have
+	public float min_stamina = 0.0f; // how much stamina you need to run.  Stops stuttering at low stamina.
 	
 	private bool sneaking = false;
-	private bool running = false;
+	public bool running = false;
 	
 	private float cooldown  = 0.0f;
 
@@ -31,6 +32,7 @@ public class PlayerState : MonoBehaviour {
 	void Update () {
 		UpdateTimers ();
 		UpdateCooldowns ();
+		UpdateStamina ();
 
 		if (cooldown <= 0.0f) {
 			ProcessAbilityInput();
@@ -60,9 +62,9 @@ public class PlayerState : MonoBehaviour {
 
 	void UpdateStamina(){
 		if(running){
-			stamina -= Time.time * stamina_recovery_rate;
+			stamina -= Time.deltaTime * stamina_recovery_rate;
 		} else {
-			stamina += Time.time;
+			stamina += Time.deltaTime;
 		}
 		if(stamina > max_stamina){
 			stamina = max_stamina;
@@ -113,7 +115,7 @@ public class PlayerState : MonoBehaviour {
 	}
 
 	public void SetRunning(){
-		running = stamina > 0.0f;
+		running = stamina > min_stamina;
 		sneaking = false;
 	}
 

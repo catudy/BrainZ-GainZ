@@ -13,9 +13,9 @@ public class InputController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown ("Sneak")) {
+		if (Input.GetButton ("Sneak")) {
 			playerState.SetSneaking ();
-		} else if (Input.GetButtonDown ("Sprint")) {
+		} else if (Input.GetButton ("Sprint")) {
 			playerState.SetRunning();
 		} else {
 			playerState.SetWalking ();
