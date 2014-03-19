@@ -28,10 +28,15 @@ public class PlayerMovement : MonoBehaviour
 	
 	void FixedUpdate ()
 	{
-		// Cache the inputs.
-		bool sneak = Input.GetButton("Sneak");
-		bool sprint = Input.GetButton ("Sprint");
-		MovementManagement(sneak, sprint);
+		float current_speed = base_speed;
+		if (playerState.GetSneaking()) {
+			current_speed = base_speed / 2.0f;
+		} else if (playerState.GetRunning ()) {
+			current_speed = base_speed * 10.5f;
+		} 
+		// Set the sneaking parameter to the sneak input.
+		anim.SetBool(hash.sneakingBool, playerState.GetSneaking());
+		anim.SetFloat (hash.speedFloat, current_speed, speedDampTime, Time.deltaTime);
 	}
 	
 	
@@ -46,23 +51,7 @@ public class PlayerMovement : MonoBehaviour
 		AudioManagement(shout);
 	}
 	
-	
-	void MovementManagement (bool sneaking, bool sprinting)
-	{
-		float current_speed = base_speed;
-		if (sneaking) {
-			current_speed = base_speed / 2.0f;
-			playerState.SetSneaking();
-		} else if (sprinting) {
-			current_speed = base_speed * 1.5f;
-			playerState.SetRunning();
-		} else {
-			playerState.SetWalking();
-		}
-		// Set the sneaking parameter to the sneak input.
-		anim.SetBool(hash.sneakingBool, sneaking);
-		anim.SetFloat (hash.speedFloat, current_speed, speedDampTime, Time.deltaTime);
-	}
+
 	
 	
 	void AudioManagement (bool shout)

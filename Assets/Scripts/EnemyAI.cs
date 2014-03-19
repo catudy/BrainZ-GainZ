@@ -41,9 +41,9 @@ public class EnemyAI : MonoBehaviour {
 		if (player.GetComponent<PlayerState> ().power_up == PowerUp.INVISIBILITY) {
 			mod_aggro_range = 0.0f;
 		}
-		else if (player.GetComponent<PlayerState> ().sneaking) {
+		else if (player.GetComponent<PlayerState> ().GetSneaking()) {
 			mod_aggro_range = aggro_range / 2;
-		} else if (player.GetComponent<PlayerState> ().running) {
+		} else if (player.GetComponent<PlayerState> ().GetRunning()) {
 			mod_aggro_range = aggro_range * 2;
 		}
 		return ((player_pos - enemy_pos).magnitude < mod_aggro_range);
