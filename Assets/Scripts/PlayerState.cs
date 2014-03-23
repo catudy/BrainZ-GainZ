@@ -101,7 +101,7 @@ public class PlayerState : MonoBehaviour {
 			GameObject.Find ("char_ethan_body").GetComponent<SkinnedMeshRenderer> ().enabled = false;
 		} else if (power_up == PowerUp.INVULNERABLE) {
 			GetComponent<ParticleSystem>().enableEmission = true;
-		}
+		} 
 	}
 
 	public void SetSneaking(){
@@ -129,5 +129,9 @@ public class PlayerState : MonoBehaviour {
 
 	public bool GetWalking(){
 		return (!running & !sneaking);
+	}
+
+	public float GetStaminaPercent(){
+		return stamina / max_stamina;
 	}
 }
