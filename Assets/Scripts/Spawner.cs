@@ -53,4 +53,10 @@ public class Spawner : MonoBehaviour {
 
 		return enemy_pos;
 	}
+
+	public void DestroyObject(GameObject obj){
+		counter--;
+		Debug.Log (counter);
+		Destroy (obj);
+	}
 }

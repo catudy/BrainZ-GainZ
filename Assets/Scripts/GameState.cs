@@ -23,4 +23,14 @@ public class GameState : MonoBehaviour {
 		}
 	}
 
+	public void RemoveObject(GameObject destroyme){
+		Spawner[] spawners = GetComponents<Spawner> ();
+		foreach (Spawner spawner in spawners) {
+			foreach(GameObject obj in spawner.objects){
+				if(obj.name + "(Clone)" == destroyme.name){
+					spawner.DestroyObject(destroyme);
+				}
+			}
+		}
+	}
 }

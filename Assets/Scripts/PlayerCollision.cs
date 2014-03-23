@@ -8,6 +8,7 @@ using System.Collections;
 
 public class PlayerCollision : MonoBehaviour {
 	private PlayerState playerState; 
+	GameState gameState;
 	void OnControllerColliderHit(ControllerColliderHit collision) {
 		if (collision.gameObject.tag == "NoCollision") { // Don't care about the ground.
 			return;
@@ -20,36 +21,32 @@ public class PlayerCollision : MonoBehaviour {
 		if (collision.gameObject.tag == "Deadly") { // Game over if you run into something deadly
 			if(playerState.power_up == PowerUp.INVULNERABLE){ 
 				// Fuck you Zambie
-				Destroy (collision.gameObject);
+				gameState.RemoveObject(collision.gameObject);
 			} else {
-				GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
 				gameState.game_over = true;
 			}
 		} else if (collision.gameObject.tag == "Brainz"){
-			GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
 			gameState.brainz++;
-			Destroy (collision.gameObject);
+				gameState.RemoveObject(collision.gameObject);
 		} else if (collision.gameObject.tag == "Gainz"){
-			GameState gameState = GameObject.Find("gameController").GetComponent<GameState>();
 			gameState.gainz++;
 			Destroy (collision.gameObject);
 		} else if (collision.gameObject.tag == "Powerup"){
 			playerState.DeletePowerup();
 			if (collision.gameObject.name == "PowerupBlink(Clone)") {
 				playerState.SetPowerUp(PowerUp.BLINK);
-				Destroy (collision.gameObject);
 			} else if(collision.gameObject.name == "PowerupInvuln(Clone)") {
 				playerState.SetPowerUp(PowerUp.INVULNERABLE);
-				Destroy (collision.gameObject);
 			} else if(collision.gameObject.name == "PowerupInvis(Clone)") {
 				playerState.SetPowerUp(PowerUp.INVISIBILITY);
-				Destroy (collision.gameObject);
 			}
+			gameState.RemoveObject(collision.gameObject);
 		}
 	}
 	// Use this for initialization
 	void Start () {
 		playerState = GetComponent<PlayerState>();
+		gameState = GameObject.Find("gameController").GetComponent<GameState>();
 	}
 	
 	// Update is called once per frame
