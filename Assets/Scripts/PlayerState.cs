@@ -16,7 +16,6 @@ public class PlayerState : MonoBehaviour {
 	public float stamina_recovery_rate = 1.0f; // how much stamina you recover per WaitForSeconds.
 	public float max_stamina = 5.0f; 
 	public float stamina; // How much stamina you currently have
-	public float min_stamina = 0.0f; // how much stamina you need to run.  Stops stuttering at low stamina.
 	
 	private bool sneaking = false;
 	public bool running = false;
@@ -115,7 +114,7 @@ public class PlayerState : MonoBehaviour {
 	}
 
 	public void SetRunning(){
-		running = stamina > min_stamina;
+		running = stamina > 0.0f;
 		sneaking = false;
 	}
 
