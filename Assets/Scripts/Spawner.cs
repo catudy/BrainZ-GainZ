@@ -14,7 +14,7 @@ public class Spawner : MonoBehaviour {
 	public GameObject[] objects; // what we will spawn
 	public float min_distance = 0; // How close can we spawn
 	public float max_distance = 0; // How far away can we spawn
-	public GameObject spawn_point; // Around What we are Spawning
+	public GameObject[] spawn_points; // Around What we are Spawning
 	private int counter = 0;	
 	private float timer = 0.0f;
 	// Use this for initialization
@@ -40,9 +40,9 @@ public class Spawner : MonoBehaviour {
 
 	// Returns a Valid Spawn Point based on level params
 	Vector3 GetValidRandomEnemySpawnPoint(){
-		// Get Player Position
-	//	GameObject player = GameObject.Find("Player");
-		Vector3 spawn_pos = spawn_point.transform.position;
+		// Choose A spawn point
+		int index = Random.Range (0, spawn_points.Length);
+		Vector3 spawn_pos = spawn_points[index].transform.position;
 
 		// Pick a point within circle around player
 		Vector3 enemy_pos;
