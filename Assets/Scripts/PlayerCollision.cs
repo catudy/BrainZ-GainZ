@@ -27,7 +27,7 @@ public class PlayerCollision : MonoBehaviour {
 			}
 		} else if (collision.gameObject.tag == "Brainz"){
 			gameState.brainz++;
-				gameState.RemoveObject(collision.gameObject);
+			gameState.RemoveObject(collision.gameObject);
 		} else if (collision.gameObject.tag == "Gainz"){
 			gameState.gainz++;
 			Destroy (collision.gameObject);
@@ -41,6 +41,8 @@ public class PlayerCollision : MonoBehaviour {
 				playerState.SetPowerUp(PowerUp.INVISIBILITY);
 			}
 			gameState.RemoveObject(collision.gameObject);
+		} else if (collision.gameObject.tag == "SceneChanger"){
+			gameState.ChangeScene(collision.gameObject.name);
 		}
 	}
 	// Use this for initialization

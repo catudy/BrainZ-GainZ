@@ -23,6 +23,7 @@ public class GameState : MonoBehaviour {
 		}
 	}
 
+	// Removes object from the scene.
 	public void RemoveObject(GameObject destroyme){
 		Spawner[] spawners = GetComponents<Spawner> ();
 		foreach (Spawner spawner in spawners) {
@@ -31,6 +32,14 @@ public class GameState : MonoBehaviour {
 					spawner.DestroyObject(destroyme);
 				}
 			}
+		}
+	}
+
+	public void ChangeScene(string scene_name){
+		if(scene_name = "TestBuilding"){
+			// Manage scene change here.
+
+			// Load Scene change
 		}
 	}
 }

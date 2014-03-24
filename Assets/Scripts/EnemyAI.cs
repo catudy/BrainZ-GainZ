@@ -7,10 +7,10 @@ using UnityEngine;
 using System.Collections;
 
 public class EnemyAI : MonoBehaviour {
-	public float aggro_range = 5.0f;
-	public float max_speed = 2.0f;
-	public float acceleration = 1.0f;
-	public Vector3 velocity = new Vector3(0,0,0);
+	public float aggro_range = 5.0f; // range in feet at which enemy will aggro
+	public float max_speed = 2.0f; // maximum speed that enemy can have.
+	public float acceleration = 1.0f; 
+	private Vector3 velocity = new Vector3(0,0,0); // current enemy velocity.
 	private GameObject player;
 
 	// Use this for initialization
