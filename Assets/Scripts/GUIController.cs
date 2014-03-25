@@ -24,7 +24,7 @@ public class GUIController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 	
@@ -46,5 +46,7 @@ public class GUIController : MonoBehaviour {
 		if (width > 0.0f) { // without this it always draws a wonkey tiny box.
 			GUI.Box (new Rect (Screen.width - width, Screen.height - 30, width, 20), playerState.power_up.ToString ());
 		}
+
+
 	}
 }
