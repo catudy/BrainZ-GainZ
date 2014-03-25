@@ -36,7 +36,7 @@ public class GameState : MonoBehaviour {
 	}
 
 	public void ChangeScene(string scene_name){
-		if(scene_name = "TestBuilding"){
+		if(scene_name == "TestBuilding"){
 			// Manage scene change here.
 
 			// Load Scene change

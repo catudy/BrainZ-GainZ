@@ -1,6 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// GUI controller.
+/// 
+/// Manages the HUD and updates it every frame.
+/// Current Displayed HUD Items: Brainz, Gainz, Stamina Bar, Current Powerup and Cooldown.
+/// 
+/// Author: Albert Wohletz
+/// </summary>
 public class GUIController : MonoBehaviour {
 	public Texture2D brainz_icon;
 	public Texture2D gainz_icon;
@@ -35,7 +43,7 @@ public class GUIController : MonoBehaviour {
 	
 		// Powerup
 		float width = playerState.power_up_time_remaining * 10;
-		if (width > 0.0f) {
+		if (width > 0.0f) { // without this it always draws a wonkey tiny box.
 			GUI.Box (new Rect (Screen.width - width, Screen.height - 30, width, 20), playerState.power_up.ToString ());
 		}
 	}

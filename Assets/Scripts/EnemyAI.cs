@@ -28,7 +28,8 @@ public class EnemyAI : MonoBehaviour {
 				velocity = velocity.normalized * max_speed;
 			}
 		} else {
-			velocity.Set(0,0,0);
+			velocity.x = 0;
+			velocity.z = 0;
 		}
 		if (velocity.magnitude > 0) {
 			CharacterController cc = GetComponent<CharacterController> ();

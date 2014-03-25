@@ -1,0 +1,8 @@
+Controls.
+Mouse changes the direction you run in.
+Holding down shift makes you sneak, reducing your speed but making it easier to sneak past zombies.
+Holding down CTRL will cause you to temporarily sprint, increasing your speed, but making you more prone to alerting zombies.
+Pressing alt will activate some powerups.  Currently this only applies to the 'Blink' powerup.
+
+Brainz are Currently given a white halo to be more identifiable until better models can be found.
+Gainz are currently given a red halo to be more identifiable.
