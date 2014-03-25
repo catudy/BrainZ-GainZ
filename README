@@ -2,7 +2,13 @@ Controls.
 Mouse changes the direction you run in.
 Holding down shift makes you sneak, reducing your speed but making it easier to sneak past zombies.
 Holding down CTRL will cause you to temporarily sprint, increasing your speed, but making you more prone to alerting zombies.
-Pressing alt will activate some powerups.  Currently this only applies to the 'Blink' powerup.
+Pressing Ability(Default key is alt) will activate some powerups.  Currently this only applies to the 'Blink' powerup.
 
+Powerups:
+Invulnerability - A red glowing spike ball.  Gives player invulnerability that allows them to kill zombies, basically same as Mario Star.
+Invisibility - A green buckey ball.  Makes the player invisible and causes them to no longer attract zombies.
+Blink - A Powdery atom ball.  Gives the player the ability to blink, or teleport, a short distance in front of them.  This ability is activated by the ability key(default alt) and has a 5 second cooldown.
+
+Debug Features:
 Brainz are Currently given a white halo to be more identifiable until better models can be found.
 Gainz are currently given a red halo to be more identifiable.
