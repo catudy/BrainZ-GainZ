@@ -21,6 +21,7 @@ public class GameState : MonoBehaviour {
 	void Update () {
 		if (Time.time > 30.0f) {
 			in_cutscene = false;
+			GameObject.Find("Player").GetComponent<Camera>().enabled = true;
 		}
 		if (game_over) {
 			// Call game over here
