@@ -61,9 +61,9 @@ public class PlayerState : MonoBehaviour {
 
 	void UpdateStamina(){
 		if(running){
-			stamina -= Time.deltaTime * stamina_recovery_rate;
+			stamina -= Time.deltaTime;
 		} else {
-			stamina += Time.deltaTime;
+			stamina += Time.deltaTime * stamina_recovery_rate;
 		}
 		if(stamina > max_stamina){
 			stamina = max_stamina;

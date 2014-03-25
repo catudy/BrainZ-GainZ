@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 		if (playerState.GetSneaking()) {
 			current_speed = base_speed / 2.0f;
 		} else if (playerState.GetRunning ()) {
-			current_speed = base_speed * 10f;
+			current_speed = base_speed * 2.0f;
 		} 
 
 		// Update Speed and move playernew 
@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
 		// Set the sneaking parameter to the sneak input.
 		anim.SetBool(hash.sneakingBool, playerState.GetSneaking());
-		anim.SetFloat (hash.speedFloat, current_speed, speedDampTime, Time.deltaTime);
+		anim.SetFloat (hash.speedFloat, 10.0f, speedDampTime, Time.deltaTime);
 	
 	}
 	
