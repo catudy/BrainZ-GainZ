@@ -48,7 +48,7 @@ public class Spawner : MonoBehaviour {
 		Vector3 enemy_pos;
 		do { 
 			enemy_pos = Random.onUnitSphere * Random.Range(min_distance, max_distance) + spawn_pos;
-			enemy_pos.y = 1;
+			enemy_pos.y = 0;
 		} while ((enemy_pos - spawn_pos).magnitude < min_distance);
 
 		return enemy_pos;
