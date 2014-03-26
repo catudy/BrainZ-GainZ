@@ -48,7 +48,7 @@ public class PlayerCollision : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		playerState = GetComponent<PlayerState>();
-		gameState = GameObject.Find("gameController").GetComponent<GameState>();
+		gameState = GameObject.Find("GameController").GetComponent<GameState>();
 	}
 	
 	// Update is called once per frame

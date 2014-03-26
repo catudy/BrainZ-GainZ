@@ -17,17 +17,17 @@ public class PlayerMovement : MonoBehaviour
 	void Start() {
 		playerState = GetComponent<PlayerState>();
 		charController = GetComponent<CharacterController> ();
-		gameState = GameObject.Find ("gameController").GetComponentInChildren<GameState> ();
+		gameState = GameObject.Find ("GameController").GetComponentInChildren<GameState> ();
 	}
 	
 	void Awake ()
 	{
 		// Setting up the references.
 		anim = GetComponent<Animator>();
-		hash = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<HashIDs>();
+		hash = GameObject.Find("GameController").GetComponent<HashIDs>();
 		
 		// Set the weight of the shouting layer to 1.
-		anim.SetLayerWeight(1, 1f);
+		// anim.SetLayerWeight(1, 1f);
 	}
 	
 	
@@ -57,12 +57,12 @@ public class PlayerMovement : MonoBehaviour
 	void Update ()
 	{
 		// Cache the attention attracting input.
-		bool shout = Input.GetButtonDown("Attract");
+		//bool shout = Input.GetButtonDown("Attract");
 		
 		// Set the animator shouting parameter.
-		anim.SetBool(hash.shoutingBool, shout);
+		//anim.SetBool(hash.shoutingBool, shout);
 		
-		AudioManagement(shout);
+		//AudioManagement(shout);
 	}
 	
 
