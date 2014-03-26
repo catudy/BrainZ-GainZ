@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 	public float speedDampTime = 0.1f;  // The damping for the speed parameter
 	public float base_speed = 50.0f;
 	private PlayerState playerState;
+	private GameState gameState;
 	private Animator anim;              // Reference to the animator component.
 	private HashIDs hash;               // Reference to the HashIDs.
 	private CharacterController charController;
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 	void Start() {
 		playerState = GetComponent<PlayerState>();
 		charController = GetComponent<CharacterController> ();
+		gameState = GameObject.Find ("gameController").GetComponentInChildren<GameState> ();
 	}
 	
 	void Awake ()
@@ -31,24 +33,24 @@ public class PlayerMovement : MonoBehaviour
 	
 	void FixedUpdate ()
 	{
-		float current_speed = base_speed;
-		if (playerState.GetSneaking()) {
-			current_speed = base_speed / 2.0f;
-		} else if (playerState.GetRunning ()) {
-			current_speed = base_speed * 2.0f;
-		} 
+		if (gameState.RunGame ()) {
+				float current_speed = base_speed;
+				if (playerState.GetSneaking ()) {
+						current_speed = base_speed / 2.0f;
+				} else if (playerState.GetRunning ()) {
+						current_speed = base_speed * 2.0f;
+				} 
 
-		// Update Speed and move playernew 
-		direction.Set(0, 0, 1);
-		velocity = transform.rotation * direction * current_speed;
-		velocity.y = 0;
-		Debug.Log (velocity);
-		charController.SimpleMove (velocity);
+				// Update Speed and move playernew 
+				direction.Set (0, 0, 1);
+				velocity = transform.rotation * direction * current_speed;
+				velocity.y = 0;
+				charController.SimpleMove (velocity);
 
-		// Set the sneaking parameter to the sneak input.
-		anim.SetBool(hash.sneakingBool, playerState.GetSneaking());
-		anim.SetFloat (hash.speedFloat, 10.0f, speedDampTime, Time.deltaTime);
-	
+				// Set the sneaking parameter to the sneak input.
+				anim.SetBool (hash.sneakingBool, playerState.GetSneaking ());
+				anim.SetFloat (hash.speedFloat, 10.0f, speedDampTime, Time.deltaTime);
+		}
 	}
 	
 	

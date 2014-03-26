@@ -10,7 +10,8 @@ public class GameState : MonoBehaviour {
 	public bool game_over = false;
 	public int brainz = 0;
 	public int gainz = 0;
-	public bool in_cutscene = true;
+	public float cutscene_length = 35.0f;
+	private bool in_cutscene = true;
 
 	// Use this for initialization
 	void Start () {
@@ -19,9 +20,10 @@ public class GameState : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Time.time > 30.0f) {
-			in_cutscene = false;
-			GameObject.Find("Player").GetComponent<Camera>().enabled = true;
+		if (Time.time > cutscene_length || Input.GetButtonDown("Sprint")) {
+						in_cutscene = false;
+						GameObject.Find ("Player").GetComponentInChildren<Camera> ().enabled = true;
+		} else {
 		}
 		if (game_over) {
 			// Call game over here
@@ -46,5 +48,8 @@ public class GameState : MonoBehaviour {
 
 			// Load Scene change
 		}
+	}
+	public bool RunGame(){
+		return (!in_cutscene);
 	}
 }
