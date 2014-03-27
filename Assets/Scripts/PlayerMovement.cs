@@ -35,7 +35,10 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (gameState.RunGame ()) {
 				float current_speed = base_speed;
-				if (playerState.GetSneaking ()) {
+				if (Input.GetButton ("Stand")) {
+					current_speed = 0.0f;
+				}
+				else if (playerState.GetSneaking ()) {
 						current_speed = base_speed / 2.0f;
 				} else if (playerState.GetRunning ()) {
 						current_speed = base_speed * 2.0f;

@@ -68,7 +68,6 @@ public class Spawner : MonoBehaviour {
 		foreach (GameObject obj in objects) {
 			if ((GameObject.Find ("Player").transform.position - obj.transform.position).magnitude > despawn_range){
 				DestroyObject(obj);
-				Debug.Log ("Destroyed");
 			}
 		}
 	}
