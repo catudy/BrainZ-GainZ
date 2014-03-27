@@ -62,11 +62,15 @@ public class PlayerState : MonoBehaviour {
 	void UpdateStamina(){
 		if(running){
 			stamina -= Time.deltaTime;
+			if( stamina < 0.5f){
+				stamina = 0.0f;
+				running = false;
+			}
 		} else {
 			stamina += Time.deltaTime * stamina_recovery_rate;
-		}
-		if(stamina > max_stamina){
-			stamina = max_stamina;
+			if(stamina > max_stamina){
+				stamina = max_stamina;
+			}
 		}
 	}
 
@@ -110,11 +114,11 @@ public class PlayerState : MonoBehaviour {
 	}
 
 	public bool GetSneaking(){
-		return sneaking;
+		return sneaking || stamina < 0.5f;
 	}
 
 	public void SetRunning(){
-		running = stamina > 0.0f;
+		running = stamina > 0.5f;
 		sneaking = false;
 	}
 

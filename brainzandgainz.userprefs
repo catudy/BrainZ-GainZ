@@ -1,13 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Spawner.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerState.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerMovement.cs" Line="65" Column="5" />
-      <File FileName="Assets/Scripts/GameState.cs" Line="25" Column="34" />
-      <File FileName="Assets/Scripts/PlayerCollision.cs" Line="51" Column="15" />
-      <File FileName="Assets/Scripts/Flicker.cs" Line="10" Column="2" />
-      <File FileName="Assets/Scripts/Spawner.cs" Line="63" Column="1" />
-      <File FileName="Assets/Scripts/Oscillate.cs" Line="15" Column="14" />
+      <File FileName="Assets/Scripts/Wander.cs" Line="24" Column="31" />
+      <File FileName="Assets/Scripts/Spawner.cs" Line="46" Column="26" />
+      <File FileName="Assets/Scripts/PlayerMovement.cs" Line="41" Column="10" />
+      <File FileName="Assets/Scripts/InputController.cs" Line="15" Column="18" />
+      <File FileName="Assets/Scripts/PlayerState.cs" Line="71" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
