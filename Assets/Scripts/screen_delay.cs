@@ -4,7 +4,8 @@ using System.Collections;
 public class screen_delay : MonoBehaviour 
 {
 	//Public variables
-	public float sceneTransTime = 2f;
+	public int sceneTransTime = 1;
+	public GUITexture guiTexture;
 
 	IEnumerator Start()
 	{
