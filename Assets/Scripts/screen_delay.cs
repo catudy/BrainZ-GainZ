@@ -4,11 +4,13 @@ using System.Collections;
 public class screen_delay : MonoBehaviour 
 {
 	public GUITexture myTexture;
-	private bool fadeOn = true;
-	private float fadeInRate = 0.05f;
-	private float fadeOutRate = 1f;
-	private float alpha;
-	private float maxFade = 0.2f;
+	public bool fadeOn = true;
+	private float fadeInRate = 0.08f;
+	private float fadeOutRate = 0.65f;
+	public float alpha = 0.0f;
+	private bool nextScene = false;
+	private float maxFade = 0.32f;
+	private float minFade = 0.01f;
 
 	void Update()
 	{
@@ -16,28 +18,39 @@ public class screen_delay : MonoBehaviour
 		{
 			FadeIn();
 		}
-		else
+		else if(!fadeOn)
 		{
 			FadeOut();
 		}
+
+		if(nextScene)
+		{
+			Application.LoadLevel("Sushil_Test");
+		}
+
+
 	}
 
 	void FadeIn()
-	{/*
-		while(alpha <= maxFade)
+	{
+		alpha = Mathf.Lerp (alpha, 1, fadeInRate * Time.deltaTime);
+		myTexture.color = new Color(1,1,1,alpha);
+
+		if(alpha >= maxFade)
 		{
-			alpha = Mathf.Lerp (0,1,Time.deltaTime*fadeInRate);
-			myTexture.color = new Color(1,1,1,alpha);
+			fadeOn = false;
 		}
-
-		fadeOn = false;
-		*/
-
 	}
 
 	void FadeOut()
 	{
-		myTexture.color = Color.Lerp(myTexture.color,Color.black, Time.deltaTime*fadeOutRate);
+		alpha = Mathf.Lerp (alpha, 0, fadeOutRate * Time.deltaTime);
+		myTexture.color = new Color(1,1,1,alpha);
+
+		if(alpha <= minFade)
+		{
+			nextScene = true;
+		}
 	}
 }
 
