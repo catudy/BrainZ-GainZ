@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 /Temp
 /obj
 /library
+=======
+Temp/
+Library/
+>>>>>>> 2c0cf8b93daf8e4ab163db47cf401c6a25998e4d
 *.csproj
 *.unityproj
 *.sln
