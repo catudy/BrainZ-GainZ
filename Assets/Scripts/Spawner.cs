@@ -15,6 +15,7 @@ public class Spawner : MonoBehaviour {
 	public float min_distance = 0; // How close can we spawn
 	public float max_distance = 0; // How far away can we spawn
 	public GameObject[] spawn_points; // Around What we are Spawning
+	public float despawn_range = 100.0f;
 	private int counter = 0;	
 	private float timer = 0.0f;
 	// Use this for initialization
@@ -30,6 +31,8 @@ public class Spawner : MonoBehaviour {
 			int index = Random.Range(0,objects.Length);
 			Spawn (GetValidRandomEnemySpawnPoint(),objects[index]);
 			timer = Time.time + spawn_frequency;
+		} else if (counter < max_count){
+			Despawn();
 		}
 	}
 
@@ -58,5 +61,15 @@ public class Spawner : MonoBehaviour {
 		counter--;
 		Debug.Log (counter);
 		Destroy (obj);
+	}
+
+	private void Despawn(){
+		// Find all objects far away and despawn
+		foreach (GameObject obj in objects) {
+			if ((GameObject.Find ("Player").transform.position - obj.transform.position).magnitude > despawn_range){
+				DestroyObject(obj);
+				Debug.Log ("Destroyed");
+			}
+		}
 	}
 }

@@ -12,12 +12,12 @@ public class Oscillate : MonoBehaviour {
 	private float start_y;
 	// Use this for initialization
 	void Start () {
-		start_y = transform.position.y;
+		start_y = 2;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position = new Vector3(transform.position.x,
+		transform.position.Set(transform.position.x,
 		                                 start_y + Mathf.Sin (Time.time) * oscillation_length,
 		                                 transform.position.z);
 		transform.Rotate (0, 1, 0);
