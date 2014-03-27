@@ -31,6 +31,7 @@ public class BnGAI : MonoBehaviour {
 			if(velocity.magnitude > max_speed){ // if higher than max speed, set velocity to max speed
 				velocity = velocity.normalized * max_speed;
 			}
+			transform.LookAt(transform.position+velocity);
 		}
 		if (velocity.magnitude > 0) {
 			CharacterController cc = GetComponent<CharacterController> ();

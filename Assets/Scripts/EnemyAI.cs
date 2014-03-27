@@ -36,7 +36,7 @@ public class EnemyAI : MonoBehaviour {
 		}
 		if (velocity.magnitude > 0) {
 			// Face zambie in right direction
-			Vector3 look = new Vector3(player_pos.x,0,player_pos.z);
+			Vector3 look = new Vector3(player_pos.x,transform.position.y,player_pos.z);
 			transform.LookAt( look );
 
 			CharacterController cc = GetComponent<CharacterController> ();

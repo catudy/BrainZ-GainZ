@@ -59,7 +59,6 @@ public class Spawner : MonoBehaviour {
 
 	public void DestroyObject(GameObject obj){
 		counter--;
-		Debug.Log (counter);
 		Destroy (obj);
 	}
 
