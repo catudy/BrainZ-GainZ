@@ -7,26 +7,32 @@ public class Wander : MonoBehaviour {
 	private float time_remaining;
 	private Vector3 target_destination;
 	private Vector3 movement_vector;
-	CharacterController cc;
+	private CharacterController cc;
+	private EnemyAI ai;
 
 	// Use this for initialization
 	void Start () {
 		SetRandomDestination ();	
 		cc = GetComponent<CharacterController> ();
+		ai = GetComponent<EnemyAI> ();
 		time_remaining = 5.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		time_remaining -= Time.deltaTime;
-		movement_vector = target_destination - transform.position;
-		movement_vector.y = 0;
-		if(time_remaining < 0.0f || movement_vector.magnitude < wander_speed * Time.deltaTime){
-			SetRandomDestination();
-		} else {
-			movement_vector.Normalize();
-			Vector3 velocity = movement_vector * wander_speed;
-			cc.SimpleMove (velocity);
+		if(!ai.aggro){
+			time_remaining -= Time.deltaTime;
+			movement_vector = target_destination - transform.position;
+			movement_vector.y = 0;
+			if(time_remaining < 0.0f || movement_vector.magnitude < wander_speed * Time.deltaTime){
+				SetRandomDestination();
+			} else {
+				movement_vector.Normalize();
+				Vector3 velocity = movement_vector * wander_speed;
+				velocity.y = 0;
+				transform.LookAt(target_destination);
+				cc.SimpleMove (velocity);
+			}
 		}
 	}
 

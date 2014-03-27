@@ -10,7 +10,9 @@ public class EnemyAI : MonoBehaviour {
 	public float aggro_range = 5.0f; // range in feet at which enemy will aggro
 	public float max_speed = 2.0f; // maximum speed that enemy can have.
 	public float acceleration = 1.0f; 
+	public bool aggro;
 	private Vector3 velocity = new Vector3(0,0,0); // current enemy velocity.
+	private Vector3 target_pos;
 	private GameObject player;
 
 	// Use this for initialization
@@ -22,7 +24,8 @@ public class EnemyAI : MonoBehaviour {
 	void Update () {
 		Vector3 player_pos = player.transform.position;
 		Vector3 enemy_pos = transform.position;
-		if (IsAggroed(player_pos,enemy_pos)) {
+		aggro = IsAggroed (player_pos, enemy_pos);
+		if(aggro) {
 			velocity = velocity + ((player_pos - enemy_pos).normalized)*acceleration;
 			if(velocity.magnitude > max_speed){ // if higher than max speed, set velocity to max speed
 				velocity = velocity.normalized * max_speed;
@@ -32,6 +35,10 @@ public class EnemyAI : MonoBehaviour {
 			velocity.z = 0;
 		}
 		if (velocity.magnitude > 0) {
+			// Face zambie in right direction
+			Vector3 look = new Vector3(player_pos.x,0,player_pos.z);
+			transform.LookAt( look );
+
 			CharacterController cc = GetComponent<CharacterController> ();
 			cc.SimpleMove (velocity);
 		}
