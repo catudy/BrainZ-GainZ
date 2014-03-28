@@ -3,27 +3,40 @@ using System.Collections;
 
 public class Scene_Transition : MonoBehaviour 
 {
+	//Texture variables
 	public GUITexture myTexture;
-	public bool fadeOn = true;
-	private float fadeInRate = 0.08f;
-	private float fadeOutRate = 0.7f;
-	public float alpha = 0.0f;
+
+	//Fade rate variables
+	public float fadeInRate = 0.08f;
+	public float fadeOutRate = 0.7f;
+	public float maxFade = 0.4f;
+	private float alpha = 0.0f;
+	private float minFade = 0.04f;
+
+	//Fade toggle variables
 	private bool nextScene = false;
-	private float maxFade = 0.32f;
-	private float minFade = 0.005f;
+	private bool fadeOn = true;
+	public bool fadeInOn = true;
+	public bool fadeOutOn = true;
+	public bool autoNextScene = true;
 
 	void Update()
 	{
-		if(fadeOn)
+		//If its time to fade in and you want to
+		if(fadeOn && fadeInOn)
 		{
 			FadeIn();
 		}
-		else if(!fadeOn)
+		//If its time to fade out and you want to
+		else if(!fadeOn && fadeOutOn)
 		{
 			FadeOut();
 		}
 
-		if(nextScene)
+		//If you are done with fades and you want to transition
+		//scenes automatically 
+		//Must edit parameters in the future if we want to auto to a different screen
+		if(nextScene && autoNextScene)
 		{
 			Application.LoadLevel("Main_Menu");
 		}
@@ -33,10 +46,14 @@ public class Scene_Transition : MonoBehaviour
 
 	void FadeIn()
 	{
-		alpha = Mathf.Lerp (alpha, 1, fadeInRate * Time.deltaTime);
-		myTexture.color = new Color(1,1,1,alpha);
-
-		if(alpha >= maxFade)
+		//While we havent reached max fade in value keep fading in
+		if(alpha < maxFade)
+		{
+			alpha = Mathf.Lerp (alpha, 1, fadeInRate * Time.deltaTime);
+			myTexture.color = new Color(myTexture.color.r,myTexture.color.g,myTexture.color.b,alpha);
+		}
+		//Stop fading in
+		else if(alpha >= maxFade)
 		{
 			fadeOn = false;
 		}
@@ -44,10 +61,14 @@ public class Scene_Transition : MonoBehaviour
 
 	void FadeOut()
 	{
-		alpha = Mathf.Lerp (alpha, 0, fadeOutRate * Time.deltaTime);
-		myTexture.color = new Color(1,1,1,alpha);
+		//While we havent reached min fade out value keep fading out
+		if(alpha > minFade)
+		{
+			alpha = Mathf.Lerp (alpha, 0, fadeOutRate * Time.deltaTime);
+			myTexture.color = new Color(myTexture.color.r,myTexture.color.g,myTexture.color.b,alpha);
+		}
 
-		if(alpha <= minFade)
+		else if(alpha <= minFade)
 		{
 			nextScene = true;
 		}
