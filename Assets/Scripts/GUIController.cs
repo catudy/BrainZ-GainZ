@@ -16,10 +16,18 @@ public class GUIController : MonoBehaviour {
 	private GameState gameState;
 	private PlayerState playerState;
 
+	private int gamePauseW = 100;
+	private int gamePauseH = 25;
+	private int placeGamePauseW;
+	private int placeGamePauseH;
+
 	// Use this for initialization
 	void Start () {
 		gameState = GetComponent<GameState>();
 		playerState = GameObject.Find("Player").GetComponent<PlayerState> ();
+
+		placeGamePauseW = (Screen.width-gamePauseW)/2;
+		placeGamePauseH = 0;
 	}
 	
 	// Update is called once per frame
@@ -45,6 +53,11 @@ public class GUIController : MonoBehaviour {
 		float width = playerState.power_up_time_remaining * 10;
 		if (width > 0.0f) { // without this it always draws a wonkey tiny box.
 			GUI.Box (new Rect (Screen.width - width, Screen.height - 30, width, 20), playerState.power_up.ToString ());
+		}
+
+		if(GUI.Button(new Rect(placeGamePauseW,placeGamePauseH,gamePauseW,gamePauseH), "PAUSE"))
+		{
+			Application.LoadLevel("Main_Menu");
 		}
 
 
