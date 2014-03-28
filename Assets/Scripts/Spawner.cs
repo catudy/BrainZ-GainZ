@@ -58,16 +58,16 @@ public class Spawner : MonoBehaviour {
 	}
 
 	public void DestroyObject(GameObject obj){
-		counter--;
-		Destroy (obj);
+	//	counter--;
+	//	Destroy (obj);
 	}
 
 	private void Despawn(){
 		// Find all objects far away and despawn
-		foreach (GameObject obj in objects) {
-			if ((GameObject.Find ("Player").transform.position - obj.transform.position).magnitude > despawn_range){
-				DestroyObject(obj);
-			}
-		}
+	//	foreach (GameObject obj in objects) {
+	//		if ((GameObject.Find ("Player").transform.position - obj.transform.position).magnitude > despawn_range){
+	//			DestroyObject(obj);
+	//		}
+	//	}
 	}
 }
