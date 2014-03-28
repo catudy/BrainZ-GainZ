@@ -1,16 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
-public class screen_delay : MonoBehaviour 
+public class Scene_Transition : MonoBehaviour 
 {
 	public GUITexture myTexture;
 	public bool fadeOn = true;
 	private float fadeInRate = 0.08f;
-	private float fadeOutRate = 0.65f;
+	private float fadeOutRate = 0.7f;
 	public float alpha = 0.0f;
 	private bool nextScene = false;
 	private float maxFade = 0.32f;
-	private float minFade = 0.01f;
+	private float minFade = 0.005f;
 
 	void Update()
 	{
@@ -25,7 +25,7 @@ public class screen_delay : MonoBehaviour
 
 		if(nextScene)
 		{
-			Application.LoadLevel("Sushil_Test");
+			Application.LoadLevel("Main_Menu");
 		}
 
 
