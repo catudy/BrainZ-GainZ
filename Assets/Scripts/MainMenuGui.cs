@@ -3,6 +3,9 @@ using System.Collections;
 
 public class MainMenuGui : MonoBehaviour 
 {
+
+	private GameState gameState;
+
 	//Reno box variables
 	private int levelBoxWidth = 100;
 	private int levelBoxHeight = 50;
@@ -24,10 +27,17 @@ public class MainMenuGui : MonoBehaviour
 	private bool quitButton;
 
 	//Scene loading variables
+	private string currentScene;
 	private string renoLevel;
 
 	void Start()
 	{
+		//Get the current game state
+		gameState = GetComponent<GameState>();
+
+		//Save the current scene
+		currentScene = null;
+
 		//Calculate various box and button placement and size values
 		levelBoxWPlace = (Screen.width-levelBoxWidth)/2;
 		levelBoxHPlace = (Screen.height-levelBoxHeight)-20;
@@ -37,26 +47,36 @@ public class MainMenuGui : MonoBehaviour
 		//Possible scenes to be loaded
 		renoLevel = "Sushil_Test";
 	}
+
+	void Update()
+	{
+		currentScene = Application.loadedLevelName;
+	}
 	void OnGUI () 
 	{
+		if(currentScene != "Main_menu")
+		{
 		//Creating reno box and button for level select
 		createBox (levelBoxWPlace-5,levelBoxHPlace-20,levelBoxWidth,levelBoxHeight, "Level Select");
 		renoButton = createButton(levelBoxWPlace,levelBoxHPlace,renoButtonWPlace,renoButtonHPlace,"Reno");
+		}
 
+		else
+		{
 		//Creating quit button for game
 		quitButton = createButton(placeGameQuitW,placeGameQuitH,gameQuitW,gameQuitH, "QUIT");
-
+		}
 		//If the reno button is pressed, load the reno level
 		if(renoButton)
 		{
-			Application.LoadLevel (renoLevel);
+			Application.LoadLevel(renoLevel);
 		}
 
 		//If the quit button is pressed, close the application
-		if(quitButton)
-		{
-			Application.Quit();
-		}
+		//if(quitButton)
+		//{
+		//	Application.Quit();
+		//}
 	}
 
 	//Function that creates a button and places it and returns its boolean value if pressed or not
