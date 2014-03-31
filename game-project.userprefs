@@ -1,9 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUIController.cs">
     <Files>
-      <File FileName="Assets\Scripts\MainMenuGui.cs" Line="40" Column="87" />
-      <File FileName="Assets\Scripts\GUIController.cs" Line="58" Column="88" />
+      <File FileName="Assets\Scripts\GUIController.cs" Line="66" Column="1" />
+      <File FileName="Assets\Scripts\MainMenuGui.cs" Line="46" Column="1" />
+      <File FileName="Assets\Scripts\GUIController.cs" Line="66" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

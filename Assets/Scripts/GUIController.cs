@@ -19,7 +19,7 @@ public class GUIController : MonoBehaviour {
 	private int gamePauseW = 100;
 	private int gamePauseH = 25;
 	private int placeGamePauseW;
-	private int placeGamePauseH;
+	private int placeGamePauseH; 
 
 	// Use this for initialization
 	void Start () {
