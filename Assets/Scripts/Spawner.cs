@@ -11,7 +11,7 @@ using System.Collections;
 public class Spawner : MonoBehaviour {
 	public int max_count = 100; // Max number of things to spawn.
 	public float spawn_frequency = 1; // How often we will spawn
-	public GameObject[] objects; // what we will spawn
+	public GameObject[] spawn_objects; // what we will spawn
 	public float min_distance = 0; // How close can we spawn
 	public float max_distance = 0; // How far away can we spawn
 	public GameObject[] spawn_points; // Around What we are Spawning
@@ -28,8 +28,8 @@ public class Spawner : MonoBehaviour {
 		// If we are ready to spawn a new entity, due so
 		if (timer < Time.time && counter < max_count) {
 			counter++;
-			int index = Random.Range(0,objects.Length);
-			Spawn (GetValidRandomEnemySpawnPoint(),objects[index]);
+			int index = Random.Range(0,spawn_objects.Length);
+			Spawn (GetValidRandomEnemySpawnPoint(),spawn_objects[index]);
 			timer = Time.time + spawn_frequency;
 		} else if (counter < max_count){
 			Despawn();
@@ -58,16 +58,16 @@ public class Spawner : MonoBehaviour {
 	}
 
 	public void DestroyObject(GameObject obj){
-	//	counter--;
-	//	Destroy (obj);
+		counter--;
+		Destroy (obj);
 	}
 
 	private void Despawn(){
 		// Find all objects far away and despawn
-	//	foreach (GameObject obj in objects) {
-	//		if ((GameObject.Find ("Player").transform.position - obj.transform.position).magnitude > despawn_range){
-	//			DestroyObject(obj);
-	//		}
-	//	}
+		//foreach (GameObject obj in spawn_objects) {
+		//	if ((GameObject.Find ("Player").transform.position - obj.transform.position).magnitude > despawn_range){
+		//		DestroyObject(obj);
+		//	} 
+		//}
 	}
 }

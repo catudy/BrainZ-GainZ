@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// Handles game state variables.
 /// 
 /// Author: Albert Wohletz
@@ -35,7 +35,7 @@ public class GameState : MonoBehaviour {
 	public void RemoveObject(GameObject destroyme){
 		Spawner[] spawners = GetComponents<Spawner> ();
 		foreach (Spawner spawner in spawners) {
-			foreach(GameObject obj in spawner.objects){
+			foreach(GameObject obj in spawner.spawn_objects){
 				if(obj.name + "(Clone)" == destroyme.name){
 					spawner.DestroyObject(destroyme);
 				}
