@@ -12,11 +12,10 @@ public class GameState : MonoBehaviour {
 	public int gainz = 0;
 	public float cutscene_length = 35.0f;
 	private bool in_cutscene = true;
-	public string current_scene;
 
 	// Use this for initialization
 	void Start () {
-		current_scene = Application.loadedLevelName;
+
 	}
 	
 	// Update is called once per frame
@@ -29,6 +28,7 @@ public class GameState : MonoBehaviour {
 		if (game_over) {
 			// Call game over here
 		}
+		 
 	}
 
 	// Removes object from the scene.

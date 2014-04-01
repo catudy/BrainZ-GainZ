@@ -38,7 +38,7 @@ public class Scene_Transition : MonoBehaviour
 		//Must edit parameters in the future if we want to auto to a different screen
 		if(nextScene && autoNextScene)
 		{
-			Application.LoadLevel("Main_Menu");
+			Application.LoadLevel("_MainMenu");
 		}
 
 
