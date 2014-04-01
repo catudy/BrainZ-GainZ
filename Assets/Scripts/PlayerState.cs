@@ -67,7 +67,11 @@ public class PlayerState : MonoBehaviour {
 				running = false;
 			}
 		} else {
-			stamina += Time.deltaTime * stamina_recovery_rate;
+			if(power_up == PowerUp.SECOND_WIND){
+				stamina += Time.deltaTime * stamina_recovery_rate * 3;
+			} else {
+				stamina += Time.deltaTime * stamina_recovery_rate;
+			}
 			if(stamina > max_stamina){
 				stamina = max_stamina;
 			}

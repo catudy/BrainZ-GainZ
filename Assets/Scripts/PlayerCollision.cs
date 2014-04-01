@@ -39,6 +39,8 @@ public class PlayerCollision : MonoBehaviour {
 				playerState.SetPowerUp(PowerUp.INVULNERABLE);
 			} else if(collision.gameObject.name == "PowerupInvis(Clone)") {
 				playerState.SetPowerUp(PowerUp.INVISIBILITY);
+			} else if(collision.gameObject.name == "PowerupSecondWind(Clone)"){
+				playerState.SetPowerUp(PowerUp.SECOND_WIND);
 			}
 			gameState.RemoveObject(collision.gameObject);
 		} else if (collision.gameObject.tag == "SceneChanger"){

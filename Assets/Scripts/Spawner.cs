@@ -16,7 +16,6 @@ public class Spawner : MonoBehaviour {
 	public float max_distance = 0; // How far away can we spawn
 	public GameObject[] spawn_points; // Around What we are Spawning
 	public float despawn_range = 100.0f;
-	private int counter = 0;	
 	private float timer = 0.0f;
 	// Use this for initialization
 	void Start () {
@@ -26,13 +25,12 @@ public class Spawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () { 
 		// If we are ready to spawn a new entity, due so
-		if (timer < Time.time && counter < max_count) {
-			counter++;
+		if (timer < Time.time ) {
 			int index = Random.Range(0,spawn_objects.Length);
-			Spawn (GetValidRandomEnemySpawnPoint(),spawn_objects[index]);
+			Quaternion rotation = new Quaternion ();
+			GameObject temp = (GameObject)Instantiate(spawn_objects[index], GetValidRandomEnemySpawnPoint(), rotation);
 			timer = Time.time + spawn_frequency;
-		} else if (counter < max_count){
-			Despawn();
+			Destroy (temp, max_count*spawn_frequency);
 		}
 	}
 
@@ -58,16 +56,10 @@ public class Spawner : MonoBehaviour {
 	}
 
 	public void DestroyObject(GameObject obj){
-		counter--;
 		Destroy (obj);
 	}
 
 	private void Despawn(){
-		// Find all objects far away and despawn
-		//foreach (GameObject obj in spawn_objects) {
-		//	if ((GameObject.Find ("Player").transform.position - obj.transform.position).magnitude > despawn_range){
-		//		DestroyObject(obj);
-		//	} 
-		//}
+
 	}
 }
