@@ -6,18 +6,27 @@ public class InputController : MonoBehaviour {
 	private PlayerState playerState;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		player = GameObject.Find("Player");
 		playerState = player.GetComponent<PlayerState>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (Input.GetButton ("Sneak")) {
+	void Update () 
+	{
+		if (Input.GetButton ("Sneak")) 
+		{
 			playerState.SetSneaking ();
-		} else if (Input.GetButton ("Sprint")) {
+		} 
+
+		else if (Input.GetButton ("Sprint")) 
+		{
 			playerState.SetRunning();
-		} else {
+		} 
+
+		else 
+		{
 			playerState.SetWalking ();
 		}
 	}

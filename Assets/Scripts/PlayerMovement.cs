@@ -14,7 +14,9 @@ public class PlayerMovement : MonoBehaviour
 	private CharacterController charController;
 	private Vector3 velocity;
 	private Vector3 direction;
-	void Start() {
+
+	void Start() 
+	{
 		playerState = GetComponent<PlayerState>();
 		charController = GetComponent<CharacterController> ();
 		gameState = GameObject.Find ("GameController").GetComponentInChildren<GameState> ();
@@ -33,17 +35,21 @@ public class PlayerMovement : MonoBehaviour
 	
 	void FixedUpdate ()
 	{
-		if (gameState.RunGame ()) {
-				float current_speed = base_speed;
-				if (Input.GetButton ("Stand")) {
-					current_speed = 0.0f;
-				}
-				else if (playerState.GetSneaking ()) {
-						current_speed = base_speed / 2.0f;
-				} else if (playerState.GetRunning ()) {
-						current_speed = base_speed * 2.0f;
-				} 
-
+		if (gameState.RunGame ()) 
+		{
+			float current_speed = base_speed;
+			if (Input.GetButton ("Stand")) 
+			{
+				current_speed = 0.0f;
+			}
+			else if (playerState.GetSneaking ()) 
+			{
+				current_speed = base_speed / 2.0f;
+			} 
+			else if (playerState.GetRunning ()) 
+			{
+				current_speed = base_speed * 2.0f;
+			} 
 				// Update Speed and move playernew 
 				direction.Set (0, 0, 1);
 				velocity = transform.rotation * direction * current_speed;
