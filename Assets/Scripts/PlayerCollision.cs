@@ -45,6 +45,8 @@ public class PlayerCollision : MonoBehaviour {
 			gameState.RemoveObject(collision.gameObject);
 		} else if (collision.gameObject.tag == "SceneChanger"){
 			gameState.ChangeScene(collision.gameObject.name);
+		} else if (collision.gameObject.tag == "Door"){
+			gameState.CheckDoor(collision.gameObject);
 		}
 	}
 	// Use this for initialization

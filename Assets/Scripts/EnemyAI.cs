@@ -22,11 +22,34 @@ public class EnemyAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 player_pos = player.transform.position;
-		Vector3 enemy_pos = transform.position;
-		aggro = IsAggroed (player_pos, enemy_pos);
+		aggro = IsAggroed (player.transform.position, transform.position);
+		UpdateZombieMovement ();
+		MoveZombie ();
+
+	
+	}
+
+	// Updates velocity component
+	private void UpdateZombieMovement(){
 		if(aggro) {
-			velocity = velocity + ((player_pos - enemy_pos).normalized)*acceleration;
+			//velocity = velocity + ((player.transform.position - transform.position).normalized)*acceleration;
+
+			Vector3 target = (player.transform.position - transform.position).normalized; // ref for
+			Vector3 target_perpendicular = Vector3.Cross(Vector3.up, target); // ref right
+			 
+			// Determine if the degree value should be negative.  Here, a positive value
+			// from the dot product means that our vector is on the right of the reference vector   
+			// whereas a negative value means we're on the left.
+			float sign = Mathf.Sign(Vector3.Dot(velocity, target_perpendicular));
+
+			// rotate
+			if(sign > 0.0f) { // right
+				transform.Rotate(0,10,0);
+			} else { // left
+				transform.Rotate(0,-10,0);
+			}
+
+			velocity = transform.TransformDirection(Vector3.right);
 			if(velocity.magnitude > max_speed){ // if higher than max speed, set velocity to max speed
 				velocity = velocity.normalized * max_speed;
 			}
@@ -34,11 +57,16 @@ public class EnemyAI : MonoBehaviour {
 			velocity.x = 0;
 			velocity.z = 0;
 		}
+	}
+
+	// Moves and Updates zombie facing direction.
+	private void MoveZombie(){
 		if (velocity.magnitude > 0) {
 			// Face zambie in right direction
-			Vector3 look = new Vector3(player_pos.x,transform.position.y,player_pos.z);
+			Vector3 look = new Vector3(player.transform.position.x,transform.position.y,player.transform.position.z);
 			transform.LookAt( look );
 
+			// Move Zombies
 			CharacterController cc = GetComponent<CharacterController> ();
 			cc.SimpleMove (velocity);
 		}

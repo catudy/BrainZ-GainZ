@@ -6,6 +6,10 @@
 using UnityEngine;
 using System.Collections;
 
+public class Inventory{
+ public bool keys;
+};
+
 public class GameState : MonoBehaviour {
 	public bool game_over = false;
 	public int brainz = 0;
@@ -41,6 +45,10 @@ public class GameState : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void CheckDoor(GameObject door){
+
 	}
 
 	public void ChangeScene(string scene_name){
