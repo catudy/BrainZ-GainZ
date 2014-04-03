@@ -39,7 +39,7 @@ public class ControllerLook : MonoBehaviour {
 	{
 		x += Input.GetAxis("LookX") * xSpeed * 0.02f;
 		y -= Input.GetAxis("LookY") * ySpeed * 0.02f;
-		Debug.Log (x);
+
 		y = ClampAngle(y,yMinLimit,yMaxLimit);
 
 		Quaternion rotation = Quaternion.Euler(y,x,0);

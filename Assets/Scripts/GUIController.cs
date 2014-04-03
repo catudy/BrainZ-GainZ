@@ -43,10 +43,13 @@ public class GUIController : MonoBehaviour
 	private string reno = "_Reno";
 
 	//Pause button variables
-	private int gamePauseW = 100;
-	private int gamePauseH = 25;
+	//private int gamePauseW = 100;
+	//private int gamePauseH = 25;
 	private int placeGamePauseW;
 	private int placeGamePauseH; 
+
+	public int a,b,c,d = 0;
+	public float w,x,y,z = 0;
 
 	void Start()
 	{
@@ -70,8 +73,8 @@ public class GUIController : MonoBehaviour
 			//Getting gamestate and player state and gui variables
 			gameState = GameObject.Find("GameController").GetComponent<GameState>();
 			playerState = GameObject.Find("Player").GetComponent<PlayerState>();
-			placeGamePauseW = (Screen.width-gamePauseW)/2;
-			placeGamePauseH = 0;
+			//placeGamePauseW = (Screen.width-gamePauseW)/2;
+			//placeGamePauseH = 0;
 		}
 	}
 	
@@ -94,7 +97,7 @@ public class GUIController : MonoBehaviour
 			}
 
 			//If the quit button is pressed, close the application
-			if(quitButton)
+			if(quitButton || Input.GetButton("Back"))
 			{
 				Application.Quit();
 			}
@@ -104,33 +107,41 @@ public class GUIController : MonoBehaviour
 		else if(currentScene == reno)
 		{
 			//Create pause button
-			pauseButton = createButton(placeGamePauseW,placeGamePauseH,gamePauseW,gamePauseH, "PAUSE");
+			pauseButton = createButton(660,5,65,20, "PAUSE");
 
 			//If the pause button is pressed open the pause menu (but for now just returns to main menu)
-			if(pauseButton)
+			if(pauseButton || Input.GetButton("Back"))
 			{
 				Application.LoadLevel(mainMenu);
 			}
 
 			//Displaying brainz and gainz score on HUD
-			createImage(0,0,25,25, brainz_icon);
-			createText(25,0,25,25, gameState.brainz.ToString());
-			createImage(Screen.width - 55, 0, Screen.width - 30, 25, gainz_icon);
-			createText(Screen.width - 30, 0, Screen.width, 25, gameState.gainz.ToString());
+			createImage(71,39,30,30, brainz_icon);
+			createText(82,53,30,30, gameState.brainz.ToString());
+
+			createImage(111,36,30,30, gainz_icon);
+			createText(119, 53, 30, 30, gameState.gainz.ToString());
 
 			//Displaying stamina bar on HUD
-			createBox(0, Screen.height - 30, playerState.GetStaminaPercent() * 100, 20, "Stamina");
-
+			if(playerState.GetStaminaPercent() *200 >=12)
+			{
+				createBox(255, 16, playerState.GetStaminaPercent() *200, 23, "");
+			}
+			createText(328,17,109,35,"STAMINA");
+		
 			// Fire Extinguisher Status
 			float extinguisher_ammo = gameState.GetItem(Item.FIRE_EXTINGUISHER);
 			if(extinguisher_ammo > 0.0f){
 				if(gameState.active_item == Item.FIRE_EXTINGUISHER){
-					createBox (Screen.width - 60, Screen.height - 93, 60, 26, ""); 
+					//createBox (Screen.width - 60, Screen.height - 93, 60, 26, ""); 
 				}
-				createBox(Screen.width - 55, Screen.height - 90, 35, 20, extinguisher_ammo.ToString("F2"));
-				createImage(Screen.width - 20, Screen.height - 90, 20, 25, fire_extinguisher_icon);
+				//createBox(Screen.width - 55, Screen.height - 90, 35, 20, extinguisher_ammo.ToString("F2"));
+				//createImage(Screen.width - 20, Screen.height - 90, 20, 25, fire_extinguisher_icon);
+				createText(23,45,30,25, extinguisher_ammo.ToString("F2"));
+				createImage(20,5,45,42, fire_extinguisher_icon);
 			}
 
+			/*
 			// Flamer Status
 			float flamer_ammo = gameState.GetItem(Item.FLAME_THROWER);
 			if(flamer_ammo > 0.0f){
@@ -140,11 +151,36 @@ public class GUIController : MonoBehaviour
 				createBox(Screen.width - 55, Screen.height - 60, 35, 20, flamer_ammo.ToString("F2"));
 				createImage(Screen.width - 20, Screen.height - 60, 20, 25, flamer_icon);
 			}
+			*/
 			//Displaying power-up bar on HUD if player has one
 			float powerup_width = playerState.power_up_time_remaining *10;
-			if(powerup_width > 0.0f)
+			if(playerState.power_up_time_remaining > 0.64f)
 			{
-				createBox(Screen.width - powerup_width, Screen.height - 30, powerup_width, 20, playerState.power_up.ToString());
+				createBox(280,44,powerup_width,5,"");
+				if(playerState.power_up.ToString() == "INVISIBILITY")
+				{
+					createText(280,48,120,67,"INVISIBILITY");
+				}
+				else if(playerState.power_up.ToString() == "BLINK")
+				{
+					createText(280,48,120,67,"BLINK");
+				}
+
+				else if(playerState.power_up.ToString() == "STUN")
+				{
+					createText(280,48,120,67,"STUN");
+				}
+
+				else if(playerState.power_up.ToString() == "SECOND_WIND")
+				{
+					createText(280,48,120,67,"SECOND WIND");
+				}
+
+				else if(playerState.power_up.ToString() == "INVULNERABLE")
+				{
+					createText(280,48,120,67,"INVULNERABLE");
+				}
+				//createBox(Screen.width - powerup_width, Screen.height - 30, powerup_width, 20, playerState.power_up.ToString());
 			}
 		}
 		
@@ -170,7 +206,7 @@ public class GUIController : MonoBehaviour
 	}
 
 	//Function that creates a text label and prints it to the screen
-	void createImage(int widthPlacement, int heightPlacement, int imageWidth, int imageHeight, Texture2D image)
+	void createImage(int widthPlacement, int heightPlacement, float imageWidth, int imageHeight, Texture2D image)
 	{
 		GUI.Label(new Rect(widthPlacement, heightPlacement, imageWidth, imageHeight), image);
 	}

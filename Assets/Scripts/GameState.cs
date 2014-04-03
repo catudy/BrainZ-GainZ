@@ -48,7 +48,7 @@ public class GameState : MonoBehaviour {
 		if (paused) {
 			return;
 		}
-		if (Time.time > cutscene_length || Input.GetButtonDown("Sprint")) 
+		if (Time.time > cutscene_length || Input.GetButtonDown("Sprint") || Input.GetButton("Start")) 
 		{
 			in_cutscene = false;
 			cam.enabled = true;
