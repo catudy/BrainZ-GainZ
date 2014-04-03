@@ -91,7 +91,7 @@ public class GUIController : MonoBehaviour
 			quitButton = createButton(placeGameQuitW,placeGameQuitH,gameQuitW,gameQuitH, "QUIT");
 
 			//If the reno button is pressed, load the reno level
-			if(renoButton)
+			if(renoButton || Input.GetButton("Start"))
 			{
 				Application.LoadLevel(reno);
 			}
