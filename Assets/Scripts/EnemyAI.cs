@@ -6,7 +6,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyAI : MonoBehaviour {
+public class EnemyAI : MonoBehaviour 
+{
 	public float aggro_range = 5.0f; // range in feet at which enemy will aggro
 	public float max_speed = 2.0f; // maximum speed that enemy can have.
 	public float acceleration = 1.0f; 
@@ -25,8 +26,6 @@ public class EnemyAI : MonoBehaviour {
 		aggro = IsAggroed (player.transform.position, transform.position);
 		UpdateZombieMovement ();
 		MoveZombie ();
-
-	
 	}
 
 	// Updates velocity component
@@ -50,21 +49,16 @@ public class EnemyAI : MonoBehaviour {
 			}
 
 			velocity = transform.TransformDirection(Vector3.right);
-			if(velocity.magnitude > max_speed){ // if higher than max speed, set velocity to max speed
-				velocity = velocity.normalized * max_speed;
-			}
-		} else {
-			velocity.x = 0;
-			velocity.z = 0;
 		}
 	}
 
 	// Moves and Updates zombie facing direction.
 	private void MoveZombie(){
-		if (velocity.magnitude > 0) {
+		if (velocity.magnitude > 0) 
+		{
 			// Face zambie in right direction
 			Vector3 look = new Vector3(player.transform.position.x,transform.position.y,player.transform.position.z);
-			transform.LookAt( look );
+			transform.LookAt(look);
 
 			// Move Zombies
 			CharacterController cc = GetComponent<CharacterController> ();
@@ -72,16 +66,25 @@ public class EnemyAI : MonoBehaviour {
 		}
 	}
 
-	private bool IsAggroed(Vector3 player_pos, Vector3 enemy_pos){
+	private bool IsAggroed(Vector3 player_pos, Vector3 enemy_pos)
+	{
 		float mod_aggro_range = aggro_range;
-		if (player.GetComponent<PlayerState> ().power_up == PowerUp.INVISIBILITY) {
+
+		if (player.GetComponent<PlayerState> ().power_up == PowerUp.INVISIBILITY) 
+		{
 			mod_aggro_range = 0.0f;
 		}
-		else if (player.GetComponent<PlayerState> ().GetSneaking()) {
+
+		else if (player.GetComponent<PlayerState> ().GetSneaking()) 
+		{
 			mod_aggro_range = aggro_range / 2;
-		} else if (player.GetComponent<PlayerState> ().GetRunning()) {
+		} 
+
+		else if (player.GetComponent<PlayerState> ().GetRunning()) 
+		{
 			mod_aggro_range = aggro_range * 2;
 		}
+
 		return ((player_pos - enemy_pos).magnitude < mod_aggro_range);
 	}
 }

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum PowerUp{
+public enum PowerUp
+{
 	NONE,
 	BLINK,
 	INVISIBILITY,
@@ -10,7 +11,8 @@ public enum PowerUp{
 	INVULNERABLE
 };
 
-public class PlayerState : MonoBehaviour {
+public class PlayerState : MonoBehaviour 
+{
 	public PowerUp power_up = PowerUp.NONE;
 	public float power_up_time_remaining = 0.0f;
 	public float stamina_recovery_rate = 1.0f; // how much stamina you recover per WaitForSeconds.
@@ -23,68 +25,92 @@ public class PlayerState : MonoBehaviour {
 	private float cooldown  = 0.0f;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		stamina = max_stamina;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		UpdateTimers ();
 		UpdateCooldowns ();
 		UpdateStamina ();
 
-		if (cooldown <= 0.0f) {
+		if (cooldown <= 0.0f) 
+		{
 			ProcessAbilityInput();
 		}
 	}
 
-	void UpdateTimers(){
+	void UpdateTimers()
+	{
 		UpdatePowerupTimer ();
 		UpdateCooldowns ();
-
 	}
 
-	void UpdatePowerupTimer(){
-		if (power_up != PowerUp.NONE) { // Update powerup timer
+	void UpdatePowerupTimer()
+	{
+		if (power_up != PowerUp.NONE) 
+		{ 	// Update powerup timer
 			power_up_time_remaining = power_up_time_remaining - Time.deltaTime;
-			if (power_up_time_remaining < 0.0f) {
+
+			if (power_up_time_remaining < 0.0f) 
+			{
 				DeletePowerup();
 			}
 		}
 	}
 
-	void UpdateCooldowns(){
-		if (cooldown > 0.0f) { // Update Ability Cooldowns
-				cooldown -= Time.deltaTime;
+	void UpdateCooldowns()
+	{
+		if (cooldown > 0.0f) 
+		{ // Update Ability Cooldowns
+			cooldown -= Time.deltaTime;
 		}
 	}
 
-	void UpdateStamina(){
-		if(running){
+	void UpdateStamina()
+	{
+		if(running)
+		{
 			stamina -= Time.deltaTime;
-			if( stamina < 0.5f){
+			if( stamina < 0.5f)
+			{
 				stamina = 0.0f;
 				running = false;
 			}
-		} else {
-			if(power_up == PowerUp.SECOND_WIND){
+		} 
+		else 
+		{
+			if(power_up == PowerUp.SECOND_WIND)
+			{
 				stamina += Time.deltaTime * stamina_recovery_rate * 3;
-			} else {
+			} 
+			else 
+			{
 				stamina += Time.deltaTime * stamina_recovery_rate;
 			}
-			if(stamina > max_stamina){
+
+			if(stamina > max_stamina)
+			{
 				stamina = max_stamina;
 			}
 		}
 	}
 
-	void ProcessAbilityInput(){ // TODO: Move to input handler
+	void ProcessAbilityInput()
+	{ // TODO: Move to input handler
 		bool ability = Input.GetButton ("Ability");
-		if (ability) {
-			if (power_up == PowerUp.BLINK) {
+		if (ability) 
+		{
+			if (power_up == PowerUp.BLINK) 
+			{
 				Vector3 Blink = new Vector3 (0, 0, 50);
 				Vector3 Temp = transform.position + transform.rotation * Blink;
-				if (Temp.y > 0) {
+
+				if (Temp.y > 0) 
+				{
 					transform.position = Temp;
 					cooldown = 5.0f;
 				}
@@ -92,54 +118,69 @@ public class PlayerState : MonoBehaviour {
 		}
 	}
 
-	public void DeletePowerup(){
-		if (power_up == PowerUp.INVISIBILITY) {
+	public void DeletePowerup()
+	{
+		if (power_up == PowerUp.INVISIBILITY) 
+		{
 			GameObject.Find("char_ethan_body").GetComponent<SkinnedMeshRenderer>().enabled = true;
-		} else if (power_up == PowerUp.INVULNERABLE) {
+		} 
+		else if (power_up == PowerUp.INVULNERABLE) 
+		{
 			GetComponent<ParticleSystem>().enableEmission = false;
 		}
 		power_up = PowerUp.NONE;
 		power_up_time_remaining = 0.0f;
 	}
 
-	public void SetPowerUp(PowerUp set){
+	public void SetPowerUp(PowerUp set)
+	{
 		power_up = set;
 		power_up_time_remaining = 15.0f;
-		if (power_up == PowerUp.INVISIBILITY) {
+		if (power_up == PowerUp.INVISIBILITY) 
+		{
 			GameObject.Find ("char_ethan_body").GetComponent<SkinnedMeshRenderer> ().enabled = false;
-		} else if (power_up == PowerUp.INVULNERABLE) {
+		} 
+		else if (power_up == PowerUp.INVULNERABLE) 
+		{
 			GetComponent<ParticleSystem>().enableEmission = true;
 		} 
 	}
 
-	public void SetSneaking(){
+	public void SetSneaking()
+	{
 		sneaking = true;
 		running = false;
 	}
 
-	public bool GetSneaking(){
+	public bool GetSneaking()
+	{
 		return sneaking || stamina < 0.5f;
 	}
 
-	public void SetRunning(){
+	public void SetRunning()
+	{
 		running = stamina > 0.5f;
 		sneaking = false;
 	}
 
-	public bool GetRunning(){
+	public bool GetRunning()
+	{
 		return running;
 	}
 
-	public void SetWalking(){
+	public void SetWalking()
+	{
 		running = false;
 		sneaking = false;
 	}
 
-	public bool GetWalking(){
+	public bool GetWalking()
+	{
 		return (!running & !sneaking);
 	}
 
-	public float GetStaminaPercent(){
+	public float GetStaminaPercent()
+	{
 		return stamina / max_stamina;
 	}
 }

@@ -6,7 +6,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class BnGAI : MonoBehaviour {
+public class BnGAI : MonoBehaviour 
+{
 	public float flee_range = 5.0f;
 	public float max_speed = 2.0f;
 	public float acceleration = 1.0f;
@@ -15,25 +16,33 @@ public class BnGAI : MonoBehaviour {
 	public bool fleeing = false;
 	
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		player = GameObject.Find("Player");
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		Vector3 player_pos = player.transform.position;
 		Vector3 object_pos = transform.position;
-		if ((player_pos - object_pos).magnitude < flee_range) {
+
+		if ((player_pos - object_pos).magnitude < flee_range) 
+		{
 			fleeing = true;
 		}
-		if(fleeing){
+		if(fleeing)
+		{
 			velocity = velocity + ((object_pos-player_pos).normalized)*acceleration;
-			if(velocity.magnitude > max_speed){ // if higher than max speed, set velocity to max speed
+			if(velocity.magnitude > max_speed)
+			{ 
+				// if higher than max speed, set velocity to max speed
 				velocity = velocity.normalized * max_speed;
 			}
 			transform.LookAt(transform.position+velocity);
 		}
-		if (velocity.magnitude > 0) {
+		if (velocity.magnitude > 0) 
+		{
 			CharacterController cc = GetComponent<CharacterController> ();
 			cc.SimpleMove (velocity);
 		}

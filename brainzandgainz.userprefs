@@ -1,15 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerState.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameState.cs">
     <Files>
-      <File FileName="Assets/Scripts/Spawner.cs" Line="60" Column="3" />
-      <File FileName="Assets/Scripts/PlayerCollision.cs" Line="34" Column="10" />
-      <File FileName="Assets/Scripts/GameState.cs" Line="37" Column="42" />
-      <File FileName="Assets/Scripts/PlayerState.cs" Line="71" Column="58" />
-      <File FileName="Assets/Scripts/EnemyAI.cs" Line="39" Column="44" />
-      <File FileName="Assets/Scripts/Wander.cs" Line="45" Column="21" />
-      <File FileName="Assets/Scripts/ZombieMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Scene_Transition.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlayerCollision.cs" Line="48" Column="12" />
+      <File FileName="Assets/Scripts/GameState.cs" Line="34" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
