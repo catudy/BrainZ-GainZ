@@ -12,6 +12,8 @@ public class GUIController : MonoBehaviour
 	//Texture variables
 	public Texture2D brainz_icon;
 	public Texture2D gainz_icon;
+	public Texture2D fire_extinguisher_icon;
+	public Texture2D flamer_icon;
 
 	//Reno box variables
 	private int levelBoxWidth = 100;
@@ -117,11 +119,29 @@ public class GUIController : MonoBehaviour
 			createText(Screen.width - 30, 0, Screen.width, 25, gameState.gainz.ToString());
 
 			//Displaying stamina bar on HUD
-			createBox(0, Screen.height - 30, playerState.GetStaminaPercent() * 50, 20, "Stamina");
+			createBox(0, Screen.height - 30, playerState.GetStaminaPercent() * 100, 20, "Stamina");
 
-			float powerup_width = playerState.power_up_time_remaining *10;
+			// Fire Extinguisher Status
+			float extinguisher_ammo = gameState.GetItem(Item.FIRE_EXTINGUISHER);
+			if(extinguisher_ammo > 0.0f){
+				if(gameState.active_item == Item.FIRE_EXTINGUISHER){
+					createBox (Screen.width - 60, Screen.height - 93, 60, 26, ""); 
+				}
+				createBox(Screen.width - 55, Screen.height - 90, 35, 20, extinguisher_ammo.ToString("F2"));
+				createImage(Screen.width - 20, Screen.height - 90, 20, 25, fire_extinguisher_icon);
+			}
 
+			// Flamer Status
+			float flamer_ammo = gameState.GetItem(Item.FLAME_THROWER);
+			if(flamer_ammo > 0.0f){
+				if(gameState.active_item == Item.FLAME_THROWER){
+					createBox (Screen.width - 60, Screen.height - 63	, 60, 26, ""); 
+				}
+				createBox(Screen.width - 55, Screen.height - 60, 35, 20, flamer_ammo.ToString("F2"));
+				createImage(Screen.width - 20, Screen.height - 60, 20, 25, flamer_icon);
+			}
 			//Displaying power-up bar on HUD if player has one
+			float powerup_width = playerState.power_up_time_remaining *10;
 			if(powerup_width > 0.0f)
 			{
 				createBox(Screen.width - powerup_width, Screen.height - 30, powerup_width, 20, playerState.power_up.ToString());

@@ -30,6 +30,10 @@ public class InputController : MonoBehaviour {
 			fireextinguisher.enableEmission = false;
 		}
 
+		if (Input.GetButton ("Swap Active")) {
+			gameState.NextItem();
+		}
+
 		if (Input.GetButton ("Sneak")) 
 		{
 			playerState.SetSneaking ();

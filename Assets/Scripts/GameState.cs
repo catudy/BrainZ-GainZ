@@ -8,7 +8,18 @@ using System.Collections;
 
 struct Inventory{
 	public float fire_extinguisher;
+	public float flame_thrower;
 };
+
+public enum Item
+{
+	NONE,
+	FIRE_EXTINGUISHER,
+	FLAME_THROWER,
+	BRAINZ,
+	GAINZ
+};
+
 
 public class GameState : MonoBehaviour {
 	public bool game_over = false;
@@ -16,6 +27,7 @@ public class GameState : MonoBehaviour {
 	public int gainz = 0;
 	public float cutscene_length = 35.0f;
 	public bool paused = false;
+	public Item active_item = Item.FLAME_THROWER;
 	private bool in_cutscene = true;
 	Inventory inventory;
 	private Camera cam;
@@ -23,7 +35,9 @@ public class GameState : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		inventory.fire_extinguisher = 10.0f;
+		inventory.fire_extinguisher = 0.0f;
+		inventory.flame_thrower = 5.0f;
+
 		player = GameObject.Find ("Player");
 		cam = player.GetComponentInChildren<Camera> ();
 	}
@@ -91,11 +105,13 @@ public class GameState : MonoBehaviour {
 
 	public bool UseFireExtinguisher(){
 		inventory.fire_extinguisher -= Time.deltaTime;
+		Debug.DrawRay (player.transform.position, player.transform.forward, Color.green);
 		if (inventory.fire_extinguisher > 0.0f) {
 			RaycastHit hit;
 			if(Physics.Raycast(player.transform.position,player.transform.forward,out hit)){
 				if(hit.distance < 10.0f){
 					if(hit.collider.gameObject.name == "FireDoor"){
+						Debug.Log ("Fire killed " + hit.distance);
 						Destroy (hit.collider.gameObject);
 					}
 				}
@@ -106,4 +122,33 @@ public class GameState : MonoBehaviour {
 			return false;
 		}
 	}
+
+	public void AddItem(Item item){
+		if(item == Item.FIRE_EXTINGUISHER){
+			inventory.fire_extinguisher += 5.0f;
+		} else if (item == Item.BRAINZ){
+			brainz =+ 10;
+		} else if (item == Item.GAINZ){
+			gainz =+ 10;
+		}
+	}
+
+	public float GetItem(Item item){
+		if(item == Item.FIRE_EXTINGUISHER){
+			return inventory.fire_extinguisher;
+		} else if (item == Item.FLAME_THROWER){ 
+			return inventory.flame_thrower;
+		} else {
+			return 0.0f;
+		}
+	}
+
+	public void NextItem(){
+		if(active_item == Item.FIRE_EXTINGUISHER && inventory.flame_thrower > 0.0f){
+			active_item = Item.FLAME_THROWER;
+		} else if (active_item == Item.FLAME_THROWER && inventory.fire_extinguisher > 0.0f){
+			active_item = Item.FIRE_EXTINGUISHER;
+		}
+	}
 }
+

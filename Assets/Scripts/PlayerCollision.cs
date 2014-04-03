@@ -79,8 +79,15 @@ public class PlayerCollision : MonoBehaviour
 		else if (collision.gameObject.tag == "SceneChanger")
 		{
 			gameState.ChangeScene(collision.gameObject.name);
-		} else if (collision.gameObject.tag == "Door"){
-			gameState.CheckDoor(collision.gameObject);
+		} 
+		else if (collision.gameObject.tag == "Item"){
+			if (collision.gameObject.name == "Extinguisher"){
+				gameState.AddItem(Item.FIRE_EXTINGUISHER);
+				Destroy (collision.gameObject);
+			} else if (collision.gameObject.name == "Brain"){
+				gameState.AddItem (Item.BRAINZ);
+				Destroy (collision.gameObject);
+			}
 		}
 	}
 	// Use this for initialization
