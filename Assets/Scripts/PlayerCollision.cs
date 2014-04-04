@@ -10,6 +10,8 @@ public class PlayerCollision : MonoBehaviour
 {
 	private PlayerState playerState; 
 	GameState gameState;
+	public AudioClip lift;
+
 
 	void OnControllerColliderHit(ControllerColliderHit collision) 
 	{
@@ -42,11 +44,15 @@ public class PlayerCollision : MonoBehaviour
 			gameState.brainz++;
 			gameState.RemoveObject(collision.gameObject);
 		} 
-
+ 
 		else if (collision.gameObject.tag == "Gainz")
 		{
 			gameState.gainz++;
 			Destroy (collision.gameObject);
+			if(collision.gameObject){
+			audio.clip = lift;
+				audio.Play();}
+
 		} 
 
 		else if (collision.gameObject.tag == "Powerup")
