@@ -25,6 +25,7 @@ public class GameState : MonoBehaviour {
 	public bool game_over = false;
 	public int brainz = 0;
 	public int gainz = 0;
+	public int pickup = 0;
 	public float cutscene_length = 35.0f;
 	public bool paused = false;
 	public Item active_item = Item.FLAME_THROWER;
@@ -32,6 +33,7 @@ public class GameState : MonoBehaviour {
 	Inventory inventory;
 	private Camera cam;
 	GameObject player;
+	GameObject barrier;
 
 	// Use this for initialization
 	void Start () {
@@ -39,12 +41,20 @@ public class GameState : MonoBehaviour {
 		inventory.flame_thrower = 5.0f;
 
 		player = GameObject.Find ("Player");
+		barrier = GameObject.Find ("Destroyed");
 		cam = player.GetComponentInChildren<Camera> ();
+
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
+
+		if (pickup == 5) 
+		{
+			barrier.SetActive(false);
+		}
+
 		if (paused) {
 			return;
 		}
@@ -58,12 +68,15 @@ public class GameState : MonoBehaviour {
 
 		}
 
+
+
 		if (game_over) 
 		{
 			// Call game over here
 		}
 		 
 	}
+	
 
 	// Removes object from the scene.
 	public void RemoveObject(GameObject destroyme)

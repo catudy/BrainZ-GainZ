@@ -39,6 +39,13 @@ public class PlayerCollision : MonoBehaviour
 			}
 		} 
 
+		else if (collision.gameObject.tag == "pickup")
+	    {
+			gameState.pickup++;
+			Destroy (collision.gameObject);
+
+		}
+
 		else if (collision.gameObject.tag == "Brainz")
 		{
 			gameState.brainz++;
@@ -49,10 +56,6 @@ public class PlayerCollision : MonoBehaviour
 		{
 			gameState.gainz++;
 			Destroy (collision.gameObject);
-			if(collision.gameObject){
-			audio.clip = lift;
-				audio.Play();}
-
 		} 
 
 		else if (collision.gameObject.tag == "Powerup")
