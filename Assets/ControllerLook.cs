@@ -15,20 +15,19 @@ public class ControllerLook : MonoBehaviour {
 	private float y = 0.0f;
 
 	private PlayerState playerState;
-	private GameState gameState;
 
 	// Use this for initialization
 	void Start () {
 
 		playerState = GameObject.Find("Player").GetComponent<PlayerState>();
-		gameState = GameObject.Find("GameController").GetComponent<GameState>();
 	
 		Vector3 angles = transform.eulerAngles;
 		x = angles.y;
 		y = angles.x;
 
-		if(rigidbody)
+		if(rigidbody){
 			rigidbody.freezeRotation = true;
+		}
 	}
 	
 	// Update is called once per frame
@@ -53,7 +52,7 @@ public class ControllerLook : MonoBehaviour {
 
 		if(Input.GetButton("Ability"))
 		{
-			gameState.UseFireExtinguisher();
+
 		}
 	}
 

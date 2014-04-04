@@ -10,6 +10,8 @@ public class PlayerCollision : MonoBehaviour
 {
 	private PlayerState playerState; 
 	GameState gameState;
+	public AudioClip lift;
+
 
 	void OnControllerColliderHit(ControllerColliderHit collision) 
 	{
@@ -17,9 +19,6 @@ public class PlayerCollision : MonoBehaviour
 		{ // Don't care about the ground.
 			return;
 		}
-
-		// Log the collision
-		Debug.Log ("Collided with " + collision.gameObject.name + " " + collision.gameObject.tag);
 
 		// Filter through the collisions
 		if (collision.gameObject.tag == "Deadly") 
@@ -37,12 +36,19 @@ public class PlayerCollision : MonoBehaviour
 			}
 		} 
 
+		else if (collision.gameObject.tag == "pickup")
+	    {
+			gameState.pickup++;
+			Destroy (collision.gameObject);
+
+		}
+
 		else if (collision.gameObject.tag == "Brainz")
 		{
 			gameState.brainz++;
 			gameState.RemoveObject(collision.gameObject);
 		} 
-
+ 
 		else if (collision.gameObject.tag == "Gainz")
 		{
 			gameState.gainz++;

@@ -129,29 +129,22 @@ public class GUIController : MonoBehaviour
 			}
 			createText(328,17,109,35,"STAMINA");
 		
-			// Fire Extinguisher Status
-			float extinguisher_ammo = gameState.GetItem(Item.FIRE_EXTINGUISHER);
-			if(extinguisher_ammo > 0.0f){
-				if(gameState.active_item == Item.FIRE_EXTINGUISHER){
-					//createBox (Screen.width - 60, Screen.height - 93, 60, 26, ""); 
+			if(gameState.active_item == Item.FIRE_EXTINGUISHER){
+				// Fire Extinguisher Status
+				float extinguisher_ammo = gameState.GetItem(Item.FIRE_EXTINGUISHER);
+				if(extinguisher_ammo > 0.0f){
+					createText(23,45,30,25, extinguisher_ammo.ToString("F2"));
+					createImage(20,5,45,42, fire_extinguisher_icon);
 				}
-				//createBox(Screen.width - 55, Screen.height - 90, 35, 20, extinguisher_ammo.ToString("F2"));
-				//createImage(Screen.width - 20, Screen.height - 90, 20, 25, fire_extinguisher_icon);
-				createText(23,45,30,25, extinguisher_ammo.ToString("F2"));
-				createImage(20,5,45,42, fire_extinguisher_icon);
+			} else if (gameState.active_item == Item.FLAME_THROWER){
+				// Fire Extinguisher Status
+				float flamer_ammo = gameState.GetItem(Item.FLAME_THROWER);
+				if(flamer_ammo > 0.0f){
+					createText(23,45,30,25, flamer_ammo.ToString("F2"));
+					createImage(20,5,45,42, flamer_icon);
+				}
 			}
 
-			/*
-			// Flamer Status
-			float flamer_ammo = gameState.GetItem(Item.FLAME_THROWER);
-			if(flamer_ammo > 0.0f){
-				if(gameState.active_item == Item.FLAME_THROWER){
-					createBox (Screen.width - 60, Screen.height - 63	, 60, 26, ""); 
-				}
-				createBox(Screen.width - 55, Screen.height - 60, 35, 20, flamer_ammo.ToString("F2"));
-				createImage(Screen.width - 20, Screen.height - 60, 20, 25, flamer_icon);
-			}
-			*/
 			//Displaying power-up bar on HUD if player has one
 			float powerup_width = playerState.power_up_time_remaining *10;
 			if(playerState.power_up_time_remaining > 0.64f)

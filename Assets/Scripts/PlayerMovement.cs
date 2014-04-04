@@ -61,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 				anim.SetFloat (hash.speedFloat, 10.0f, speedDampTime, Time.deltaTime);
 		}
 	}
+
 	
 	
 	void Update ()
