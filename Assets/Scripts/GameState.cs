@@ -29,6 +29,7 @@ public class GameState : MonoBehaviour {
 	public float cutscene_length = 35.0f;
 	public bool paused = false;
 	public Item active_item = Item.FLAME_THROWER;
+	public ParticleSystem explosion;
 	private bool in_cutscene = true;
 	Inventory inventory;
 	private Camera cam;
@@ -38,7 +39,7 @@ public class GameState : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		inventory.fire_extinguisher = 0.0f;
-		inventory.flame_thrower = 5.0f;
+		inventory.flame_thrower = 10.0f;
 
 		player = GameObject.Find ("Player");
 		barrier = GameObject.Find ("Destroyed");
@@ -115,22 +116,42 @@ public class GameState : MonoBehaviour {
 	public bool RunGame(){
 		return (!in_cutscene);
 	}
-
-	public bool UseFireExtinguisher(){
-		inventory.fire_extinguisher -= Time.deltaTime;
-		Debug.DrawRay (player.transform.position, player.transform.forward, Color.green);
-		if (inventory.fire_extinguisher > 0.0f) {
+	
+	public bool UseItem(){
+		Item item = active_item;
+		if(UseAmmo (item)){
 			RaycastHit hit;
-			if(Physics.Raycast(player.transform.position,player.transform.forward,out hit)){
-				if(hit.distance < 10.0f){
-					if(hit.collider.gameObject.name == "FireDoor"){
-						Debug.Log ("Fire killed " + hit.distance);
-						Destroy (hit.collider.gameObject);
+			Vector3 forward = player.transform.forward;
+			Vector3 ray_start = player.transform.position;
+			ray_start.y += 0.5f; // Shoot ray from head
+
+			// Shoot rays in spread
+			for(float i=-10; i < 10; i=i+0.1f){
+				Vector3 ray = new Vector3(forward.x,forward.y,forward.z+i);
+				if(Physics.Raycast(ray_start,ray,out hit)){
+					Debug.DrawRay (ray_start,ray);
+					if(hit.distance < 20.0f){
+						if(item == Item.FIRE_EXTINGUISHER && hit.collider.gameObject.name == "FireDoor"){
+							Destroy (hit.collider.gameObject);
+						} else if(item == Item.FLAME_THROWER && hit.collider.gameObject.tag == "Deadly"){
+							DestroyWithExplosion (hit.collider.gameObject);
+						}
 					}
 				}
 			}
-
 			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private bool UseAmmo(Item item){
+		if (item == Item.FIRE_EXTINGUISHER){
+			inventory.fire_extinguisher -= Time.deltaTime;
+			return (inventory.fire_extinguisher > 0.0f);
+		} else if (item == Item.FLAME_THROWER){
+			inventory.flame_thrower -= Time.deltaTime;
+			return (inventory.flame_thrower > 0.0f);
 		} else {
 			return false;
 		}
@@ -162,6 +183,12 @@ public class GameState : MonoBehaviour {
 		} else if (active_item == Item.FLAME_THROWER && inventory.fire_extinguisher > 0.0f){
 			active_item = Item.FIRE_EXTINGUISHER;
 		}
+	}
+
+	private void DestroyWithExplosion(GameObject obj){
+		Quaternion rotation = new Quaternion ();
+		Instantiate( explosion, obj.transform.position, rotation);
+		Destroy (obj);
 	}
 }
 

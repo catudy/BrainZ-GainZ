@@ -20,9 +20,6 @@ public class PlayerCollision : MonoBehaviour
 			return;
 		}
 
-		// Log the collision
-		Debug.Log ("Collided with " + collision.gameObject.name + " " + collision.gameObject.tag);
-
 		// Filter through the collisions
 		if (collision.gameObject.tag == "Deadly") 
 		{ 
