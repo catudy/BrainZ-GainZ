@@ -30,6 +30,7 @@ public class GameState : MonoBehaviour {
 	public bool paused = false;
 	public Item active_item = Item.FLAME_THROWER;
 	public ParticleSystem explosion;
+	private float level_end_time = 0.0f;
 	private bool in_cutscene = true;
 	Inventory inventory;
 	private Camera cam;
@@ -77,7 +78,11 @@ public class GameState : MonoBehaviour {
 		}
 		 
 	}
-	
+
+	// Returns true if level is active
+	public bool LevelTimerActive(){
+		return (level_end_time > Time.time);
+	}
 
 	// Removes object from the scene.
 	public void RemoveObject(GameObject destroyme)
@@ -189,6 +194,14 @@ public class GameState : MonoBehaviour {
 		Quaternion rotation = new Quaternion ();
 		Instantiate( explosion, obj.transform.position, rotation);
 		Destroy (obj);
+	}
+
+	public void SetLevelTime(float time){
+		level_end_time = Time.time + time;
+	}
+
+	public float GetLevelTimeRemaining(){
+		return level_end_time - Time.time;
 	}
 }
 
