@@ -20,16 +20,60 @@ public enum Item
 	GAINZ
 };
 
+public enum ObjectiveType
+{
+	NONE,
+	KILL, // Kill X Zombies
+	SURVIVE, // Survive X seconds
+	COLLECT, // Collect X Items
+	SCAVENGER, // Find Special Item
+	DAMAGE // Take less than X damage
+}
+
+public enum ObjectiveReward{
+	NONE,
+	BRAINZ,
+	GAINZ
+}
+
+public class Objective{
+	ObjectiveType type;
+	ObjectiveReward reward;
+	public float target; // how many of objective you need to do 
+	public float current; // current objective progress
+	public bool completed;
+	Objective(){ // Default constructor
+		type = ObjectiveType.NONE;
+		reward = ObjectiveReward.NONE;
+		current = 0;
+		target = 1;
+		completed = false;
+	}
+	Objective(ObjectiveType set_type, ObjectiveReward set_reward, float set_target){ // parametrized constructor
+		type = set_type;
+		reward = set_reward;
+		target = set_target;
+		current = 0;
+	}
+	void UpdateObjective(float amount){
+		current += amount;
+		if (current >= target) {
+			completed = true;
+		}
+	}
+};
 
 public class GameState : MonoBehaviour {
 	public bool game_over = false;
 	public int brainz = 0;
 	public int gainz = 0;
-	public int pickup = 0;
-	public float cutscene_length = 35.0f;
+	public int pickup_temp = 0;
+	public float cutscene_length_seconds = 35.0f;
 	public bool paused = false;
 	public Item active_item = Item.FLAME_THROWER;
 	public ParticleSystem explosion;
+	private Objective primary_objective;
+	private Objective[] secondary_objectives;
 	private float level_end_time = 0.0f;
 	private bool in_cutscene = true;
 	Inventory inventory;
@@ -49,31 +93,26 @@ public class GameState : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () 
-	{
+	void Update () {
 
-		if (pickup == 5) 
-		{
+		if (pickup_temp == 5) {
 			barrier.SetActive(false);
 		}
 
 		if (paused) {
 			return;
 		}
-		if (Time.time > cutscene_length || Input.GetButtonDown("Sprint") || Input.GetButton("Start")) 
-		{
+		if (Time.time > cutscene_length_seconds || Input.GetButtonDown("Sprint") || Input.GetButton("Start")) {
 			in_cutscene = false;
 			cam.enabled = true;
 		} 
-		else 
-		{
+		else {
 
 		}
 
 
 
-		if (game_over) 
-		{
+		if (game_over) {
 			// Call game over here
 		}
 		 
@@ -89,12 +128,9 @@ public class GameState : MonoBehaviour {
 	{
 		Spawner[] spawners = GetComponents<Spawner> ();
 
-		foreach (Spawner spawner in spawners) 
-		{
-			foreach(GameObject obj in spawner.spawn_objects)
-			{
-				if(obj.name + "(Clone)" == destroyme.name)
-				{
+		foreach (Spawner spawner in spawners) 	{
+			foreach(GameObject obj in spawner.spawn_objects) {
+				if(obj.name + "(Clone)" == destroyme.name) {
 					spawner.DestroyObject(destroyme);
 				}
 			}

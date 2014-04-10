@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// Handles objects that collide with players.  Namely enemies, BnG, and powerups.
 /// 
 /// Author: Albert Wohletz
@@ -38,7 +38,7 @@ public class PlayerCollision : MonoBehaviour
 
 		else if (collision.gameObject.tag == "pickup")
 	    {
-			gameState.pickup++;
+			gameState.pickup_temp++;
 			Destroy (collision.gameObject);
 
 		}
