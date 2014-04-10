@@ -138,7 +138,10 @@ function UpdateSmoothedMovementDirection ()
 	// Always orthogonal to the forward vector
 	var right = Vector3(forward.z, 0, -forward.x);
 
-	var v = Input.GetAxisRaw("Vertical");
+	//CHANGED: LOCKS FORWARD MOVEMENT: 1 = FORWARD -1 = BACKWARDS
+	var v = 1; 	//Input.GetAxisRaw("Vertical");
+
+	//CHANGED: TAKES CONTROLLER INPUT AS WELL AS LEFT RIGHT ON KEYBOARD
 	var h = Input.GetAxisRaw("Horizontal");
 
 	// Are we moving backwards or looking backwards
@@ -190,8 +193,10 @@ function UpdateSmoothedMovementDirection ()
 		_characterState = CharacterState.Idle;
 		
 		// Pick speed modifier
-		if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift))
+		//CHANGED: ADDED HOLD B TO SPRINT
+		if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift) || Input.GetButton("Run"))
 		{
+			
 			targetSpeed *= runSpeed;
 			_characterState = CharacterState.Running;
 		}
