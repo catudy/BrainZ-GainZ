@@ -48,8 +48,6 @@ public class GUIController : MonoBehaviour
 	private int placeGamePauseW;
 	private int placeGamePauseH; 
 
-	public int a,b,c,d = 0;
-	public float w,x,y,z = 0;
 
 	void Start()
 	{
@@ -178,7 +176,6 @@ public class GUIController : MonoBehaviour
 		}
 		
 	  }
-
 
 	//Function that creates a button and places it and returns its boolean value if pressed or not
 	bool createButton(int widthPlacement, int heightPlacement, int buttonWidth, int buttonHeight, string displayText)

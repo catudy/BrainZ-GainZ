@@ -24,10 +24,10 @@ public enum ObjectiveType
 {
 	NONE,
 	KILL, // Kill X Zombies
-	SURVIVE, // Survive X seconds
 	COLLECT, // Collect X Items
 	SCAVENGER, // Find Special Item
-	DAMAGE // Take less than X damage
+	DAMAGE, // Take less than X damage
+	TIME // Survive X seconds
 }
 
 public enum ObjectiveReward{
@@ -36,29 +36,37 @@ public enum ObjectiveReward{
 	GAINZ
 }
 
-public class Objective{
-	ObjectiveType type;
-	ObjectiveReward reward;
+public class Objective {
+	public ObjectiveType type;
+	public ObjectiveReward reward;
 	public float target; // how many of objective you need to do 
 	public float current; // current objective progress
 	public bool completed;
-	Objective(){ // Default constructor
+	public Objective(){ // Default constructor
 		type = ObjectiveType.NONE;
 		reward = ObjectiveReward.NONE;
 		current = 0;
 		target = 1;
 		completed = false;
 	}
-	Objective(ObjectiveType set_type, ObjectiveReward set_reward, float set_target){ // parametrized constructor
+
+	public Objective(ObjectiveType set_type, ObjectiveReward set_reward, int set_target){
+		SetObjective (set_type, set_reward, set_target);
+	}
+
+	public void SetObjective(ObjectiveType set_type, ObjectiveReward set_reward, int set_target){ 
 		type = set_type;
 		reward = set_reward;
-		target = set_target;
+		target = (float)set_target;
 		current = 0;
+		completed = false;
 	}
-	void UpdateObjective(float amount){
+	public void UpdateObjective(float amount){
 		current += amount;
 		if (current >= target) {
 			completed = true;
+		} else {
+			completed = false;
 		}
 	}
 };
@@ -72,9 +80,9 @@ public class GameState : MonoBehaviour {
 	public bool paused = false;
 	public Item active_item = Item.FLAME_THROWER;
 	public ParticleSystem explosion;
-	private Objective primary_objective;
-	private Objective[] secondary_objectives;
-	private float level_end_time = 0.0f;
+	public int level = 1;
+	public Objective primary_objective = new Objective();
+	public Objective[] secondary_objectives;
 	private bool in_cutscene = true;
 	Inventory inventory;
 	private Camera cam;
@@ -90,15 +98,22 @@ public class GameState : MonoBehaviour {
 		barrier = GameObject.Find ("Destroyed");
 		cam = player.GetComponentInChildren<Camera> ();
 
+		// Primary Objective time for now
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 60);
+
+		// Set secondary Objectives
+		secondary_objectives = new Objective[5];
+
+		for(int i=0; i<secondary_objectives.Length; i++){
+			secondary_objectives[i] = new Objective((ObjectiveType)Random.Range(1,5),(ObjectiveReward)Random.Range(1,3), Random.Range(10,30));
+		}
 	}
 
 	// Update is called once per frame
 	void Update () {
-
 		if (pickup_temp == 5) {
 			barrier.SetActive(false);
 		}
-
 		if (paused) {
 			return;
 		}
@@ -109,19 +124,27 @@ public class GameState : MonoBehaviour {
 		else {
 
 		}
-
-
-
 		if (game_over) {
 			// Call game over here
 		}
 		 
 	}
 
-	// Returns true if level is active
-	public bool LevelTimerActive(){
-		return (level_end_time > Time.time);
+	private void UpdateObjectives(){
+		UpdateObjective (ObjectiveType.TIME, Time.deltaTime);
 	}
+
+	public void UpdateObjective(ObjectiveType type, float value){
+		foreach (Objective objective in secondary_objectives) {
+			if(objective.type == type){
+				objective.UpdateObjective(value);
+			}
+		}
+		if(primary_objective.type == type){
+			primary_objective.UpdateObjective(value);
+		}
+	}
+
 
 	// Removes object from the scene.
 	public void RemoveObject(GameObject destroyme)
@@ -167,6 +190,7 @@ public class GameState : MonoBehaviour {
 			ray_start.y += 0.5f; // Shoot ray from head
 
 			// Shoot rays in spread
+			int count = 0;
 			for(float i=-10; i < 10; i=i+0.1f){
 				Vector3 ray = new Vector3(forward.x,forward.y,forward.z+i);
 				if(Physics.Raycast(ray_start,ray,out hit)){
@@ -176,10 +200,13 @@ public class GameState : MonoBehaviour {
 							Destroy (hit.collider.gameObject);
 						} else if(item == Item.FLAME_THROWER && hit.collider.gameObject.tag == "Deadly"){
 							DestroyWithExplosion (hit.collider.gameObject);
+							UpdateObjective(ObjectiveType.KILL,1.0f);
+							count++;
 						}
 					}
 				}
 			}
+			Debug.Log ("Killed " + count + "Zambies");
 			return true;
 		} else {
 			return false;
@@ -232,12 +259,8 @@ public class GameState : MonoBehaviour {
 		Destroy (obj);
 	}
 
-	public void SetLevelTime(float time){
-		level_end_time = Time.time + time;
-	}
-
 	public float GetLevelTimeRemaining(){
-		return level_end_time - Time.time;
+		return primary_objective.target - primary_objective.current;
 	}
 }
 
