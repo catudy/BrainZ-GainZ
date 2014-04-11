@@ -23,7 +23,7 @@ public class Wander : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(!ai.aggro)
+		if(!ai || !ai.aggro)
 		{
 			time_remaining -= Time.deltaTime;
 			movement_vector = target_destination - transform.position;

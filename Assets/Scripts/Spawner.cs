@@ -16,7 +16,6 @@ public class Spawner : MonoBehaviour
 	public float min_distance = 0; // How close can we spawn
 	public float max_distance = 0; // How far away can we spawn
 	public GameObject[] spawn_points; // Around What we are Spawning
-	public float despawn_range = 100.0f;
 	private float timer = 0.0f;
 
 	// Use this for initialization

@@ -15,10 +15,12 @@ public class EnemyAI : MonoBehaviour
 	private Vector3 velocity = new Vector3(0,0,0); // current enemy velocity.
 	private Vector3 target_pos;
 	private GameObject player;
+	private CharacterController cc;
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find("Player");
+		cc = GetComponent<CharacterController> ();
 	}
 	
 	// Update is called once per frame
@@ -61,7 +63,6 @@ public class EnemyAI : MonoBehaviour
 			transform.LookAt(look);
 
 			// Move Zombies
-			CharacterController cc = GetComponent<CharacterController> ();
 			cc.SimpleMove (velocity);
 		}
 	}
