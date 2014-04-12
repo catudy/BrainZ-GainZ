@@ -9,7 +9,7 @@ public class UpgradeGUI : MonoBehaviour
 	public Texture2D LevelupB1;
 	public Texture2D LevelupB2;
 	public Texture2D LevelupB3;
-	public bool showUpgradeMenu = true;
+	public bool showUpgradeMenu = false;
 	//Private PlayerState playerState;
 
 	//Resolution variables
@@ -37,6 +37,25 @@ public class UpgradeGUI : MonoBehaviour
 		//Get current resonlution
 		originalWidth = Screen.resolutions[0].width;
 		originalHeight = Screen.resolutions[0].height;
+
+		if(showUpgradeMenu)
+		{
+			//Toggle background plane for upgrade menu
+			upgradeBG.SetActive(true);
+			
+			//Code to disable GUI
+			hud.SetActive(false);
+			//Add code to disable GUI
+		}
+		else
+		{
+			//Hide background plane for upgrade menu
+			upgradeBG.SetActive(false);
+			
+			//Code to activate GUI
+			hud.SetActive(true);
+			//Code to activate GUI
+		}
 	}
 	void OnGUI()
 	{
@@ -50,13 +69,6 @@ public class UpgradeGUI : MonoBehaviour
 
 		if(showUpgradeMenu)
 		{
-			//Toggle background plane for upgrade menu
-			upgradeBG.SetActive(true);
-
-			//Code to disable GUI
-			hud.SetActive(false);
-			//Add code to disable GUI
-
 			//Draw upgrade texture logos
 
 			GUI.DrawTexture( new Rect(75f, 254f, 100f, 100f), HeartTexture);
@@ -101,12 +113,6 @@ public class UpgradeGUI : MonoBehaviour
 
 		else
 		{
-			//Hide background plane for upgrade menu
-			upgradeBG.SetActive(false);
-
-			//Code to activate GUI
-			hud.SetActive(true);
-			//Cod to activate GUI
 		}
 
 		GUI.matrix = svMat;
