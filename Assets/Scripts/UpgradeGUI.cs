@@ -19,6 +19,7 @@ public class UpgradeGUI : MonoBehaviour
 
 	//Upgrade background plane
 	public GameObject upgradeBG;
+	public GameObject hud;
 
 	//Placement test variables
 	//public float x = 0;
@@ -51,6 +52,10 @@ public class UpgradeGUI : MonoBehaviour
 		{
 			//Toggle background plane for upgrade menu
 			upgradeBG.SetActive(true);
+
+			//Code to disable GUI
+			hud.SetActive(false);
+			//Add code to disable GUI
 
 			//Draw upgrade texture logos
 
@@ -98,6 +103,10 @@ public class UpgradeGUI : MonoBehaviour
 		{
 			//Hide background plane for upgrade menu
 			upgradeBG.SetActive(false);
+
+			//Code to activate GUI
+			hud.SetActive(true);
+			//Cod to activate GUI
 		}
 
 		GUI.matrix = svMat;

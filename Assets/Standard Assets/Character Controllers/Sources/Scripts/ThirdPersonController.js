@@ -7,6 +7,8 @@ public var walkAnimation : AnimationClip;
 public var runAnimation : AnimationClip;
 public var jumpPoseAnimation : AnimationClip;
 
+public var melee : GameObject;
+
 public var walkMaxAnimationSpeed : float = 0.75;
 public var trotMaxAnimationSpeed : float = 1.0;
 public var runMaxAnimationSpeed : float = 1.0;
@@ -360,6 +362,15 @@ function Update() {
 		}
 	}
 	// ANIMATION sector
+	
+	//attack
+	/*
+	melee.collider.isTrigger = false;
+	if(Input.GetButton("Attack"))
+	{
+		melee.collider.isTrigger = true;
+		melee.animation.Play();
+	}*/
 	
 	// Set rotation to the move direction
 	if (IsGrounded())

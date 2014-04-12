@@ -25,6 +25,11 @@ public class PlayerState : MonoBehaviour
 	private float cooldown  = 0.0f;
 	private GameState gameState;
 
+	private int weapon = 0;
+
+	public GameObject melee;
+	public GameObject gun;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -42,6 +47,25 @@ public class PlayerState : MonoBehaviour
 		if (cooldown <= 0.0f) 
 		{
 			ProcessAbilityInput();
+		}
+
+		if(Input.GetButton("Switch"))
+		{
+			switch(weapon)
+			{
+			case 0:
+				weapon = 1;
+				melee.SetActive(false);
+				gun.SetActive(true);
+				Debug.Log (weapon);
+				break;
+			case 1:
+				weapon = 0;
+				gun.SetActive(false);
+				melee.SetActive(true);
+				Debug.Log (weapon);
+				break;
+			}
 		}
 	}
 

@@ -22,14 +22,18 @@ public class PlayerCollision : MonoBehaviour
 		if (collision.gameObject.tag == "Deadly") 
 		{ 
 			// Game over if you run into something deadly
-			if(playerState.power_up != PowerUp.INVULNERABLE) {
-				playerState.DealDamage(1);
+			if(playerState.power_up == PowerUp.INVULNERABLE)
+			{ 
+				// Fuck you Zambie
+				gameState.RemoveObject(collision.gameObject);
+			} 
+
+			else 
+			{
+				gameState.game_over = true;
 			}
-			gameState.RemoveObject(collision.gameObject);
 		} else if (collision.gameObject.tag == "Projectile"){
-			if(playerState.power_up != PowerUp.INVULNERABLE) {
-				playerState.DealDamage(1);
-			}
+			gameState.game_over = true;
 			collision.gameObject.GetComponent<Projectile>().DestroyWithExplosion(collision.gameObject);
 		}
 

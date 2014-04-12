@@ -34,6 +34,7 @@ public class EnemyAI : MonoBehaviour
 	private void UpdateZombieMovement(){
 		if(aggro) {
 			velocity = velocity + ((player.transform.position - transform.position).normalized)*acceleration;
+			velocity.y = 0;
 			if(velocity.magnitude > max_speed ){
 				velocity = velocity.normalized * max_speed;
 			}
@@ -47,7 +48,7 @@ public class EnemyAI : MonoBehaviour
 			// Face zambie in right direction
 			Vector3 look = new Vector3(player.transform.position.x,transform.position.y,player.transform.position.z);
 			transform.LookAt(look);
-
+			velocity.y = 0;
 			// Move Zombies
 			cc.SimpleMove (velocity);
 		}
