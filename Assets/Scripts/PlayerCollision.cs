@@ -10,8 +10,6 @@ public class PlayerCollision : MonoBehaviour
 {
 	private PlayerState playerState; 
 	GameState gameState;
-	public AudioClip lift;
-
 
 	void OnControllerColliderHit(ControllerColliderHit collision) 
 	{
@@ -34,7 +32,10 @@ public class PlayerCollision : MonoBehaviour
 			{
 				gameState.game_over = true;
 			}
-		} 
+		} else if (collision.gameObject.tag == "Projectile"){
+			gameState.game_over = true;
+			collision.gameObject.GetComponent<Projectile>().DestroyWithExplosion(collision.gameObject);
+		}
 
 		else if (collision.gameObject.tag == "pickup")
 	    {
