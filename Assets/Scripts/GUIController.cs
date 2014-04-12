@@ -111,6 +111,16 @@ public class GUIController : MonoBehaviour
 		//Load GUI for reno level
 		else if(currentScene == reno || currentScene == newReno)
 		{
+			//// Make me look purty
+			createText (10, 100, 200,30, gameState.primary_objective.GetString());
+
+			int offset_y = 35;
+			foreach (Objective objective in gameState.secondary_objectives) {
+				createText(10,100+offset_y,200,30,objective.GetString());
+				offset_y += 35;
+			}
+
+
 			//Create pause button
 			pauseButton = createButton(578,6,59,20, "PAUSE");
 			

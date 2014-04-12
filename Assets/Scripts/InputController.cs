@@ -16,7 +16,7 @@ public class InputController : MonoBehaviour {
 		playerState = player.GetComponent<PlayerState>();
 		fireextinguisher = GameObject.Find ("FireExtinguisherParticleEffect").GetComponent<ParticleSystem> ();
 		flamer = GameObject.Find ("FlamethrowerParticleEffect").GetComponent<ParticleSystem> ();
-		cam = player.GetComponentInChildren<Camera> ();
+		cam = GameObject.Find ("Main Camera").GetComponent<Camera> ();
 		gameState = GetComponent<GameState> ();
 	}
 	

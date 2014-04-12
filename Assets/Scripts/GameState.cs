@@ -42,32 +42,72 @@ public class Objective {
 	public float target; // how many of objective you need to do 
 	public float current; // current objective progress
 	public bool completed;
+	public int reward_amount;
+
 	public Objective(){ // Default constructor
 		type = ObjectiveType.NONE;
 		reward = ObjectiveReward.NONE;
 		current = 0;
 		target = 1;
 		completed = false;
+		reward_amount = 0;
 	}
 
-	public Objective(ObjectiveType set_type, ObjectiveReward set_reward, int set_target){
-		SetObjective (set_type, set_reward, set_target);
+	public Objective(ObjectiveType set_type, ObjectiveReward set_reward, int set_target, int amount){
+		SetObjective (set_type, set_reward, set_target,amount);
 	}
 
-	public void SetObjective(ObjectiveType set_type, ObjectiveReward set_reward, int set_target){ 
+	public void SetObjective(ObjectiveType set_type, ObjectiveReward set_reward, int set_target, int amount){ 
 		type = set_type;
 		reward = set_reward;
 		target = (float)set_target;
 		current = 0;
 		completed = false;
+		reward_amount = amount;
 	}
 	public void UpdateObjective(float amount){
 		current += amount;
-		if (current >= target) {
+		if (current >= target && !completed) {
+			GrantReward();
 			completed = true;
 		} else {
 			completed = false;
 		}
+	}
+
+	private void GrantReward(){
+		GameState gameState = GameObject.Find("GameController").GetComponent<GameState>();
+		if(reward == ObjectiveReward.BRAINZ){
+			gameState.brainz += reward_amount;
+		} else if (reward == ObjectiveReward.GAINZ){
+			gameState.gainz += reward_amount;
+		}
+	}
+
+	public string GetString(){
+		string ret;
+		if(type == ObjectiveType.KILL){
+			ret = "Kill Zombies: ";
+		} else if (type == ObjectiveType.TIME){
+			ret = "Survive: ";
+		} else if (type == ObjectiveType.COLLECT){
+			ret = "Collect: ";
+		} else if (type == ObjectiveType.DAMAGE){
+			ret = "Avoid Damage: ";
+		} else if (type == ObjectiveType.SCAVENGER){
+			ret = "Collect Scavenge Items: ";
+		} else {
+			return "NO_OBJECTIVE";
+		}
+
+		ret = ret + current + " / " + target + " Reward: " + reward_amount;
+
+		if(reward == ObjectiveReward.BRAINZ){
+			ret += " Brainz";
+		} else if (reward == ObjectiveReward.GAINZ){
+			ret += "Gainz";
+		}
+		return ret;
 	}
 };
 
@@ -83,6 +123,7 @@ public class GameState : MonoBehaviour {
 	public int level = 1;
 	public Objective primary_objective = new Objective();
 	public Objective[] secondary_objectives;
+	public int num_objectives = 5;
 	private bool in_cutscene = true;
 	Inventory inventory;
 	private Camera cam;
@@ -99,13 +140,13 @@ public class GameState : MonoBehaviour {
 		cam = player.GetComponentInChildren<Camera> ();
 
 		// Primary Objective time for now
-		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 60);
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 60, 0);
 
 		// Set secondary Objectives
-		secondary_objectives = new Objective[5];
+		secondary_objectives = new Objective[num_objectives];
 
 		for(int i=0; i<secondary_objectives.Length; i++){
-			secondary_objectives[i] = new Objective((ObjectiveType)Random.Range(1,5),(ObjectiveReward)Random.Range(1,3), Random.Range(10,30));
+			secondary_objectives[i] = new Objective((ObjectiveType)Random.Range(1,5),(ObjectiveReward)Random.Range(1,3), Random.Range(10,30), Random.Range(20,40));
 		}
 	}
 
@@ -130,6 +171,8 @@ public class GameState : MonoBehaviour {
 		if (game_over) {
 			// Call game over here
 		}
+
+		UpdateObjectives ();
 		 
 	}
 
