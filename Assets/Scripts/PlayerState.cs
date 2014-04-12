@@ -11,16 +11,22 @@ public enum PowerUp
 	INVULNERABLE
 };
 
+public struct PlayerStats{
+	public int max_health;
+	public int weapon_damage;
+	public float max_stamina;
+};
+
 public class PlayerState : MonoBehaviour 
 {
 	public PowerUp power_up = PowerUp.NONE;
 	public float power_up_time_remaining = 0.0f;
 	public float stamina_recovery_rate = 1.0f; // how much stamina you recover per WaitForSeconds.
-	public float max_stamina = 5.0f; 
 	public float stamina; // How much stamina you currently have
 	public int health = 10;
 	private bool sneaking = false;
 	public bool running = false;
+	public PlayerStats playerStats;
 	
 	private float cooldown  = 0.0f;
 	private GameState gameState;
@@ -33,8 +39,11 @@ public class PlayerState : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		stamina = max_stamina;
+		stamina = playerStats.max_stamina;
 		gameState = GameObject.Find ("GameController").GetComponentInChildren<GameState> ();
+		playerStats.max_health = 10;
+		playerStats.weapon_damage = 1;
+		playerStats.max_stamina = 5.0f;
 	}
 	
 	// Update is called once per frame
@@ -118,9 +127,9 @@ public class PlayerState : MonoBehaviour
 				stamina += Time.deltaTime * stamina_recovery_rate;
 			}
 
-			if(stamina > max_stamina)
+			if(stamina > playerStats.max_stamina)
 			{
-				stamina = max_stamina;
+				stamina = playerStats.max_stamina;
 			}
 		}
 	}
@@ -207,7 +216,7 @@ public class PlayerState : MonoBehaviour
 
 	public float GetStaminaPercent()
 	{
-		return stamina / max_stamina;
+		return stamina / playerStats.max_stamina;
 	}
 
 	public void DealDamage(int damage){
