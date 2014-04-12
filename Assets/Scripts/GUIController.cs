@@ -8,6 +8,7 @@ public class GUIController : MonoBehaviour
 	
 	//Variable for the current player
 	private PlayerState playerState;
+
 	
 	//Texture variables
 	public Texture2D brainz_icon;
@@ -49,11 +50,8 @@ public class GUIController : MonoBehaviour
 	private int placeGamePauseW;
 	private int placeGamePauseH; 
 	
-	public int a,b,c,d = 0;
-	public float w,x,y,z = 0;
-	
-	public float originalWidth;
-	public float originalHeight;
+	private float originalWidth;
+	private float originalHeight;
 	private Vector3 scale;
 	
 	
@@ -67,7 +65,7 @@ public class GUIController : MonoBehaviour
 		if(currentScene == reno || currentScene == newReno)
 		{
 			//Getting gamestate and player state and gui variables
-			gameState = GameObject.Find("GAME CONTROLLER").GetComponent<GameState>();
+			gameState = GameObject.Find("GameController").GetComponent<GameState>();
 			playerState = GameObject.Find("Player").GetComponent<PlayerState>();
 		}
 	}

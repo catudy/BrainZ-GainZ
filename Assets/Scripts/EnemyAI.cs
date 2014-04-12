@@ -15,10 +15,12 @@ public class EnemyAI : MonoBehaviour
 	private Vector3 velocity = new Vector3(0,0,0); // current enemy velocity.
 	private Vector3 target_pos;
 	private GameObject player;
+	private CharacterController cc;
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find("Player");
+		cc = GetComponent<CharacterController> ();
 	}
 	
 	// Update is called once per frame
@@ -31,24 +33,10 @@ public class EnemyAI : MonoBehaviour
 	// Updates velocity component
 	private void UpdateZombieMovement(){
 		if(aggro) {
-			//velocity = velocity + ((player.transform.position - transform.position).normalized)*acceleration;
-
-			Vector3 target = (player.transform.position - transform.position).normalized; // ref for
-			Vector3 target_perpendicular = Vector3.Cross(Vector3.up, target); // ref right
-			 
-			// Determine if the degree value should be negative.  Here, a positive value
-			// from the dot product means that our vector is on the right of the reference vector   
-			// whereas a negative value means we're on the left.
-			float sign = Mathf.Sign(Vector3.Dot(velocity, target_perpendicular));
-
-			// rotate
-			if(sign > 0.0f) { // right
-				transform.Rotate(0,10,0);
-			} else { // left
-				transform.Rotate(0,-10,0);
+			velocity = velocity + ((player.transform.position - transform.position).normalized)*acceleration;
+			if(velocity.magnitude > max_speed ){
+				velocity = velocity.normalized * max_speed;
 			}
-
-			velocity = transform.TransformDirection(Vector3.right);
 		}
 	}
 
@@ -61,7 +49,6 @@ public class EnemyAI : MonoBehaviour
 			transform.LookAt(look);
 
 			// Move Zombies
-			CharacterController cc = GetComponent<CharacterController> ();
 			cc.SimpleMove (velocity);
 		}
 	}

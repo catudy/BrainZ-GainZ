@@ -18,11 +18,12 @@ public class PlayerState : MonoBehaviour
 	public float stamina_recovery_rate = 1.0f; // how much stamina you recover per WaitForSeconds.
 	public float max_stamina = 5.0f; 
 	public float stamina; // How much stamina you currently have
-	
+	public int health = 10;
 	private bool sneaking = false;
 	public bool running = false;
 	
 	private float cooldown  = 0.0f;
+	private GameState gameState;
 
 	private int weapon = 0;
 
@@ -33,6 +34,7 @@ public class PlayerState : MonoBehaviour
 	void Start () 
 	{
 		stamina = max_stamina;
+		gameState = GameObject.Find ("GameController").GetComponentInChildren<GameState> ();
 	}
 	
 	// Update is called once per frame
@@ -206,5 +208,16 @@ public class PlayerState : MonoBehaviour
 	public float GetStaminaPercent()
 	{
 		return stamina / max_stamina;
+	}
+
+	public void DealDamage(int damage){
+		health -= damage;
+		if(health < 0){
+			gameState.game_over = true;
+		}
+	}
+
+	public void HealDamage(int damage){
+		health += damage;
 	}
 }
