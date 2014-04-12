@@ -8,6 +8,7 @@ public class GUIController : MonoBehaviour
 	
 	//Variable for the current player
 	private PlayerState playerState;
+
 	
 	//Texture variables
 	public Texture2D brainz_icon;
@@ -49,8 +50,8 @@ public class GUIController : MonoBehaviour
 	private int placeGamePauseW;
 	private int placeGamePauseH; 
 	
-	public float originalWidth;
-	public float originalHeight;
+	private float originalWidth;
+	private float originalHeight;
 	private Vector3 scale;
 	
 	
