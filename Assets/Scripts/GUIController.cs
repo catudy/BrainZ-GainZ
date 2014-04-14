@@ -120,6 +120,9 @@ public class GUIController : MonoBehaviour
 				offset_y += 35;
 			}
 
+			createText (0,Screen.height-30,30,30,"HP: " + playerState.health.ToString());
+			// End Make me look purty
+
 
 			//Create pause button
 			pauseButton = createButton(578,6,59,20, "PAUSE");
