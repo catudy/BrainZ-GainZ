@@ -31,7 +31,9 @@ public class Projectile : MonoBehaviour {
 
 	public void DestroyWithExplosion(GameObject obj){
 		Quaternion rotation = new Quaternion ();
-		Instantiate( explosion, obj.transform.position, rotation);
+		Object o = Instantiate( explosion, obj.transform.position, rotation);
+		Destroy (o);
+
 		Destroy (obj);
 	}
 	

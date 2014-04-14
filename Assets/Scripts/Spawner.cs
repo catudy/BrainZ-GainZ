@@ -56,7 +56,7 @@ public class Spawner : MonoBehaviour
 		do 
 		{ 
 			enemy_pos = Random.onUnitSphere * Random.Range(min_distance, max_distance) + spawn_pos;
-			enemy_pos.y = 0;
+			enemy_pos.y = 0.2f;
 		} while ((enemy_pos - spawn_pos).magnitude < min_distance);
 
 		return enemy_pos;

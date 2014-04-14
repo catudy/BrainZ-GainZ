@@ -16,11 +16,13 @@ public class EnemyAI : MonoBehaviour
 	private Vector3 target_pos;
 	private GameObject player;
 	private CharacterController cc;
+	private Wander wander;
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find("Player");
 		cc = GetComponent<CharacterController> ();
+		wander = GetComponent<Wander> ();
 	}
 	
 	// Update is called once per frame
@@ -33,11 +35,14 @@ public class EnemyAI : MonoBehaviour
 	// Updates velocity component
 	private void UpdateZombieMovement(){
 		if(aggro) {
+			wander.enabled = true;
 			velocity = velocity + ((player.transform.position - transform.position).normalized)*acceleration;
 			velocity.y = 0;
 			if(velocity.magnitude > max_speed ){
 				velocity = velocity.normalized * max_speed;
 			}
+		} else {
+			wander.enabled = false;
 		}
 	}
 
@@ -72,7 +77,7 @@ public class EnemyAI : MonoBehaviour
 		{
 			mod_aggro_range = aggro_range * 2;
 		}
-
+		Debug.Log (mod_aggro_range);
 		return ((player_pos - enemy_pos).magnitude < mod_aggro_range);
 	}
 }
