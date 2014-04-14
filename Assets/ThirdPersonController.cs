@@ -190,7 +190,7 @@ public class ThirdPersonController : MonoBehaviour
 					moveDirection = moveDirection.normalized;
 				}
 			}
-			
+
 			// Smooth the speed based on the current target direction
 			float curSmooth= speedSmoothing * Time.deltaTime;
 			
@@ -200,14 +200,23 @@ public class ThirdPersonController : MonoBehaviour
 		
 			_characterState = CharacterState.Idle;
 
+			bool canRun = playerState.stamina > 0.5f;
+
 			// Pick speed modifier
-			if ((Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift) || Input.GetButton("Run"))) //&& playerState.GetRunning())
+			if ((Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift) || Input.GetButton("Run")) && canRun)
 			{
-				targetSpeed *= runSpeed;
-				playerState.SetRunning();
-				_characterState = CharacterState.Running;
+					targetSpeed *= runSpeed;
+					playerState.SetRunning();
+					_characterState = CharacterState.Running;
 			}
-			else if (Time.time - trotAfterSeconds > walkTimeStart)
+			else if ((Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift) || Input.GetButton("Run")) && !canRun)
+			{
+				playerState.stamina = 0.0f;
+				targetSpeed *= trotSpeed;
+				_characterState = CharacterState.Trotting;
+				playerState.SetWalking();
+			}
+			else if (Time.time - trotAfterSeconds > walkTimeStart )
 			{
 				targetSpeed *= trotSpeed;
 				_characterState = CharacterState.Trotting;
