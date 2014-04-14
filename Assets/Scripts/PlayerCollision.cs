@@ -73,6 +73,8 @@ public class PlayerCollision : MonoBehaviour
 				gameState.AddItem (Item.BRAINZ);
 				Destroy (collision.gameObject);
 			}
+			// Update Scavenger for now
+			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
 		}
 	}
 	// Use this for initialization
