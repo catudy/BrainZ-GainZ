@@ -48,7 +48,7 @@ public class InputController : MonoBehaviour {
 				gameState.NextItem();
 			}
 		}
-
+		/*
 		if (Input.GetButton ("Sneak")) 
 		{
 			playerState.SetSneaking ();
@@ -63,5 +63,6 @@ public class InputController : MonoBehaviour {
 		{
 			playerState.SetWalking ();
 		}
+		*/
 	}
 }

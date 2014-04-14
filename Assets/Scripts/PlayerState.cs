@@ -39,11 +39,11 @@ public class PlayerState : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		stamina = playerStats.max_stamina;
 		gameState = GameObject.Find ("GameController").GetComponentInChildren<GameState> ();
 		playerStats.max_health = 10;
 		playerStats.weapon_damage = 1;
 		playerStats.max_stamina = 5.0f;
+		stamina = playerStats.max_stamina;
 	}
 	
 	// Update is called once per frame

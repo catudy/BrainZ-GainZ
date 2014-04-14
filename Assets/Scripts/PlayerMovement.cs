@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
 	
 	void FixedUpdate ()
 	{
+		/*
 		if (gameState.RunGame ()) 
 		{
 			float current_speed = base_speed;
@@ -60,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 				anim.SetBool (hash.sneakingBool, playerState.GetSneaking ());
 				anim.SetFloat (hash.speedFloat, 10.0f, speedDampTime, Time.deltaTime);
 		}
+		*/
 	}
 
 	
