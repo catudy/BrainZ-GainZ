@@ -27,7 +27,6 @@ public class Wander : MonoBehaviour
 
 		if(time_remaining < 0.0f || movement_vector.magnitude < wander_speed * Time.deltaTime)
 		{
-			Debug.Log ("New Destination");
 			SetRandomDestination();
 		} else 
 		{
@@ -35,7 +34,6 @@ public class Wander : MonoBehaviour
 			velocity.y = 0;
 			Vector3 look_here = new Vector3(target_destination.x,transform.position.y, target_destination.z);
 			transform.LookAt(look_here);
-			Debug.Log (velocity * Time.deltaTime);
 			cc.SimpleMove (velocity * Time.deltaTime);
 		}
 	}

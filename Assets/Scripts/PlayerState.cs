@@ -224,6 +224,7 @@ public class PlayerState : MonoBehaviour
 		if(health < 0){
 			gameState.game_over = true;
 		}
+		gameState.UpdateObjective (ObjectiveType.DAMAGE, 1.0f);
 	}
 
 	public void HealDamage(int damage){
