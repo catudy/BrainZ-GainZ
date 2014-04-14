@@ -13,78 +13,56 @@ public class PlayerCollision : MonoBehaviour
 
 	void OnControllerColliderHit(ControllerColliderHit collision) 
 	{
-		if (collision.gameObject.tag == "NoCollision") 
-		{ // Don't care about the ground.
+		if (collision.gameObject.tag == "NoCollision") { // Don't care about the ground.
 			return;
-		}
-
-		// Filter through the collisions
-		if (collision.gameObject.tag == "Deadly") 
-		{ 
+		} else if (collision.gameObject.tag == "Deadly") { 
 			// Game over if you run into something deadly
-			if(playerState.power_up == PowerUp.INVULNERABLE)
-			{ 
+			if(playerState.power_up == PowerUp.INVULNERABLE){ 
 				// Fuck you Zambie
 				gameState.RemoveObject(collision.gameObject);
-			} 
-
-			else 
-			{
-				gameState.game_over = true;
+			} else {
+				playerState.DealDamage(1);
 			}
 		} else if (collision.gameObject.tag == "Projectile"){
 			gameState.game_over = true;
 			collision.gameObject.GetComponent<Projectile>().DestroyWithExplosion(collision.gameObject);
 		}
 
-		else if (collision.gameObject.tag == "pickup")
-	    {
+		else if (collision.gameObject.tag == "pickup") {
 			gameState.pickup_temp++;
 			Destroy (collision.gameObject);
 
 		}
 
-		else if (collision.gameObject.tag == "Brainz")
-		{
+		else if (collision.gameObject.tag == "Brainz") {
 			gameState.brainz++;
 			gameState.RemoveObject(collision.gameObject);
 		} 
  
-		else if (collision.gameObject.tag == "Gainz")
-		{
+		else if (collision.gameObject.tag == "Gainz") {
 			gameState.gainz++;
 			Destroy (collision.gameObject);
 		} 
 
-		else if (collision.gameObject.tag == "Powerup")
-		{
+		else if (collision.gameObject.tag == "Powerup") {
+			// Takes current powerup away
 			playerState.DeletePowerup();
 
-			if (collision.gameObject.name == "PowerupBlink(Clone)") 
-			{
+			// Update based on what powerup
+			if (collision.gameObject.name == "PowerupBlink(Clone)") {
 				playerState.SetPowerUp(PowerUp.BLINK);
-			} 
-
-			else if(collision.gameObject.name == "PowerupInvuln(Clone)") 
-			{
+			} else if(collision.gameObject.name == "PowerupInvuln(Clone)") {
 				playerState.SetPowerUp(PowerUp.INVULNERABLE);
-			} 
-
-			else if(collision.gameObject.name == "PowerupInvis(Clone)") 
-			{
+			} else if(collision.gameObject.name == "PowerupInvis(Clone)") {
 				playerState.SetPowerUp(PowerUp.INVISIBILITY);
-			} 
-
-			else if(collision.gameObject.name == "PowerupSecondWind(Clone)")
-			{
+			} else if(collision.gameObject.name == "PowerupSecondWind(Clone)") {
 				playerState.SetPowerUp(PowerUp.SECOND_WIND);
 			}
 
+			// Delete Powerup Object
 			gameState.RemoveObject(collision.gameObject);
-
 		} 
-		else if (collision.gameObject.tag == "SceneChanger")
-		{
+		else if (collision.gameObject.tag == "SceneChanger"){
 			gameState.ChangeScene(collision.gameObject.name);
 		} 
 		else if (collision.gameObject.tag == "Item"){
