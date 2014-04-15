@@ -18,6 +18,7 @@ public class ThirdPersonController : MonoBehaviour
 	public float landAnimationSpeed = 1.0f;
 
 	private Animation _animation;
+	private GameState gameState;
 
 	enum CharacterState 
 	{
@@ -100,6 +101,7 @@ public class ThirdPersonController : MonoBehaviour
 	void Start()
 	{
 		playerState = GameObject.Find("Player").GetComponent<PlayerState>();
+		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 	}
 	void  Awake ()
 	{
@@ -310,7 +312,15 @@ public class ThirdPersonController : MonoBehaviour
 
 	void Update ()
 	{
-		
+		//Pauses the player if pause is pressed
+		if(gameState.paused)
+		{
+			_animation.enabled = false;
+			return;
+		}
+		else
+			_animation.enabled = true;
+
 		if (!isControllable)
 		{
 			// kill all inputs if not controllable.

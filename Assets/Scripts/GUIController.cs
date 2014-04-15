@@ -8,7 +8,6 @@ public class GUIController : MonoBehaviour
 	
 	//Variable for the current player
 	private PlayerState playerState;
-
 	
 	//Texture variables
 	public Texture2D brainz_icon;

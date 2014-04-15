@@ -9,10 +9,12 @@ public class UpgradeGUI : MonoBehaviour
 	public Texture2D LevelupB1;
 	public Texture2D LevelupB2;
 	public Texture2D LevelupB3;
+
 	public bool showUpgradeMenu = false;
 
 	private PlayerState playerState;
 	private GameState gameState;
+	private ObjectiveType objectiveType;
 
 	//Resolution variables
 	private float originalWidth;
@@ -36,6 +38,7 @@ public class UpgradeGUI : MonoBehaviour
 	{
 		playerState = GameObject.Find("Player").GetComponentInChildren<PlayerState>();
 		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
+		//objectiveType = GameObject.Find ("GameController").GetComponentInChildren<ObjectiveType>();
 	}
 
 	void Update()
@@ -44,23 +47,20 @@ public class UpgradeGUI : MonoBehaviour
 		originalWidth = Screen.resolutions[0].width;
 		originalHeight = Screen.resolutions[0].height;
 
-		if(showUpgradeMenu)
+		if(gameState.primary_objective.completed)//showUpgradeMenu)
 		{
 			//Toggle background plane for upgrade menu
 			upgradeBG.SetActive(true);
-			
 			//Code to disable GUI
 			hud.SetActive(false);
-			//Add code to disable GUI
+
 		}
 		else
 		{
 			//Hide background plane for upgrade menu
 			upgradeBG.SetActive(false);
-			
 			//Code to activate GUI
 			hud.SetActive(true);
-			//Code to activate GUI
 		}
 	}
 	void OnGUI()
@@ -73,7 +73,7 @@ public class UpgradeGUI : MonoBehaviour
 		Matrix4x4 svMat = GUI.matrix;
 		GUI.matrix = Matrix4x4.TRS(Vector3.zero,Quaternion.identity,scale);
 
-		if(showUpgradeMenu)
+		if(gameState.primary_objective.completed)//showUpgradeMenu)
 		{
 			//Draw upgrade texture logos
 
@@ -164,7 +164,15 @@ public class UpgradeGUI : MonoBehaviour
 			//User is done applying upgrades
 			if(GUI.Button( new Rect(589f,440f,45f,32f), new GUIContent("Done", null, "")))
 			{
-				showUpgradeMenu = false;
+				//Increment game level and set new primary objective
+				gameState.level++;
+				gameState.primary_objective.SetObjective(ObjectiveType.TIME, ObjectiveReward.NONE, 30*gameState.level, 0);
+
+
+				gameState.primary_objective.completed = false;
+				gameState.primary_objective.done = false;
+
+				//showUpgradeMenu = false;
 				//Call code that scene transitions and set apporpriate variables for next level
 			}
 		}
