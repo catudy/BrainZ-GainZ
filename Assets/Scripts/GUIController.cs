@@ -53,7 +53,9 @@ public class GUIController : MonoBehaviour
 	private float originalWidth;
 	private float originalHeight;
 	private Vector3 scale;
-	
+
+	public float a,b;
+	public int c,d;
 	
 	
 	void Start()
@@ -89,16 +91,16 @@ public class GUIController : MonoBehaviour
 			placeGameQuitH = 0;
 
 			//Creating reno box and button for level select
-			createBox (levelBoxWPlace-5,levelBoxHPlace-20,levelBoxWidth,levelBoxHeight, "Level Select");
-			renoButton = createButton(levelBoxWPlace,levelBoxHPlace,renoButtonWPlace,renoButtonHPlace,"Reno");
+			createBox (273,424,levelBoxWidth,levelBoxHeight, "Level Select");
+			renoButton = createButton(278,445,renoButtonWPlace,renoButtonHPlace,"Reno");
 			
 			//Creating quit button for game
-			quitButton = createButton(placeGameQuitW,placeGameQuitH,gameQuitW,gameQuitH, "QUIT");
+			quitButton = createButton(278,0,gameQuitW,gameQuitH, "QUIT");
 			
 			//If the reno button is pressed, load the reno level
 			if(renoButton || Input.GetButton("Start"))
 			{
-				Application.LoadLevel(reno);
+				Application.LoadLevel(newReno);
 			}
 			
 			//If the quit button is pressed, close the application
