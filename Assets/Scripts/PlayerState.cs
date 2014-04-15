@@ -12,9 +12,15 @@ public enum PowerUp
 };
 
 public struct PlayerStats{
+	public int base_health;
+	public float base_wepon_damage;
+	public float base_stamina;
 	public int max_health;
-	public int weapon_damage;
+	public float weapon_damage;
 	public float max_stamina;
+	public int health_level;
+	public int stamina_level;
+	public int weapon_level;
 };
 
 public class PlayerState : MonoBehaviour 
@@ -23,7 +29,7 @@ public class PlayerState : MonoBehaviour
 	public float power_up_time_remaining = 0.0f;
 	public float stamina_recovery_rate = 1.0f; // how much stamina you recover per WaitForSeconds.
 	public float stamina; // How much stamina you currently have
-	public int health = 10;
+	public int health;
 	private bool sneaking = false;
 	public bool running = false;
 	public PlayerStats playerStats;
@@ -36,14 +42,33 @@ public class PlayerState : MonoBehaviour
 	public GameObject melee;
 	public GameObject gun;
 
+	//Make private later
+	public int health_up_bcost = 25;
+	public int health_up_gcost = 25;
+	public int stamina_up_bcost = 25;
+	public int stamina_up_gcost = 25;
+	public int weapon_up_bcost = 25;
+	public int weapon_up_gcost = 25;
+
 	// Use this for initialization
 	void Start () 
 	{
 		gameState = GameObject.Find ("GameController").GetComponentInChildren<GameState> ();
-		playerStats.max_health = 10;
-		playerStats.weapon_damage = 1;
-		playerStats.max_stamina = 5.0f;
+
+		playerStats.base_health = 10;
+		playerStats.base_wepon_damage = 1;
+		playerStats.base_stamina = 5.0f;
+
+		playerStats.max_health = playerStats.base_health;
+		playerStats.max_stamina = playerStats.base_stamina;
+		playerStats.weapon_damage = playerStats.base_wepon_damage;
+
+		playerStats.health_level = 1;
+		playerStats.stamina_level = 1;
+		playerStats.weapon_level = 1;
+
 		stamina = playerStats.max_stamina;
+		health = playerStats.max_health;
 	}
 	
 	// Update is called once per frame
@@ -229,5 +254,24 @@ public class PlayerState : MonoBehaviour
 
 	public void HealDamage(int damage){
 		health += damage;
+	}
+
+	public void UpdateMaxHealth()
+	{
+		playerStats.max_health = playerStats.base_health + (playerStats.health_level-1);
+		health_up_bcost = health_up_bcost + (25*playerStats.health_level);
+		health_up_gcost = health_up_gcost + (25*playerStats.health_level);
+	}
+	public void UpdateMaxStamina()
+	{
+		playerStats.max_stamina = playerStats.base_stamina + (playerStats.stamina_level-1);
+		stamina_up_bcost = stamina_up_bcost + (25*playerStats.stamina_level);
+		stamina_up_gcost = stamina_up_gcost + (25*playerStats.stamina_level);
+	}
+	public void UpdateMaxWeaponDamage()
+	{
+		playerStats.weapon_damage = playerStats.base_wepon_damage + (0.5f*playerStats.weapon_level-0.5f);
+		weapon_up_bcost = weapon_up_bcost + (25*playerStats.weapon_level);
+		weapon_up_gcost = weapon_up_gcost + (25*playerStats.weapon_level);
 	}
 }

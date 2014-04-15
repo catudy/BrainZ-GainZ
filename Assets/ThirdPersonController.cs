@@ -229,7 +229,7 @@ public class ThirdPersonController : MonoBehaviour
 				playerState.SetWalking();
 			}
 
-			moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, curSmooth);
+			moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, curSmooth);   
 			
 			// Reset walk time start when we slow down
 			if (moveSpeed < walkSpeed * 0.3f)
