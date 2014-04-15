@@ -100,12 +100,12 @@ public class Objective {
 			return "NO_OBJECTIVE";
 		}
 
-		ret = ret + current + " / " + target + " Reward: " + reward_amount;
+		ret = ret + current.ToString("F0") + " / " + target + " Reward: " + reward_amount;
 
 		if(reward == ObjectiveReward.BRAINZ){
 			ret += " Brainz";
 		} else if (reward == ObjectiveReward.GAINZ){
-			ret += "Gainz";
+			ret += " Gainz";
 		}
 		return ret;
 	}
