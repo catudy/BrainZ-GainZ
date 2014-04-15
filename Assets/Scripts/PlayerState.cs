@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum PowerUp
 {
@@ -37,10 +38,15 @@ public class PlayerState : MonoBehaviour
 	private float cooldown  = 0.0f;
 	private GameState gameState;
 
-	private int weapon = 0;
-
+	//weapon vars
+	private int currentWeapon = 0;
+	private int maxWeapon = 4;
 	public GameObject melee;
-	public GameObject gun;
+	public GameObject wep1;
+	public GameObject wep2;
+	public GameObject wep3;
+
+	public new bool[] active;
 
 	//Make private later
 	public int health_up_bcost = 25;
@@ -69,6 +75,8 @@ public class PlayerState : MonoBehaviour
 
 		stamina = playerStats.max_stamina;
 		health = playerStats.max_health;
+
+		active [0] = true;
 	}
 	
 	// Update is called once per frame
@@ -83,22 +91,20 @@ public class PlayerState : MonoBehaviour
 			ProcessAbilityInput();
 		}
 
-		if(Input.GetButton("Switch"))
+		SetWeapon ();
+
+		if(Input.GetKeyDown("v"))
 		{
-			switch(weapon)
+			Swap ();
+			Debug.Log (currentWeapon);
+		}
+
+		//melee attack
+		if (Input.GetButton("Attack")) 
+		{
+			if(currentWeapon == 0)
 			{
-			case 0:
-				weapon = 1;
-				melee.SetActive(false);
-				gun.SetActive(true);
-				Debug.Log (weapon);
-				break;
-			case 1:
-				weapon = 0;
-				gun.SetActive(false);
-				melee.SetActive(true);
-				Debug.Log (weapon);
-				break;
+				melee.animation.Play();
 			}
 		}
 	}
@@ -204,6 +210,66 @@ public class PlayerState : MonoBehaviour
 		{
 			GetComponent<ParticleSystem>().enableEmission = true;
 		} 
+	}
+
+	void Swap()
+	{ 
+		int current = currentWeapon;
+		
+		if (current+1 == maxWeapon) 
+		{
+			currentWeapon = 0;
+		}
+		
+		else
+		{
+			while(current+1 < maxWeapon)
+			{
+				current++;
+				if(active[current] == true)
+				{
+					currentWeapon = current;
+					break;
+				}
+				else if(current+1 == maxWeapon)
+				{
+					currentWeapon = 0;
+					break;
+				}
+			}
+		}
+	}
+	
+	void SetWeapon()
+	{
+		if(currentWeapon == 0)
+		{
+			melee.SetActive(true);
+			wep1.SetActive(false);
+			wep2.SetActive(false);
+			wep3.SetActive(false);
+		}
+		if(currentWeapon == 1)
+		{
+			melee.SetActive(false);
+			wep1.SetActive(true);
+			wep2.SetActive(false);
+			wep3.SetActive(false);
+		}
+		if(currentWeapon == 2)
+		{
+			melee.SetActive(false);
+			wep1.SetActive(false);
+			wep2.SetActive(true);
+			wep3.SetActive(false);
+		}
+		if(currentWeapon == 3)
+		{
+			melee.SetActive(false);
+			wep1.SetActive(false);
+			wep2.SetActive(false);
+			wep3.SetActive(true);
+		}
 	}
 
 	public void SetSneaking()

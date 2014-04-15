@@ -5,6 +5,7 @@
 /// </summary>
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerCollision : MonoBehaviour 
 {
@@ -44,6 +45,12 @@ public class PlayerCollision : MonoBehaviour
 			Destroy (collision.gameObject);
 		} 
 
+		else if(collision.gameObject.tag == "ak")
+		{
+			Destroy(collision.gameObject);
+			playerState.active[1] = true;
+		}
+
 		else if (collision.gameObject.tag == "Powerup") {
 			// Takes current powerup away
 			playerState.DeletePowerup();
@@ -75,6 +82,25 @@ public class PlayerCollision : MonoBehaviour
 			}
 			// Update Scavenger for now
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
+		}
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.tag == "ak") 
+		{
+			Destroy (other.gameObject);
+			playerState.active[1] = true;
+		}
+		if(other.gameObject.tag == "smg")
+		{
+			Destroy(other.gameObject);
+			playerState.active[2] = true;
+		}
+		if(other.gameObject.tag == "rev")
+		{
+			Destroy(other.gameObject);
+			playerState.active[3] = true;
 		}
 	}
 	// Use this for initialization
