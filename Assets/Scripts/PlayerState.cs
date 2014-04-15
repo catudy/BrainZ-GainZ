@@ -100,7 +100,7 @@ public class PlayerState : MonoBehaviour
 		}
 
 		//melee attack
-		if (Input.GetButton("Attack")) 
+		if (Input.GetKeyDown("b")) 
 		{
 			if(currentWeapon == 0)
 			{

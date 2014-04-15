@@ -152,9 +152,6 @@ public class GameState : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (pickup_temp == 5) {
-			barrier.SetActive(false);
-		}
 		if (paused) {
 			return;
 		}

@@ -85,7 +85,7 @@ public class PlayerCollision : MonoBehaviour
 		}
 	}
 
-	void OnTriggerEnter(Collider other)
+	/*void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.tag == "ak") 
 		{
@@ -102,7 +102,7 @@ public class PlayerCollision : MonoBehaviour
 			Destroy(other.gameObject);
 			playerState.active[3] = true;
 		}
-	}
+	}*/
 	// Use this for initialization
 	void Start () 
 	{
