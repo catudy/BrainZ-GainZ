@@ -10,11 +10,8 @@ public class UpgradeGUI : MonoBehaviour
 	public Texture2D LevelupB2;
 	public Texture2D LevelupB3;
 
-	public bool showUpgradeMenu = false;
-
 	private PlayerState playerState;
 	private GameState gameState;
-	private ObjectiveType objectiveType;
 
 	//Resolution variables
 	private float originalWidth;
@@ -27,18 +24,11 @@ public class UpgradeGUI : MonoBehaviour
 
 	//test vars
 	public float a,b,c,d = 0;
-
-	//Placement test variables
-	//public float x = 0;
-	//public float y = 0;
-	//public float w = 0;
-	//public float h = 0;
-
+	
 	void Start()
 	{
 		playerState = GameObject.Find("Player").GetComponentInChildren<PlayerState>();
 		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
-		//objectiveType = GameObject.Find ("GameController").GetComponentInChildren<ObjectiveType>();
 	}
 
 	void Update()
@@ -47,7 +37,7 @@ public class UpgradeGUI : MonoBehaviour
 		originalWidth = Screen.resolutions[0].width;
 		originalHeight = Screen.resolutions[0].height;
 
-		if(gameState.primary_objective.completed)//showUpgradeMenu)
+		if(gameState.primary_objective.completed)
 		{
 			//Toggle background plane for upgrade menu
 			upgradeBG.SetActive(true);
@@ -69,17 +59,24 @@ public class UpgradeGUI : MonoBehaviour
 		scale.x = Screen.width/originalWidth;
 		scale.y = Screen.height/originalHeight;
 		scale.z = 1;
-		
+
 		Matrix4x4 svMat = GUI.matrix;
 		GUI.matrix = Matrix4x4.TRS(Vector3.zero,Quaternion.identity,scale);
 
-		if(gameState.primary_objective.completed)//showUpgradeMenu)
+		if(gameState.primary_objective.completed)
 		{
-			//Draw upgrade texture logos
+			gameState.paused = true;
 
+			//Show score screen first (fade in congradulations)
+
+
+
+			//Fade out and fade in again and show the upgrade menu
 			GUI.DrawTexture( new Rect(75f, 254f, 100f, 100f), HeartTexture);
 			GUI.DrawTexture( new Rect(250f, 254f, 100f, 100f), StaminaTexture);
 			GUI.DrawTexture( new Rect(350f, 185f, 250f, 250f), WeaponLogo);
+
+			GUI.Box(new Rect(a,b,c,d),"");
 
 			float current_wepdmg = playerState.playerStats.weapon_damage;
 			float next_wepdmg = playerState.playerStats.base_wepon_damage + (0.5f*(playerState.playerStats.weapon_level+1)-0.5f);
@@ -166,14 +163,16 @@ public class UpgradeGUI : MonoBehaviour
 			{
 				//Increment game level and set new primary objective
 				gameState.level++;
-				gameState.primary_objective.SetObjective(ObjectiveType.TIME, ObjectiveReward.NONE, 30*gameState.level, 0);
+				gameState.primary_objective.SetObjective(ObjectiveType.TIME, ObjectiveReward.NONE, 3*gameState.level, 0);
 
 
 				gameState.primary_objective.completed = false;
 				gameState.primary_objective.done = false;
 
-				//showUpgradeMenu = false;
+			
 				//Call code that scene transitions and set apporpriate variables for next level
+
+				gameState.paused = true;
 			}
 		}
 

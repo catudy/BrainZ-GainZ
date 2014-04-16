@@ -150,7 +150,7 @@ public class GameState : MonoBehaviour {
 		upgradeMenu = GameObject.Find("GUIController").GetComponentInChildren<UpgradeGUI>();
 
 		// Primary Objective time for now
-		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 30*level, 0);
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 3*level, 0);
 
 		// Set secondary Objectives
 		secondary_objectives = new Objective[num_objectives];

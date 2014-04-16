@@ -17,16 +17,22 @@ public class Spawner : MonoBehaviour
 	public float max_distance = 0; // How far away can we spawn
 	public GameObject[] spawn_points; // Around What we are Spawning
 	private float timer = 0.0f;
+	private GameState gameState;
 
 	// Use this for initialization
 	void Start () 
 	{
+		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 		timer = Time.time;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{ 
+		if(gameState.paused)
+		{
+			return;
+		}
 		// If we are ready to spawn a new entity, due so
 		if (timer < Time.time ) 
 		{

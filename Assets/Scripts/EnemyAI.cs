@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// Controls Enemy AI.  Current Behavior is to just chase player.
 /// 
 /// Author: Albert Wohletz
@@ -17,16 +17,19 @@ public class EnemyAI : MonoBehaviour
 	private GameObject player;
 	private CharacterController cc;
 	private Wander wander;
+	private GameState gameState;
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find("Player");
+		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 		cc = GetComponent<CharacterController> ();
 		wander = GetComponent<Wander> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
 		aggro = IsAggroed (player.transform.position, transform.position);
 		UpdateZombieMovement ();
 		MoveZombie ();

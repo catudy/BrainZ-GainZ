@@ -82,6 +82,10 @@ public class PlayerState : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		//No updates if the game is paused
+		if(gameState.paused)
+			return;
+
 		UpdateTimers ();
 		UpdateCooldowns ();
 		UpdateStamina ();
