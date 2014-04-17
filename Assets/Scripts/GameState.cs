@@ -43,6 +43,8 @@ public class Objective {
 	public float current; // current objective progress
 	public bool completed;
 	public int reward_amount;
+	public bool done = false;
+
 
 	public Objective(){ // Default constructor
 		type = ObjectiveType.NONE;
@@ -65,13 +67,19 @@ public class Objective {
 		completed = false;
 		reward_amount = amount;
 	}
-	public void UpdateObjective(float amount){
+	public void UpdateObjective(float amount)
+	{
 		current += amount;
-		if (current >= target && !completed) {
+		if (current >= target && !completed) 
+		{
 			GrantReward();
 			completed = true;
-		} else {
-			completed = false;
+			done = true;
+		} 
+		else if (done)
+		{
+			current = 0;
+
 		}
 	}
 
@@ -129,6 +137,10 @@ public class GameState : MonoBehaviour {
 	private Camera cam;
 	GameObject player;
 	GameObject barrier;
+	private UpgradeGUI upgradeMenu;
+	public bool inUpgradeMenu = false;
+
+	public GameObject spawnPoint1, spawnPoint2, spawnPoint3, spawnPoint4;
 
 	// Use this for initialization
 	void Start () {
@@ -138,9 +150,10 @@ public class GameState : MonoBehaviour {
 		player = GameObject.Find ("Player");
 		barrier = GameObject.Find ("Destroyed");
 		cam = player.GetComponentInChildren<Camera> ();
+		upgradeMenu = GameObject.Find("GUIController").GetComponentInChildren<UpgradeGUI>();
 
 		// Primary Objective time for now
-		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 60, 0);
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 10*level, 0);
 
 		// Set secondary Objectives
 		secondary_objectives = new Objective[num_objectives];
@@ -148,6 +161,10 @@ public class GameState : MonoBehaviour {
 		for(int i=0; i<secondary_objectives.Length; i++){
 			secondary_objectives[i] = new Objective((ObjectiveType)Random.Range(1,5),(ObjectiveReward)Random.Range(1,3), Random.Range(10,30), Random.Range(20,40));
 		}
+
+		player.transform.position = spawnPoint1.transform.position;
+		brainz = 500;
+		gainz = 500;
 	}
 
 	// Update is called once per frame
@@ -165,8 +182,13 @@ public class GameState : MonoBehaviour {
 
 		}
 		*/
-		if (game_over) {
-			// Call game over here
+	 
+		if (game_over) 
+		{
+			// Call game over scene transition
+
+			// Return player to main menu
+			Application.LoadLevel("_MainMenu");
 		}
 
 		UpdateObjectives ();

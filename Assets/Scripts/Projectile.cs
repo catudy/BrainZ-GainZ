@@ -9,9 +9,11 @@ public class Projectile : MonoBehaviour {
 	private Vector3 start; 
 	private Vector3 velocity;
 	CharacterController cc;
+	private GameState gameState;
 
 	// Use this for initialization
 	void Start () {
+		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 		target = GameObject.Find("Player").transform.position;
 		start = transform.position;
 		start_time = Time.time;
@@ -22,6 +24,10 @@ public class Projectile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(gameState.paused)
+		{
+			return;
+		}
 		//transform.position = Vector3.Lerp (start, target, (Time.time-start_time)/(5.0f));
 		cc.Move (velocity * Time.deltaTime);
 		if(Time.time > start_time + 5.0f){

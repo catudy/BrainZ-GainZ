@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// Controls Brainz and Gainz AI.
 /// 
 /// Author: Albert Wohletz
@@ -14,11 +14,14 @@ public class BnGAI : MonoBehaviour
 	public Vector3 velocity = new Vector3(0,0,0);
 	private GameObject player;
 	public bool fleeing = false;
+
+	private GameState gameState;
 	
 	// Use this for initialization
 	void Start () 
 	{
 		player = GameObject.Find("Player");
+		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 	}
 	
 	// Update is called once per frame

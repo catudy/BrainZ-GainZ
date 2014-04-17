@@ -23,6 +23,10 @@ public class InputController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if(gameState.paused)
+		{
+			return;
+		}
 		if(Input.GetButton("Ability")){
 			if(gameState.UseItem()){
 				if(gameState.active_item == Item.FIRE_EXTINGUISHER){

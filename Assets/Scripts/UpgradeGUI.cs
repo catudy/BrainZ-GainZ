@@ -9,10 +9,10 @@ public class UpgradeGUI : MonoBehaviour
 	public Texture2D LevelupB1;
 	public Texture2D LevelupB2;
 	public Texture2D LevelupB3;
-	public bool showUpgradeMenu = false;
 
 	private PlayerState playerState;
 	private GameState gameState;
+	public GameObject player;
 
 	//Resolution variables
 	private float originalWidth;
@@ -25,15 +25,14 @@ public class UpgradeGUI : MonoBehaviour
 
 	//test vars
 	public float a,b,c,d = 0;
-
-	//Placement test variables
-	//public float x = 0;
-	//public float y = 0;
-	//public float w = 0;
-	//public float h = 0;
-
+	
+	public bool showUpgradeMenu = false;
+	public bool startNextLevel = false;
+	public bool gameCompleted = false;
+	
 	void Start()
 	{
+		player = GameObject.Find("Player");
 		playerState = GameObject.Find("Player").GetComponentInChildren<PlayerState>();
 		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 	}
@@ -44,23 +43,25 @@ public class UpgradeGUI : MonoBehaviour
 		originalWidth = Screen.resolutions[0].width;
 		originalHeight = Screen.resolutions[0].height;
 
-		if(showUpgradeMenu)
+		if(gameState.primary_objective.completed)
 		{
 			//Toggle background plane for upgrade menu
 			upgradeBG.SetActive(true);
-			
 			//Code to disable GUI
 			hud.SetActive(false);
-			//Add code to disable GUI
+
 		}
-		else
+		else if(!gameState.primary_objective.completed && gameCompleted)
+		{
+			upgradeBG.SetActive(false);
+			hud.SetActive(false);
+		}
+		else if(!gameState.primary_objective.completed)
 		{
 			//Hide background plane for upgrade menu
 			upgradeBG.SetActive(false);
-			
 			//Code to activate GUI
 			hud.SetActive(true);
-			//Code to activate GUI
 		}
 	}
 	void OnGUI()
@@ -69,103 +70,165 @@ public class UpgradeGUI : MonoBehaviour
 		scale.x = Screen.width/originalWidth;
 		scale.y = Screen.height/originalHeight;
 		scale.z = 1;
-		
+
 		Matrix4x4 svMat = GUI.matrix;
 		GUI.matrix = Matrix4x4.TRS(Vector3.zero,Quaternion.identity,scale);
 
-		if(showUpgradeMenu)
+		if(gameState.primary_objective.completed)
 		{
-			//Draw upgrade texture logos
+			gameState.paused = true;
 
-			GUI.DrawTexture( new Rect(75f, 254f, 100f, 100f), HeartTexture);
-			GUI.DrawTexture( new Rect(250f, 254f, 100f, 100f), StaminaTexture);
-			GUI.DrawTexture( new Rect(350f, 185f, 250f, 250f), WeaponLogo);
-
-			float current_wepdmg = playerState.playerStats.weapon_damage;
-			float next_wepdmg = playerState.playerStats.base_wepon_damage + (0.5f*(playerState.playerStats.weapon_level+1)-0.5f);
-			float current_health = playerState.playerStats.max_health;
-			float next_health = playerState.playerStats.base_health + (playerState.playerStats.health_level);
-			float current_stamina = playerState.playerStats.max_stamina;
-			float next_stamina = playerState.playerStats.base_stamina + (playerState.playerStats.stamina_level);
-
-			//Draw upgrade text logos
-			//Edit these to show the actual level values
-			GUI.Label( new Rect(92f, 195f, 250f, 250f), new GUIContent(current_health+"->"+next_health, null, ""));
-			GUI.Label( new Rect(262f, 195f, 250f, 250f), new GUIContent(current_stamina+"->"+next_stamina, null, ""));
-			GUI.Label( new Rect(439, 195f, 250f, 250f), new GUIContent(current_wepdmg+"->"+next_wepdmg, null, ""));
-			GUI.Label( new Rect(280f, 25f, 77f, 50f), new GUIContent("Upgrades", null, ""));
-
-			GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("Current total BrainZ: "+gameState.brainz.ToString(), null, ""));
-			GUI.Label( new Rect(400f,100f,400f,100f), new GUIContent("Current total GainZ: "+gameState.gainz.ToString(), null, ""));
-
-			GUI.Label( new Rect(66f,429f,200f,100f), new GUIContent("BrainZ needed: "+playerState.health_up_bcost, null, ""));
-			GUI.Label( new Rect(66f,448f,200f,100f), new GUIContent("GainZ needed: "+playerState.health_up_gcost, null, ""));
-
-			GUI.Label( new Rect(241f,429f,200f,100f), new GUIContent("BrainZ needed: "+playerState.stamina_up_bcost, null, ""));
-			GUI.Label( new Rect(241f,448f,200f,100f), new GUIContent("GainZ needed: "+playerState.stamina_up_gcost, null, ""));
-
-			GUI.Label( new Rect(432f,429f,200f,100f), new GUIContent("BrainZ needed: "+playerState.weapon_up_bcost, null, ""));
-			GUI.Label( new Rect(432f,448f,200f,100f), new GUIContent("GainZ needed: "+playerState.weapon_up_gcost, null, ""));
-
-			//Draw upgrade button logos 
-
-			// Weapon upgrade pressed
-			if(gameState.brainz >= playerState.weapon_up_bcost && gameState.gainz >= playerState.weapon_up_gcost)
+			if(gameState.level == 4)
 			{
-				if(GUI.Button( new Rect(452,379, 50f, 50f), new GUIContent("", LevelupB1, "")))
+				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("You beat the game! Your gains are superior!", null, ""));
+				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
+				if(GUI.Button( new Rect(250,300,100,100),"Main Menu"))
 				{
-					//Call code that upgrades the players weapon damage modifier
-					gameState.brainz = gameState.brainz - playerState.weapon_up_bcost;
-					gameState.gainz = gameState.gainz - playerState.weapon_up_gcost;
-					playerState.playerStats.weapon_level++;
-					playerState.UpdateMaxWeaponDamage();
+					Application.LoadLevel("_MainMenu");
 				}
 			}
-			else
-			{
-				//Show something instead of the button?
-			}
 
-			//Stamina upgrade pressed
-			//Check to see if enough brainZ or gainZ aquired
-			if(gameState.brainz >= playerState.stamina_up_bcost && gameState.gainz >= playerState.stamina_up_gcost)
+			else if(!showUpgradeMenu)
 			{
-				if(GUI.Button( new Rect(272f,379f,50f,50f), new GUIContent("", LevelupB2, "")))
+				//Level X completed message
+				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("Congratulations! Level "+gameState.level.ToString()+" completed", null, ""));
+
+				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
+				if(GUI.Button( new Rect(250,300,100,100),"Continue")) 
 				{
-					//Call code that upgrades the players stamina duration or speed modifier
-					gameState.brainz = gameState.brainz - playerState.stamina_up_bcost;
-					gameState.gainz = gameState.gainz - playerState.stamina_up_gcost;
-					playerState.playerStats.stamina_level++;
-					playerState.UpdateMaxStamina();
+					showUpgradeMenu = true;
 				}
 			}
-			else
-			{
-				//Show something instead of the button?
-			}
 
-			// Health upgrade pressed
-			if(gameState.brainz >= playerState.health_up_bcost && gameState.gainz >= playerState.health_up_gcost)
+
+
+			if(showUpgradeMenu)
 			{
-				if(GUI.Button( new Rect(98f,379f,50f,50f), new GUIContent("", LevelupB3, "")))
+				//Fade out and fade in again and show the upgrade menu
+				GUI.DrawTexture( new Rect(75f, 254f, 100f, 100f), HeartTexture);
+				GUI.DrawTexture( new Rect(250f, 254f, 100f, 100f), StaminaTexture);
+				GUI.DrawTexture( new Rect(350f, 185f, 250f, 250f), WeaponLogo);
+
+				//GUI.Box(new Rect(a,b,c,d),"");
+
+				float current_wepdmg = playerState.playerStats.weapon_damage;
+				float next_wepdmg = playerState.playerStats.base_wepon_damage + (0.5f*(playerState.playerStats.weapon_level+1)-0.5f);
+				float current_health = playerState.playerStats.max_health;
+				float next_health = playerState.playerStats.base_health + (playerState.playerStats.health_level);
+				float current_stamina = playerState.playerStats.max_stamina;
+				float next_stamina = playerState.playerStats.base_stamina + (playerState.playerStats.stamina_level);
+
+				//Draw upgrade text logos
+				//Edit these to show the actual level values
+				GUI.Label( new Rect(92f, 195f, 250f, 250f), new GUIContent(current_health+"->"+next_health, null, ""));
+				GUI.Label( new Rect(262f, 195f, 250f, 250f), new GUIContent(current_stamina+"->"+next_stamina, null, ""));
+				GUI.Label( new Rect(439, 195f, 250f, 250f), new GUIContent(current_wepdmg+"->"+next_wepdmg, null, ""));
+				GUI.Label( new Rect(280f, 25f, 77f, 50f), new GUIContent("Upgrades", null, ""));
+
+				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("Current total BrainZ: "+gameState.brainz.ToString(), null, ""));
+				GUI.Label( new Rect(400f,100f,400f,100f), new GUIContent("Current total GainZ: "+gameState.gainz.ToString(), null, ""));
+
+				GUI.Label( new Rect(66f,429f,200f,100f), new GUIContent("BrainZ needed: "+playerState.health_up_bcost, null, ""));
+				GUI.Label( new Rect(66f,448f,200f,100f), new GUIContent("GainZ needed: "+playerState.health_up_gcost, null, ""));
+
+				GUI.Label( new Rect(241f,429f,200f,100f), new GUIContent("BrainZ needed: "+playerState.stamina_up_bcost, null, ""));
+				GUI.Label( new Rect(241f,448f,200f,100f), new GUIContent("GainZ needed: "+playerState.stamina_up_gcost, null, ""));
+
+				GUI.Label( new Rect(432f,429f,200f,100f), new GUIContent("BrainZ needed: "+playerState.weapon_up_bcost, null, ""));
+				GUI.Label( new Rect(432f,448f,200f,100f), new GUIContent("GainZ needed: "+playerState.weapon_up_gcost, null, ""));
+
+				//Draw upgrade button logos 
+
+				// Weapon upgrade pressed
+				if(gameState.brainz >= playerState.weapon_up_bcost && gameState.gainz >= playerState.weapon_up_gcost)
 				{
-					//Call the code that upgrades the players maximum health
-					gameState.brainz = gameState.brainz - playerState.health_up_bcost;
-					gameState.gainz = gameState.gainz - playerState.health_up_gcost;
-					playerState.playerStats.health_level++;
-					playerState.UpdateMaxHealth();
-				}
-			}
-			else
-			{
-				//Show something instead of the button?
-			}
+					//GUI.Label( new Rect(418f,357f,117f,20f), new GUIContent("Press B to level up", null, ""));
 
-			//User is done applying upgrades
-			if(GUI.Button( new Rect(589f,440f,45f,32f), new GUIContent("Done", null, "")))
-			{
-				showUpgradeMenu = false;
-				//Call code that scene transitions and set apporpriate variables for next level
+					if(GUI.Button( new Rect(452,379, 50f, 50f), new GUIContent("", LevelupB1, "")))
+					{
+						//Call code that upgrades the players weapon damage modifier
+						gameState.brainz = gameState.brainz - playerState.weapon_up_bcost;
+						gameState.gainz = gameState.gainz - playerState.weapon_up_gcost;
+						playerState.playerStats.weapon_level++;
+						playerState.UpdateMaxWeaponDamage();
+					}
+				}
+				else
+				{
+					//Show something instead of the button?
+				}
+
+				//Stamina upgrade pressed
+				//Check to see if enough brainZ or gainZ aquired
+				if(gameState.brainz >= playerState.stamina_up_bcost && gameState.gainz >= playerState.stamina_up_gcost)
+				{
+					//GUI.Label( new Rect(237f,357f,117f,20f), new GUIContent("Press A to level up", null, ""));
+
+					if(GUI.Button( new Rect(272f,379f,50f,50f), new GUIContent("", LevelupB2, "")))
+					{
+						//Call code that upgrades the players stamina duration or speed modifier
+						gameState.brainz = gameState.brainz - playerState.stamina_up_bcost;
+						gameState.gainz = gameState.gainz - playerState.stamina_up_gcost;
+						playerState.playerStats.stamina_level++;
+						playerState.UpdateMaxStamina();
+					}
+				}
+				else
+				{
+					//Show something instead of the button?
+				}
+
+				// Health upgrade pressed
+				if(gameState.brainz >= playerState.health_up_bcost && gameState.gainz >= playerState.health_up_gcost)
+				{
+					//GUI.Label( new Rect(66f,357f,117f,20f), new GUIContent("Press X to level up", null, ""));
+
+					if(GUI.Button( new Rect(98f,379f,50f,50f), new GUIContent("", LevelupB3, "")))
+					{
+						//Call the code that upgrades the players maximum health
+						gameState.brainz = gameState.brainz - playerState.health_up_bcost;
+						gameState.gainz = gameState.gainz - playerState.health_up_gcost;
+						playerState.playerStats.health_level++;
+						playerState.UpdateMaxHealth();
+					}
+				}
+				else
+				{
+					//Show something instead of the button?
+				}
+
+				//User is done applying upgrades
+				if(GUI.Button( new Rect(589f,440f,45f,32f), new GUIContent("Done", null, "")))
+				{
+					//Increment game level and set new primary objective
+					gameState.level++;
+					gameState.primary_objective.SetObjective(ObjectiveType.TIME, ObjectiveReward.NONE, 10*gameState.level, 0);
+					showUpgradeMenu = false;
+					gameState.primary_objective.completed = false;
+					gameState.primary_objective.done = false;
+
+					//Move player position to next levels spawn point position
+					if(gameState.level == 2)
+					{
+						player.transform.position = gameState.spawnPoint2.transform.position;
+					}
+					else if(gameState.level == 3)
+					{
+						player.transform.position = gameState.spawnPoint3.transform.position;
+					}
+					else if(gameState.level == 4)
+					{
+						player.transform.position = gameState.spawnPoint4.transform.position;
+					}
+
+					//Call code that scene transitions and set apporpriate variables for next level
+					playerState.stamina = playerState.playerStats.max_stamina;
+					playerState.health = playerState.playerStats.max_health;
+						//Call possible scene transition before starting level
+						//Reset health and stamina possible for starting the next level and maybe weapon ammo?
+						
+					gameState.paused = false;
+				}
 			}
 		}
 
