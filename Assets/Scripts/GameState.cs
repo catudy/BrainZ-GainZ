@@ -161,8 +161,6 @@ public class GameState : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		inventory.fire_extinguisher = 10.0f;
-		inventory.flame_thrower = 10.0f;
 
 		player = GameObject.Find ("Player");
 		playerState = player.GetComponent<PlayerState> ();
@@ -202,10 +200,16 @@ public class GameState : MonoBehaviour {
 	public void InitializeLevel(){
 		InitializeObjectives();
 		InitializePlayerPosition();
-		playerState.stamina = playerState.playerStats.max_stamina;
-		playerState.health = playerState.playerStats.max_health;
+		InitializePlayer ();
 		paused = false;
 
+	}
+
+	public void InitializePlayer(){
+		inventory.fire_extinguisher = 10.0f;
+		inventory.flame_thrower = 10.0f;
+		playerState.stamina = playerState.playerStats.max_stamina;
+		playerState.health = playerState.playerStats.max_health;
 	}
 
 	public void InitializePlayerPosition(){

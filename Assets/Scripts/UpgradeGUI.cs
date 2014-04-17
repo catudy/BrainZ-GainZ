@@ -23,9 +23,6 @@ public class UpgradeGUI : MonoBehaviour
 	public GameObject upgradeBG;
 	public GameObject hud;
 
-	//test vars
-	public float a,b,c,d = 0;
-	
 	public bool showUpgradeMenu = false;
 	public bool startNextLevel = false;
 	public bool gameCompleted = false;
