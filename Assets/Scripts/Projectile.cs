@@ -44,6 +44,7 @@ public class Projectile : MonoBehaviour {
 	}
 	
 	void OnControllerColliderHit(ControllerColliderHit collision) {
+		Debug.Log ("Hit with + " + collision.gameObject.name);
 		if(collision.gameObject.tag == "Deadly"){
 			DestroyWithExplosion(collision.gameObject);
 		}

@@ -67,6 +67,24 @@ public class Objective {
 		completed = false;
 		reward_amount = amount;
 	}
+	public void SetRandomObjective(int level){
+		type = (ObjectiveType)Random.Range (1, 5);
+		reward_amount = Random.Range (20 * level, 30 * level);
+		if(type == ObjectiveType.COLLECT){
+			target = Random.Range(1, level*5);
+			reward = ObjectiveReward.BRAINZ;
+		} else if (type == ObjectiveType.DAMAGE){
+			target = Random.Range(1, level*5);
+			reward = ObjectiveReward.GAINZ;
+		} else if (type == ObjectiveType.KILL){
+			target = Random.Range(level * 5, level * 10);
+			reward = ObjectiveReward.GAINZ;
+		} else if (type == ObjectiveType.SCAVENGER){
+			target = Random.Range(1, level*2);
+			reward = ObjectiveReward.BRAINZ;
+		}
+	}
+
 	public void UpdateObjective(float amount)
 	{
 		current += amount;
@@ -121,8 +139,8 @@ public class Objective {
 
 public class GameState : MonoBehaviour {
 	public bool game_over = false;
-	public int brainz = 0;
-	public int gainz = 0;
+	public int brainz = 500;
+	public int gainz = 500;
 	public int pickup_temp = 0;
 	public float cutscene_length_seconds = 35.0f;
 	public bool paused = false;
@@ -134,11 +152,11 @@ public class GameState : MonoBehaviour {
 	public int num_objectives = 5;
 	private bool in_cutscene = true;
 	Inventory inventory;
+	public bool inUpgradeMenu = false;
+	public GameObject[] spawnPoints;
 	private GameObject player;
 	private UpgradeGUI upgradeMenu;
-	public bool inUpgradeMenu = false;
-
-	public GameObject[] spawnPoints;
+	private PlayerState playerState;
 
 	// Use this for initialization
 	void Start () {
@@ -146,21 +164,10 @@ public class GameState : MonoBehaviour {
 		inventory.flame_thrower = 10.0f;
 
 		player = GameObject.Find ("Player");
+		playerState = player.GetComponent<PlayerState> ();
 		upgradeMenu = GameObject.Find("GUIController").GetComponentInChildren<UpgradeGUI>();
 
-		// Primary Objective time for now
-		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 40*level, 0);
-
-		// Set secondary Objectives
-		secondary_objectives = new Objective[num_objectives];
-
-		for(int i=0; i<secondary_objectives.Length; i++){
-			secondary_objectives[i] = new Objective((ObjectiveType)Random.Range(1,5),(ObjectiveReward)Random.Range(1,3), Random.Range(10,30), Random.Range(20,40));
-		}
-
-		player.transform.position = spawnPoints[0].transform.position;
-		brainz = 500;
-		gainz = 500;
+		InitializeLevel ();
 	}
 
 	// Update is called once per frame
@@ -189,6 +196,31 @@ public class GameState : MonoBehaviour {
 
 		UpdateObjectives ();
 		 
+	}
+
+	public void InitializeLevel(){
+		InitializeObjectives();
+		InitializePlayerPosition();
+		playerState.stamina = playerState.playerStats.max_stamina;
+		playerState.health = playerState.playerStats.max_health;
+		paused = false;
+
+	}
+
+	public void InitializePlayerPosition(){
+		player.transform.position = spawnPoints[level-1].transform.position;
+	}
+
+	public void InitializeObjectives(){
+		// Primary Objective time for now
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 40*level, 0);
+		
+		// Set secondary Objectives
+		secondary_objectives = new Objective[num_objectives];
+		for(int i=0; i<secondary_objectives.Length; i++){
+			secondary_objectives[i] = new Objective();
+			secondary_objectives[i].SetRandomObjective(level);
+		}
 	}
 
 	private void UpdateObjectives(){
@@ -255,12 +287,13 @@ public class GameState : MonoBehaviour {
 				Vector3 ray = new Vector3(forward.x,forward.y,forward.z+i);
 				if(Physics.Raycast(ray_start,ray,out hit)){
 					Debug.DrawRay (ray_start,ray);
-					if(hit.distance < 20.0f){
+					if(hit.distance < 5.0f){
 						if(item == Item.FIRE_EXTINGUISHER && hit.collider.gameObject.name == "FireDoor"){
 							Destroy (hit.collider.gameObject);
 						} else if(item == Item.FLAME_THROWER && hit.collider.gameObject.tag == "Deadly"){
 							DestroyWithExplosion (hit.collider.gameObject);
 							UpdateObjective(ObjectiveType.KILL,1.0f);
+							Debug.Log ("Hit + " + hit.distance);
 							return true;
 						}
 					}
