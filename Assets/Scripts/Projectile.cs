@@ -8,7 +8,6 @@ public class Projectile : MonoBehaviour {
 	private float start_time;
 	private Vector3 start; 
 	private Vector3 velocity;
-	CharacterController cc;
 	private GameState gameState;
 
 	// Use this for initialization
@@ -17,8 +16,7 @@ public class Projectile : MonoBehaviour {
 		target = GameObject.Find("Player").transform.position;
 		start = transform.position;
 		start_time = Time.time;
-		transform.Rotate (90, 0, 0);
-		cc = GetComponent<CharacterController> ();
+		transform.rotation = new Quaternion (0, 0, 0, 0);
 		velocity = (target - start).normalized * 5.0f;
 	}
 	
@@ -29,7 +27,7 @@ public class Projectile : MonoBehaviour {
 			return;
 		}
 		//transform.position = Vector3.Lerp (start, target, (Time.time-start_time)/(5.0f));
-		cc.Move (velocity * Time.deltaTime);
+		transform.Translate (velocity * Time.deltaTime);
 		if(Time.time > start_time + 5.0f){
 			DestroyWithExplosion(transform.gameObject);
 		}
@@ -43,9 +41,10 @@ public class Projectile : MonoBehaviour {
 		Destroy (obj);
 	}
 	
-	void OnControllerColliderHit(ControllerColliderHit collision) {
-		Debug.Log ("Hit with + " + collision.gameObject.name);
-		if(collision.gameObject.tag == "Deadly"){
+	void OnTriggerEnter(Collider collision) {
+		if(collision.gameObject.name == "Shooter(Clone)"){
+			return;
+		} else if(collision.gameObject.tag == "Deadly"){
 			DestroyWithExplosion(collision.gameObject);
 		}
 		DestroyWithExplosion(transform.gameObject);
