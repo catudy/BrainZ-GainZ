@@ -77,7 +77,6 @@ public class EnemyAI : MonoBehaviour
 		{
 			mod_aggro_range = aggro_range * 2;
 		}
-		Debug.Log (mod_aggro_range);
 		return ((player_pos - enemy_pos).magnitude < mod_aggro_range);
 	}
 }
