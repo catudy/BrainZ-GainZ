@@ -47,6 +47,7 @@ public class PlayerState : MonoBehaviour
 	public GameObject wep3;
 
 	public new bool[] active;
+	public bool canAttack = true;
 
 	//Make private later
 	public int health_up_bcost = 25;
@@ -77,6 +78,7 @@ public class PlayerState : MonoBehaviour
 		health = playerStats.max_health;
 
 		active [0] = true;
+		melee.collider.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -104,12 +106,21 @@ public class PlayerState : MonoBehaviour
 		}
 
 		//melee attack
-		if (Input.GetKeyDown("b")) 
+		if (Input.GetKeyDown("b") && canAttack) 
 		{
 			if(currentWeapon == 0)
 			{
 				melee.animation.Play();
+				if(melee.animation.isPlaying)
+				{
+					melee.collider.enabled = true;
+				}
+				StartCoroutine(Wait ());
 			}
+		}
+		if(!melee.animation.isPlaying)
+		{
+			melee.collider.enabled = false;
 		}
 	}
 
@@ -274,6 +285,13 @@ public class PlayerState : MonoBehaviour
 			wep2.SetActive(false);
 			wep3.SetActive(true);
 		}
+	}
+
+	IEnumerator Wait()
+	{
+		canAttack = false;
+		yield return new WaitForSeconds(1.0f);
+		canAttack = true;
 	}
 
 	public void SetSneaking()
