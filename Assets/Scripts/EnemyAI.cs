@@ -17,12 +17,10 @@ public class EnemyAI : MonoBehaviour
 	private GameObject player;
 	private CharacterController cc;
 	private Wander wander;
-	private GameState gameState;
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find("Player");
-		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 		cc = GetComponent<CharacterController> ();
 		wander = GetComponent<Wander> ();
 	}

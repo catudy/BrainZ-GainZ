@@ -18,8 +18,6 @@ public class GUIController : MonoBehaviour
 	//Reno box variables
 	private int levelBoxWidth = 100;
 	private int levelBoxHeight = 50;
-	private int levelBoxWPlace;
-	private int levelBoxHPlace;
 	
 	//Reno button variables
 	private int renoButtonWPlace = 90;
@@ -28,8 +26,6 @@ public class GUIController : MonoBehaviour
 	//Quit button variables
 	private int gameQuitW = 100;
 	private int gameQuitH = 25;
-	private int placeGameQuitW;
-	private int placeGameQuitH;
 	
 	//Button check variables
 	private bool renoButton;
@@ -82,12 +78,6 @@ public class GUIController : MonoBehaviour
 		//Load GUI for main menu
 		if(currentScene == mainMenu)
 		{
-			//Calculate various box and button placement and size values
-			levelBoxWPlace = (Screen.width-levelBoxWidth)/2;
-			levelBoxHPlace = (Screen.height-levelBoxHeight)-20;
-			placeGameQuitW = (Screen.width-gameQuitW)/2;
-			placeGameQuitH = 0;
-
 			//Creating reno box and button for level select
 			createBox (273,424,levelBoxWidth,levelBoxHeight, "Level Select");
 			renoButton = createButton(278,445,renoButtonWPlace,renoButtonHPlace,"Reno");

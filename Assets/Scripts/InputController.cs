@@ -3,7 +3,6 @@ using System.Collections;
 
 public class InputController : MonoBehaviour {
 	private GameObject player;
-	private PlayerState playerState;
 	private ParticleSystem fireextinguisher;
 	private ParticleSystem flamer;
 	private Camera cam;
@@ -13,7 +12,6 @@ public class InputController : MonoBehaviour {
 	void Start () 
 	{
 		player = GameObject.Find("Player");
-		playerState = player.GetComponent<PlayerState>();
 		fireextinguisher = GameObject.Find ("FireExtinguisherParticleEffect").GetComponent<ParticleSystem> ();
 		flamer = GameObject.Find ("FlamethrowerParticleEffect").GetComponent<ParticleSystem> ();
 		cam = GameObject.Find ("Main Camera").GetComponent<Camera> ();

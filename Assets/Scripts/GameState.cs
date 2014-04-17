@@ -156,7 +156,6 @@ public class GameState : MonoBehaviour {
 	public bool inUpgradeMenu = false;
 	public GameObject[] spawn_points;
 	private GameObject player;
-	private UpgradeGUI upgradeMenu;
 	private PlayerState playerState;
 
 	// Use this for initialization
@@ -164,8 +163,6 @@ public class GameState : MonoBehaviour {
 
 		player = GameObject.Find ("Player");
 		playerState = player.GetComponent<PlayerState> ();
-		upgradeMenu = GameObject.Find("GUIController").GetComponentInChildren<UpgradeGUI>();
-
 		InitializeLevel ();
 	}
 
