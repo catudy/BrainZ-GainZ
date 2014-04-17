@@ -4,6 +4,7 @@ using System.Collections;
 public class Projectile : MonoBehaviour {
 
 	public ParticleSystem explosion;
+	public GameObject fire;
 	private Vector3 target;
 	private float start_time;
 	private Vector3 start; 
@@ -35,8 +36,8 @@ public class Projectile : MonoBehaviour {
 
 	public void DestroyWithExplosion(GameObject obj){
 		Quaternion rotation = new Quaternion ();
-		Object o = Instantiate( explosion, obj.transform.position, rotation);
-		Destroy (o);
+		Instantiate( explosion, obj.transform.position, rotation);
+		Instantiate (fire, obj.transform.position, rotation);
 
 		Destroy (obj);
 	}

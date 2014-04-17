@@ -66,6 +66,7 @@ public class Objective {
 		current = 0;
 		completed = false;
 		reward_amount = amount;
+		done = false;
 	}
 	public void SetRandomObjective(int level){
 		type = (ObjectiveType)Random.Range (1, 5);
@@ -80,7 +81,7 @@ public class Objective {
 			target = Random.Range(1, level*2);
 			reward = ObjectiveReward.BRAINZ;
 		} else if (type == ObjectiveType.FIRE){
-			target = Random.Range (4, level * 4);
+			target = Random.Range (5*level, 10*level);
 			reward = ObjectiveReward.BRAINZ;
 		}
 	}
@@ -120,6 +121,8 @@ public class Objective {
 			ret = "Take Damage: ";
 		} else if (type == ObjectiveType.SCAVENGER){
 			ret = "Collect Items: ";
+		} else if (type == ObjectiveType.FIRE){
+			ret = "Put out Fires: ";
 		} else {
 			return "NO_OBJECTIVE";
 		}
@@ -151,7 +154,7 @@ public class GameState : MonoBehaviour {
 	private bool in_cutscene = true;
 	Inventory inventory;
 	public bool inUpgradeMenu = false;
-	public GameObject[] spawnPoints;
+	public GameObject[] spawn_points;
 	private GameObject player;
 	private UpgradeGUI upgradeMenu;
 	private PlayerState playerState;
@@ -206,12 +209,13 @@ public class GameState : MonoBehaviour {
 	}
 
 	public void InitializePlayerPosition(){
-		player.transform.position = spawnPoints[level-1].transform.position;
+		int spawn_index = (level-1) % spawn_points.Length;
+		player.transform.position = spawn_points[spawn_index].transform.position;
 	}
 
 	public void InitializeObjectives(){
 		// Primary Objective time for now
-		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 40*level, 0);
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 15*level, 0);
 		
 		// Set secondary Objectives
 		secondary_objectives = new Objective[num_objectives];
