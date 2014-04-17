@@ -24,7 +24,7 @@ public enum ObjectiveType
 {
 	NONE,
 	KILL, // Kill X Zombies
-	COLLECT, // Collect X Items
+	FIRE, // Put out X Fires
 	SCAVENGER, // Find Special Item
 	DAMAGE, // Take less than X damage
 	TIME // Survive X seconds
@@ -70,17 +70,17 @@ public class Objective {
 	public void SetRandomObjective(int level){
 		type = (ObjectiveType)Random.Range (1, 5);
 		reward_amount = Random.Range (20 * level, 30 * level);
-		if(type == ObjectiveType.COLLECT){
-			target = Random.Range(1, level*5);
-			reward = ObjectiveReward.BRAINZ;
-		} else if (type == ObjectiveType.DAMAGE){
-			target = Random.Range(1, level*5);
+		if (type == ObjectiveType.DAMAGE){
+			target = Random.Range(level, level*5);
 			reward = ObjectiveReward.GAINZ;
 		} else if (type == ObjectiveType.KILL){
 			target = Random.Range(level * 5, level * 10);
 			reward = ObjectiveReward.GAINZ;
 		} else if (type == ObjectiveType.SCAVENGER){
 			target = Random.Range(1, level*2);
+			reward = ObjectiveReward.BRAINZ;
+		} else if (type == ObjectiveType.FIRE){
+			target = Random.Range (4, level * 4);
 			reward = ObjectiveReward.BRAINZ;
 		}
 	}
@@ -116,12 +116,10 @@ public class Objective {
 			ret = "Kill Zombies: ";
 		} else if (type == ObjectiveType.TIME){
 			ret = "Survive: ";
-		} else if (type == ObjectiveType.COLLECT){
-			ret = "Collect: ";
 		} else if (type == ObjectiveType.DAMAGE){
-			ret = "Avoid Damage: ";
+			ret = "Take Damage: ";
 		} else if (type == ObjectiveType.SCAVENGER){
-			ret = "Collect Scavenge Items: ";
+			ret = "Collect Items: ";
 		} else {
 			return "NO_OBJECTIVE";
 		}
@@ -160,7 +158,7 @@ public class GameState : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		inventory.fire_extinguisher = 0.0f;
+		inventory.fire_extinguisher = 10.0f;
 		inventory.flame_thrower = 10.0f;
 
 		player = GameObject.Find ("Player");
@@ -263,13 +261,6 @@ public class GameState : MonoBehaviour {
 		}
 	}
 
-	public void ChangeScene(string scene_name) {
-		if(scene_name == "TestBuilding"){
-			// Manage scene change here.
-
-			// Load Scene change
-		}
-	}
 	public bool RunGame(){
 		return (!in_cutscene);
 	}
@@ -288,12 +279,13 @@ public class GameState : MonoBehaviour {
 				if(Physics.Raycast(ray_start,ray,out hit)){
 					Debug.DrawRay (ray_start,ray);
 					if(hit.distance < 5.0f){
-						if(item == Item.FIRE_EXTINGUISHER && hit.collider.gameObject.name == "FireDoor"){
+						if(item == Item.FIRE_EXTINGUISHER && hit.collider.gameObject.tag == "Fire"){
 							Destroy (hit.collider.gameObject);
+							UpdateObjective(ObjectiveType.FIRE,1.0f);
+							return true;
 						} else if(item == Item.FLAME_THROWER && hit.collider.gameObject.tag == "Deadly"){
 							DestroyWithExplosion (hit.collider.gameObject);
 							UpdateObjective(ObjectiveType.KILL,1.0f);
-							Debug.Log ("Hit + " + hit.distance);
 							return true;
 						}
 					}

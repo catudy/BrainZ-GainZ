@@ -15,7 +15,7 @@ public class PlayerCollision : MonoBehaviour
 	void OnControllerColliderHit(ControllerColliderHit collision) {
 		if (collision.gameObject.tag == "NoCollision") { // Don't care about the ground.
 			return;
-		} else if (collision.gameObject.tag == "Deadly") { 
+		} else if (collision.gameObject.tag == "Deadly" || collision.gameObject.tag == "Fire") { 
 			// Game over if you run into something deadly
 			if(playerState.power_up == PowerUp.INVULNERABLE){ 
 				// Fuck you Zambie
@@ -67,9 +67,6 @@ public class PlayerCollision : MonoBehaviour
 
 			// Delete Powerup Object
 			gameState.RemoveObject(collision.gameObject);
-		} 
-		else if (collision.gameObject.tag == "SceneChanger"){
-			gameState.ChangeScene(collision.gameObject.name);
 		} 
 		else if (collision.gameObject.tag == "Item"){
 			if (collision.gameObject.name == "Extinguisher"){
