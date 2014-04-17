@@ -46,7 +46,7 @@ public class PlayerState : MonoBehaviour
 	public GameObject wep2;
 	public GameObject wep3;
 
-	public bool[] active; // TODO: Rename and reimplement to remove warning.
+	public bool[] activeWeaponList; // TODO: Rename and reimplement to remove warning.
 	public bool canAttack = true;
 
 	// Use this for initialization
@@ -69,8 +69,8 @@ public class PlayerState : MonoBehaviour
 		stamina = playerStats.max_stamina;
 		health = playerStats.max_health;
 
-		active [0] = true;
-//		melee.collider.enabled = false;
+		activeWeaponList [0] = true;
+		//melee.collider.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -97,7 +97,7 @@ public class PlayerState : MonoBehaviour
 		}
 
 		//melee attack
-		if (Input.GetKeyDown("b") && canAttack) 
+		if (Input.GetKey("b") && canAttack) 
 		{
 			if(currentWeapon == 0)
 			{
@@ -106,12 +106,12 @@ public class PlayerState : MonoBehaviour
 				{
 					melee.collider.enabled = true;
 				}
-				StartCoroutine(Wait ());
+				//StartCoroutine(Wait ());
 			}
 		}
 		if(!melee.animation.isPlaying)
 		{
-//			melee.collider.enabled = false;
+			//melee.collider.enabled = false;
 		}
 	}
 
@@ -224,7 +224,7 @@ public class PlayerState : MonoBehaviour
 		} else {
 			while(current+1 < maxWeapon) {
 				current++;
-				if(active[current] == true) {
+				if(activeWeaponList[current] == true) {
 					currentWeapon = current;
 					break;
 				}
