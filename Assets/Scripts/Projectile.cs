@@ -26,8 +26,8 @@ public class Projectile : MonoBehaviour {
 		{
 			return;
 		}
-		//transform.position = Vector3.Lerp (start, target, (Time.time-start_time)/(5.0f));
-		transform.Translate (velocity * Time.deltaTime);
+		//transform.Translate (velocity * Time.deltaTime);
+		rigidbody.AddForce (velocity);
 		if(Time.time > start_time + 5.0f){
 			DestroyWithExplosion(transform.gameObject);
 		}
