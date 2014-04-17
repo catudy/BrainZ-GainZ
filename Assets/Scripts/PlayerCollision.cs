@@ -48,7 +48,6 @@ public class PlayerCollision : MonoBehaviour
 		else if(collision.gameObject.tag == "ak")
 		{
 			Destroy(collision.gameObject);
-			playerState.active[1] = true;
 		}
 
 		else if (collision.gameObject.tag == "Powerup") {

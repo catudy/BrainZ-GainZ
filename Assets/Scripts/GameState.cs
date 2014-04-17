@@ -251,7 +251,6 @@ public class GameState : MonoBehaviour {
 			ray_start.y += 0.5f; // Shoot ray from head
 
 			// Shoot rays in spread
-			int count = 0;
 			for(float i=-10; i < 10; i=i+0.1f){
 				Vector3 ray = new Vector3(forward.x,forward.y,forward.z+i);
 				if(Physics.Raycast(ray_start,ray,out hit)){
@@ -262,12 +261,11 @@ public class GameState : MonoBehaviour {
 						} else if(item == Item.FLAME_THROWER && hit.collider.gameObject.tag == "Deadly"){
 							DestroyWithExplosion (hit.collider.gameObject);
 							UpdateObjective(ObjectiveType.KILL,1.0f);
-							count++;
+							return true;
 						}
 					}
 				}
 			}
-			Debug.Log ("Killed " + count + "Zambies");
 			return true;
 		} else {
 			return false;

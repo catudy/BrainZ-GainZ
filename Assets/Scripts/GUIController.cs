@@ -118,8 +118,10 @@ public class GUIController : MonoBehaviour
 
 				int offset_y = 35;
 				foreach (Objective objective in gameState.secondary_objectives) {
-					createText(10,100+offset_y,400,400,objective.GetString());
-					offset_y += 35;
+					if(!objective.completed){
+						createText(10,100+offset_y,400,400,objective.GetString());
+						offset_y += 35;
+					}
 				}
 			}
 
@@ -137,10 +139,10 @@ public class GUIController : MonoBehaviour
 			
 			//Displaying brainz and gainz score on HUD
 			createImage(59,50,48,23, brainz_icon);
-			createText(72,64,8,25, gameState.brainz.ToString());
+			createText(72,64,20,25, gameState.brainz.ToString());
 		
 			createImage(98,48,20,27, gainz_icon);
-			createText(104,64,8,25, gameState.gainz.ToString());
+			createText(104,64,20,25, gameState.gainz.ToString());
 
 
 			//Displaying stamina bar on HUD
