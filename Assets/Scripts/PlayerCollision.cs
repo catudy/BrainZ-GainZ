@@ -12,9 +12,7 @@ public class PlayerCollision : MonoBehaviour
 	private PlayerState playerState; 
 	GameState gameState;
 
-	void OnControllerColliderHit(ControllerColliderHit collision) 
-	{
-		Debug.Log (collision.gameObject.name);
+	void OnControllerColliderHit(ControllerColliderHit collision) {
 		if (collision.gameObject.tag == "NoCollision") { // Don't care about the ground.
 			return;
 		} else if (collision.gameObject.tag == "Deadly") { 
@@ -24,6 +22,7 @@ public class PlayerCollision : MonoBehaviour
 				gameState.RemoveObject(collision.gameObject);
 			} else {
 				playerState.DealDamage(1);
+				Debug.Log ("Took Damage from " + collision.gameObject.name);
 			}
 		} else if (collision.gameObject.tag == "Projectile"){
 			gameState.game_over = true;

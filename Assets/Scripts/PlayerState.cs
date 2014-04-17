@@ -34,11 +34,11 @@ public class PlayerState : MonoBehaviour
 	private bool sneaking = false;
 	public bool running = false;
 	public PlayerStats playerStats;
-	
 	private float cooldown  = 0.0f;
+	private float damage_cooldown = 0.0f;
 	private GameState gameState;
 
-	//weapon vars
+	//weapon vars TODO: Update this to be an enumerable array.
 	private int currentWeapon = 0;
 	private int maxWeapon = 4;
 	public GameObject melee;
@@ -46,7 +46,7 @@ public class PlayerState : MonoBehaviour
 	public GameObject wep2;
 	public GameObject wep3;
 
-	public new bool[] active;
+	public bool[] active; // TODO: Rename and reimplement to remove warning.
 	public bool canAttack = true;
 
 	//Make private later
@@ -92,8 +92,7 @@ public class PlayerState : MonoBehaviour
 		UpdateCooldowns ();
 		UpdateStamina ();
 
-		if (cooldown <= 0.0f) 
-		{
+		if (cooldown <= 0.0f) {
 			ProcessAbilityInput();
 		}
 
@@ -230,9 +229,7 @@ public class PlayerState : MonoBehaviour
 		
 		if (current+1 == maxWeapon) {
 			currentWeapon = 0;
-		}
-		
-		else {
+		} else {
 			while(current+1 < maxWeapon) {
 				current++;
 				if(active[current] == true) {
@@ -312,11 +309,14 @@ public class PlayerState : MonoBehaviour
 	}
 
 	public void DealDamage(int damage){
-		health -= damage;
-		if(health < 0){
-			gameState.game_over = true;
+		if(Time.time > damage_cooldown){
+			health -= damage;
+			if(health < 0){
+				gameState.game_over = true;
+			}
+			gameState.UpdateObjective (ObjectiveType.DAMAGE, 1.0f);
+			damage_cooldown = Time.time + 1.0f;
 		}
-		gameState.UpdateObjective (ObjectiveType.DAMAGE, 1.0f);
 	}
 
 	public void HealDamage(int damage){
