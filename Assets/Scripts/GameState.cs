@@ -187,7 +187,7 @@ public class GameState : MonoBehaviour {
 			// Call game over scene transition
 
 			// Return player to main menu
-			Application.LoadLevel("_MainMenu");
+			//Application.LoadLevel("_MainMenu");
 		}
 
 		UpdateObjectives ();

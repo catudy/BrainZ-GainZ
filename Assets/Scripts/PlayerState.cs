@@ -304,7 +304,7 @@ public class PlayerState : MonoBehaviour
 	public void DealDamage(int damage){
 		if(Time.time > damage_cooldown){
 			health -= damage;
-			if(health < 0){
+			if(health <= 0){
 				gameState.game_over = true;
 			}
 			gameState.UpdateObjective (ObjectiveType.DAMAGE, 1.0f);

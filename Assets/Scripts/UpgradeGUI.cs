@@ -59,6 +59,11 @@ public class UpgradeGUI : MonoBehaviour
 			hud.SetActive(false);
 
 		}
+		else if(gameState.game_over)
+		{
+			hud.SetActive(false);
+			upgradeBG.SetActive(true);
+		}
 		else if(!gameState.primary_objective.completed && gameCompleted)
 		{
 			upgradeBG.SetActive(false);
@@ -86,7 +91,8 @@ public class UpgradeGUI : MonoBehaviour
 		{
 			gameState.paused = true;
 
-			/*if(gameState.level == 4)
+			//Change to 7 or 8 later
+			if(gameState.level == 3)
 			{
 				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("You beat the game! Your gains are superior!", null, ""));
 				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
@@ -94,7 +100,7 @@ public class UpgradeGUI : MonoBehaviour
 				{
 					Application.LoadLevel("_MainMenu");
 				}
-			}*/
+			}
 
 			if(!showUpgradeMenu)
 			{
@@ -107,8 +113,6 @@ public class UpgradeGUI : MonoBehaviour
 					showUpgradeMenu = true;
 				}
 			}
-
-
 
 			if(showUpgradeMenu)
 			{
@@ -219,8 +223,16 @@ public class UpgradeGUI : MonoBehaviour
 			}
 		}
 
-		else
+		else if(!gameState.primary_objective.completed && gameState.game_over)
 		{
+			gameState.paused = true;
+
+			GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("You lose!", null, ""));
+			//Insert score screen code (completed objectives and current brainZ and gainZ acquired
+			if(GUI.Button( new Rect(250,300,100,100),"Main Menu"))
+			{
+				Application.LoadLevel("_MainMenu");
+			}
 		}
 
 		GUI.matrix = svMat;
