@@ -12,6 +12,7 @@ public class UpgradeGUI : MonoBehaviour
 
 	private PlayerState playerState;
 	private GameState gameState;
+	public GameObject player;
 
 	//Resolution variables
 	private float originalWidth;
@@ -24,11 +25,14 @@ public class UpgradeGUI : MonoBehaviour
 
 	//test vars
 	public float a,b,c,d = 0;
+	
 	public bool showUpgradeMenu = false;
 	public bool startNextLevel = false;
+	public bool gameCompleted = false;
 	
 	void Start()
 	{
+		player = GameObject.Find("Player");
 		playerState = GameObject.Find("Player").GetComponentInChildren<PlayerState>();
 		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 	}
@@ -47,7 +51,12 @@ public class UpgradeGUI : MonoBehaviour
 			hud.SetActive(false);
 
 		}
-		else
+		else if(!gameState.primary_objective.completed && gameCompleted)
+		{
+			upgradeBG.SetActive(false);
+			hud.SetActive(false);
+		}
+		else if(!gameState.primary_objective.completed)
 		{
 			//Hide background plane for upgrade menu
 			upgradeBG.SetActive(false);
@@ -69,15 +78,29 @@ public class UpgradeGUI : MonoBehaviour
 		{
 			gameState.paused = true;
 
-			if(!showUpgradeMenu)
+			if(gameState.level == 4)
 			{
+				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("You beat the game! Your gains are superior!", null, ""));
+				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
+				if(GUI.Button( new Rect(250,300,100,100),"Main Menu") || Input.GetKey(KeyCode.JoystickButton7))
+				{
+					Application.LoadLevel("_MainMenu");
+				}
+			}
+
+			else if(!showUpgradeMenu)
+			{
+				//Level X completed message
 				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("Congratulations! Level "+gameState.level.ToString()+" completed", null, ""));
-				//Show score screen first (fade in congradulations)
-				if(GUI.Button( new Rect(250,300,100,100),"Continue"))
+
+				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
+				if(GUI.Button( new Rect(250,300,100,100),"Continue") || Input.GetKey(KeyCode.JoystickButton7))
 				{
 					showUpgradeMenu = true;
 				}
 			}
+
+
 
 			if(showUpgradeMenu)
 			{
@@ -169,18 +192,32 @@ public class UpgradeGUI : MonoBehaviour
 				}
 
 				//User is done applying upgrades
-				if(GUI.Button( new Rect(589f,440f,45f,32f), new GUIContent("Done", null, "")))
+				if(GUI.Button( new Rect(589f,440f,45f,32f), new GUIContent("Done", null, "")) || Input.GetKey(KeyCode.JoystickButton7))
 				{
 					//Increment game level and set new primary objective
 					gameState.level++;
-					gameState.primary_objective.SetObjective(ObjectiveType.TIME, ObjectiveReward.NONE, 3*gameState.level, 0);
+					gameState.primary_objective.SetObjective(ObjectiveType.TIME, ObjectiveReward.NONE, 10*gameState.level, 0);
 					showUpgradeMenu = false;
 					gameState.primary_objective.completed = false;
 					gameState.primary_objective.done = false;
 
-					//Call code that moves player to next level
-						//Move player position to next levels spawn point position
+					//Move player position to next levels spawn point position
+					if(gameState.level == 2)
+					{
+						player.transform.position = gameState.spawnPoint2.transform.position;
+					}
+					else if(gameState.level == 3)
+					{
+						player.transform.position = gameState.spawnPoint3.transform.position;
+					}
+					else if(gameState.level == 4)
+					{
+						player.transform.position = gameState.spawnPoint4.transform.position;
+					}
+
 					//Call code that scene transitions and set apporpriate variables for next level
+					playerState.stamina = playerState.playerStats.max_stamina;
+					playerState.health = playerState.playerStats.max_health;
 						//Call possible scene transition before starting level
 						//Reset health and stamina possible for starting the next level and maybe weapon ammo?
 						

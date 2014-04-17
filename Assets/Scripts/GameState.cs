@@ -45,6 +45,7 @@ public class Objective {
 	public int reward_amount;
 	public bool done = false;
 
+
 	public Objective(){ // Default constructor
 		type = ObjectiveType.NONE;
 		reward = ObjectiveReward.NONE;
@@ -139,6 +140,8 @@ public class GameState : MonoBehaviour {
 	private UpgradeGUI upgradeMenu;
 	public bool inUpgradeMenu = false;
 
+	public GameObject spawnPoint1, spawnPoint2, spawnPoint3, spawnPoint4;
+
 	// Use this for initialization
 	void Start () {
 		inventory.fire_extinguisher = 0.0f;
@@ -150,7 +153,7 @@ public class GameState : MonoBehaviour {
 		upgradeMenu = GameObject.Find("GUIController").GetComponentInChildren<UpgradeGUI>();
 
 		// Primary Objective time for now
-		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 3*level, 0);
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 10*level, 0);
 
 		// Set secondary Objectives
 		secondary_objectives = new Objective[num_objectives];
@@ -158,6 +161,8 @@ public class GameState : MonoBehaviour {
 		for(int i=0; i<secondary_objectives.Length; i++){
 			secondary_objectives[i] = new Objective((ObjectiveType)Random.Range(1,5),(ObjectiveReward)Random.Range(1,3), Random.Range(10,30), Random.Range(20,40));
 		}
+
+		player.transform.position = spawnPoint1.transform.position;
 	}
 
 	// Update is called once per frame
