@@ -89,7 +89,7 @@ public class UpgradeGUI : MonoBehaviour
 		{
 			gameState.paused = true;
 
-			if(gameState.level == 4)
+			/*if(gameState.level == 4)
 			{
 				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("You beat the game! Your gains are superior!", null, ""));
 				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
@@ -97,9 +97,9 @@ public class UpgradeGUI : MonoBehaviour
 				{
 					Application.LoadLevel("_MainMenu");
 				}
-			}
+			}*/
 
-			else if(!showUpgradeMenu)
+			if(!showUpgradeMenu)
 			{
 				//Level X completed message
 				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("Congratulations! Level "+gameState.level.ToString()+" completed", null, ""));
@@ -203,7 +203,7 @@ public class UpgradeGUI : MonoBehaviour
 						playerState.playerStats.health_level++;
 						playerState.UpdateMaxHealth();
 						upgrade_health_brain_cost += health_cost_increase_rate;
-						upgrade_weapon_gain_cost += health_cost_increase_rate;
+						upgrade_health_gain_cost += health_cost_increase_rate;
 					}
 				}
 				else
