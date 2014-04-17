@@ -350,5 +350,10 @@ public class GameState : MonoBehaviour {
 	public float GetLevelTimeRemaining(){
 		return primary_objective.target - primary_objective.current;
 	}
+
+	public void SpendBrainzNGainz(int b, int g){
+		brainz = brainz - b;
+		gainz = gainz - g;
+	}
 }
 

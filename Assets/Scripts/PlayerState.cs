@@ -49,14 +49,6 @@ public class PlayerState : MonoBehaviour
 	public bool[] active; // TODO: Rename and reimplement to remove warning.
 	public bool canAttack = true;
 
-	//Make private later
-	public int health_up_bcost = 25;
-	public int health_up_gcost = 25;
-	public int stamina_up_bcost = 25;
-	public int stamina_up_gcost = 25;
-	public int weapon_up_bcost = 25;
-	public int weapon_up_gcost = 25;
-
 	// Use this for initialization
 	void Start () 
 	{
@@ -245,6 +237,7 @@ public class PlayerState : MonoBehaviour
 	}
 	
 	void SetWeapon() {
+		//TODO: Wep1,Wep2,Wep3 need to go into an array.
 		if(currentWeapon == 0) {
 			melee.SetActive(true);
 			wep1.SetActive(false);
@@ -325,17 +318,11 @@ public class PlayerState : MonoBehaviour
 
 	public void UpdateMaxHealth() {
 		playerStats.max_health = playerStats.base_health + (playerStats.health_level-1);
-		health_up_bcost = health_up_bcost + (25*playerStats.health_level);
-		health_up_gcost = health_up_gcost + (25*playerStats.health_level);
 	}
 	public void UpdateMaxStamina() {
 		playerStats.max_stamina = playerStats.base_stamina + (playerStats.stamina_level-1);
-		stamina_up_bcost = stamina_up_bcost + (25*playerStats.stamina_level);
-		stamina_up_gcost = stamina_up_gcost + (25*playerStats.stamina_level);
 	}
 	public void UpdateMaxWeaponDamage(){
 		playerStats.weapon_damage = playerStats.base_wepon_damage + (0.5f*playerStats.weapon_level-0.5f);
-		weapon_up_bcost = weapon_up_bcost + (25*playerStats.weapon_level);
-		weapon_up_gcost = weapon_up_gcost + (25*playerStats.weapon_level);
 	}
 }
