@@ -82,7 +82,7 @@ public class UpgradeGUI : MonoBehaviour
 			{
 				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("You beat the game! Your gains are superior!", null, ""));
 				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
-				if(GUI.Button( new Rect(250,300,100,100),"Main Menu") || Input.GetKey(KeyCode.JoystickButton7))
+				if(GUI.Button( new Rect(250,300,100,100),"Main Menu"))
 				{
 					Application.LoadLevel("_MainMenu");
 				}
@@ -94,7 +94,7 @@ public class UpgradeGUI : MonoBehaviour
 				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("Congratulations! Level "+gameState.level.ToString()+" completed", null, ""));
 
 				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
-				if(GUI.Button( new Rect(250,300,100,100),"Continue") || Input.GetKey(KeyCode.JoystickButton7))
+				if(GUI.Button( new Rect(250,300,100,100),"Continue")) 
 				{
 					showUpgradeMenu = true;
 				}
@@ -109,7 +109,7 @@ public class UpgradeGUI : MonoBehaviour
 				GUI.DrawTexture( new Rect(250f, 254f, 100f, 100f), StaminaTexture);
 				GUI.DrawTexture( new Rect(350f, 185f, 250f, 250f), WeaponLogo);
 
-				GUI.Box(new Rect(a,b,c,d),"");
+				//GUI.Box(new Rect(a,b,c,d),"");
 
 				float current_wepdmg = playerState.playerStats.weapon_damage;
 				float next_wepdmg = playerState.playerStats.base_wepon_damage + (0.5f*(playerState.playerStats.weapon_level+1)-0.5f);
@@ -142,6 +142,8 @@ public class UpgradeGUI : MonoBehaviour
 				// Weapon upgrade pressed
 				if(gameState.brainz >= playerState.weapon_up_bcost && gameState.gainz >= playerState.weapon_up_gcost)
 				{
+					//GUI.Label( new Rect(418f,357f,117f,20f), new GUIContent("Press B to level up", null, ""));
+
 					if(GUI.Button( new Rect(452,379, 50f, 50f), new GUIContent("", LevelupB1, "")))
 					{
 						//Call code that upgrades the players weapon damage modifier
@@ -160,6 +162,8 @@ public class UpgradeGUI : MonoBehaviour
 				//Check to see if enough brainZ or gainZ aquired
 				if(gameState.brainz >= playerState.stamina_up_bcost && gameState.gainz >= playerState.stamina_up_gcost)
 				{
+					//GUI.Label( new Rect(237f,357f,117f,20f), new GUIContent("Press A to level up", null, ""));
+
 					if(GUI.Button( new Rect(272f,379f,50f,50f), new GUIContent("", LevelupB2, "")))
 					{
 						//Call code that upgrades the players stamina duration or speed modifier
@@ -177,6 +181,8 @@ public class UpgradeGUI : MonoBehaviour
 				// Health upgrade pressed
 				if(gameState.brainz >= playerState.health_up_bcost && gameState.gainz >= playerState.health_up_gcost)
 				{
+					//GUI.Label( new Rect(66f,357f,117f,20f), new GUIContent("Press X to level up", null, ""));
+
 					if(GUI.Button( new Rect(98f,379f,50f,50f), new GUIContent("", LevelupB3, "")))
 					{
 						//Call the code that upgrades the players maximum health
@@ -192,7 +198,7 @@ public class UpgradeGUI : MonoBehaviour
 				}
 
 				//User is done applying upgrades
-				if(GUI.Button( new Rect(589f,440f,45f,32f), new GUIContent("Done", null, "")) || Input.GetKey(KeyCode.JoystickButton7))
+				if(GUI.Button( new Rect(589f,440f,45f,32f), new GUIContent("Done", null, "")))
 				{
 					//Increment game level and set new primary objective
 					gameState.level++;

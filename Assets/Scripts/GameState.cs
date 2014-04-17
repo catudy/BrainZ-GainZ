@@ -163,6 +163,8 @@ public class GameState : MonoBehaviour {
 		}
 
 		player.transform.position = spawnPoint1.transform.position;
+		brainz = 500;
+		gainz = 500;
 	}
 
 	// Update is called once per frame
