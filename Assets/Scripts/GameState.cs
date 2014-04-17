@@ -134,13 +134,11 @@ public class GameState : MonoBehaviour {
 	public int num_objectives = 5;
 	private bool in_cutscene = true;
 	Inventory inventory;
-	private Camera cam;
-	GameObject player;
-	GameObject barrier;
+	private GameObject player;
 	private UpgradeGUI upgradeMenu;
 	public bool inUpgradeMenu = false;
 
-	public GameObject spawnPoint1, spawnPoint2, spawnPoint3, spawnPoint4;
+	public GameObject[] spawnPoints;
 
 	// Use this for initialization
 	void Start () {
@@ -148,12 +146,10 @@ public class GameState : MonoBehaviour {
 		inventory.flame_thrower = 10.0f;
 
 		player = GameObject.Find ("Player");
-		barrier = GameObject.Find ("Destroyed");
-		cam = player.GetComponentInChildren<Camera> ();
 		upgradeMenu = GameObject.Find("GUIController").GetComponentInChildren<UpgradeGUI>();
 
 		// Primary Objective time for now
-		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 10*level, 0);
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 40*level, 0);
 
 		// Set secondary Objectives
 		secondary_objectives = new Objective[num_objectives];
@@ -162,7 +158,7 @@ public class GameState : MonoBehaviour {
 			secondary_objectives[i] = new Objective((ObjectiveType)Random.Range(1,5),(ObjectiveReward)Random.Range(1,3), Random.Range(10,30), Random.Range(20,40));
 		}
 
-		player.transform.position = spawnPoint1.transform.position;
+		player.transform.position = spawnPoints[0].transform.position;
 		brainz = 500;
 		gainz = 500;
 	}

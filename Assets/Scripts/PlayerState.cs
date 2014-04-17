@@ -78,7 +78,7 @@ public class PlayerState : MonoBehaviour
 		health = playerStats.max_health;
 
 		active [0] = true;
-		melee.collider.enabled = false;
+//		melee.collider.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -120,7 +120,7 @@ public class PlayerState : MonoBehaviour
 		}
 		if(!melee.animation.isPlaying)
 		{
-			melee.collider.enabled = false;
+//			melee.collider.enabled = false;
 		}
 	}
 
@@ -203,11 +203,11 @@ public class PlayerState : MonoBehaviour
 	{
 		if (power_up == PowerUp.INVISIBILITY) 
 		{
-			GameObject.Find("char_ethan_body").GetComponent<SkinnedMeshRenderer>().enabled = true;
+//			GameObject.Find("char_ethan_body").GetComponent<SkinnedMeshRenderer>().enabled = true;
 		} 
 		else if (power_up == PowerUp.INVULNERABLE) 
 		{
-			GetComponent<ParticleSystem>().enableEmission = false;
+//			GetComponent<ParticleSystem>().enableEmission = false;
 		}
 		power_up = PowerUp.NONE;
 		power_up_time_remaining = 0.0f;
@@ -217,37 +217,29 @@ public class PlayerState : MonoBehaviour
 	{
 		power_up = set;
 		power_up_time_remaining = 15.0f;
-		if (power_up == PowerUp.INVISIBILITY) 
-		{
-			GameObject.Find ("char_ethan_body").GetComponent<SkinnedMeshRenderer> ().enabled = false;
+		if (power_up == PowerUp.INVISIBILITY) {
+//			GameObject.Find ("char_ethan_body").GetComponent<SkinnedMeshRenderer> ().enabled = false;
 		} 
-		else if (power_up == PowerUp.INVULNERABLE) 
-		{
-			GetComponent<ParticleSystem>().enableEmission = true;
+		else if (power_up == PowerUp.INVULNERABLE) {
+	//		GetComponent<ParticleSystem>().enableEmission = true;
 		} 
 	}
 
-	void Swap()
-	{ 
+	void Swap() { 
 		int current = currentWeapon;
 		
-		if (current+1 == maxWeapon) 
-		{
+		if (current+1 == maxWeapon) {
 			currentWeapon = 0;
 		}
 		
-		else
-		{
-			while(current+1 < maxWeapon)
-			{
+		else {
+			while(current+1 < maxWeapon) {
 				current++;
-				if(active[current] == true)
-				{
+				if(active[current] == true) {
 					currentWeapon = current;
 					break;
 				}
-				else if(current+1 == maxWeapon)
-				{
+				else if(current+1 == maxWeapon) {
 					currentWeapon = 0;
 					break;
 				}
@@ -255,31 +247,26 @@ public class PlayerState : MonoBehaviour
 		}
 	}
 	
-	void SetWeapon()
-	{
-		if(currentWeapon == 0)
-		{
+	void SetWeapon() {
+		if(currentWeapon == 0) {
 			melee.SetActive(true);
 			wep1.SetActive(false);
 			wep2.SetActive(false);
 			wep3.SetActive(false);
 		}
-		if(currentWeapon == 1)
-		{
+		if(currentWeapon == 1) {
 			melee.SetActive(false);
 			wep1.SetActive(true);
 			wep2.SetActive(false);
 			wep3.SetActive(false);
 		}
-		if(currentWeapon == 2)
-		{
+		if(currentWeapon == 2) {
 			melee.SetActive(false);
 			wep1.SetActive(false);
 			wep2.SetActive(true);
 			wep3.SetActive(false);
 		}
-		if(currentWeapon == 3)
-		{
+		if(currentWeapon == 3) {
 			melee.SetActive(false);
 			wep1.SetActive(false);
 			wep2.SetActive(false);
@@ -287,48 +274,40 @@ public class PlayerState : MonoBehaviour
 		}
 	}
 
-	IEnumerator Wait()
-	{
+	IEnumerator Wait() {
 		canAttack = false;
 		yield return new WaitForSeconds(1.0f);
 		canAttack = true;
 	}
 
-	public void SetSneaking()
-	{
+	public void SetSneaking() {
 		sneaking = true;
 		running = false;
 	}
 
-	public bool GetSneaking()
-	{
+	public bool GetSneaking() {
 		return sneaking || stamina < 0.5f;
 	}
 
-	public void SetRunning()
-	{
+	public void SetRunning() {
 		running = stamina > 0.5f;
 		sneaking = false;
 	}
 
-	public bool GetRunning()
-	{
+	public bool GetRunning() {
 		return running;
 	}
 
-	public void SetWalking()
-	{
+	public void SetWalking() {
 		running = false;
 		sneaking = false;
 	}
 
-	public bool GetWalking()
-	{
+	public bool GetWalking() {
 		return (!running & !sneaking);
 	}
 
-	public float GetStaminaPercent()
-	{
+	public float GetStaminaPercent() {
 		return stamina / playerStats.max_stamina;
 	}
 
@@ -344,20 +323,17 @@ public class PlayerState : MonoBehaviour
 		health += damage;
 	}
 
-	public void UpdateMaxHealth()
-	{
+	public void UpdateMaxHealth() {
 		playerStats.max_health = playerStats.base_health + (playerStats.health_level-1);
 		health_up_bcost = health_up_bcost + (25*playerStats.health_level);
 		health_up_gcost = health_up_gcost + (25*playerStats.health_level);
 	}
-	public void UpdateMaxStamina()
-	{
+	public void UpdateMaxStamina() {
 		playerStats.max_stamina = playerStats.base_stamina + (playerStats.stamina_level-1);
 		stamina_up_bcost = stamina_up_bcost + (25*playerStats.stamina_level);
 		stamina_up_gcost = stamina_up_gcost + (25*playerStats.stamina_level);
 	}
-	public void UpdateMaxWeaponDamage()
-	{
+	public void UpdateMaxWeaponDamage(){
 		playerStats.weapon_damage = playerStats.base_wepon_damage + (0.5f*playerStats.weapon_level-0.5f);
 		weapon_up_bcost = weapon_up_bcost + (25*playerStats.weapon_level);
 		weapon_up_gcost = weapon_up_gcost + (25*playerStats.weapon_level);

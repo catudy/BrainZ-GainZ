@@ -15,13 +15,10 @@ public class BnGAI : MonoBehaviour
 	private GameObject player;
 	public bool fleeing = false;
 
-	private GameState gameState;
-	
 	// Use this for initialization
 	void Start () 
 	{
 		player = GameObject.Find("Player");
-		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 	}
 	
 	// Update is called once per frame

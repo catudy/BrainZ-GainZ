@@ -14,6 +14,7 @@ public class PlayerCollision : MonoBehaviour
 
 	void OnControllerColliderHit(ControllerColliderHit collision) 
 	{
+		Debug.Log (collision.gameObject.name);
 		if (collision.gameObject.tag == "NoCollision") { // Don't care about the ground.
 			return;
 		} else if (collision.gameObject.tag == "Deadly") { 
@@ -76,7 +77,7 @@ public class PlayerCollision : MonoBehaviour
 			if (collision.gameObject.name == "Extinguisher"){
 				gameState.AddItem(Item.FIRE_EXTINGUISHER);
 				Destroy (collision.gameObject);
-			} else if (collision.gameObject.name == "Brain"){
+			} else if (collision.gameObject.name == "Brain(Clone)"){
 				gameState.AddItem (Item.BRAINZ);
 				Destroy (collision.gameObject);
 			}

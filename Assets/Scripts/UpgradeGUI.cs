@@ -208,25 +208,15 @@ public class UpgradeGUI : MonoBehaviour
 					gameState.primary_objective.done = false;
 
 					//Move player position to next levels spawn point position
-					if(gameState.level == 2)
-					{
-						player.transform.position = gameState.spawnPoint2.transform.position;
-					}
-					else if(gameState.level == 3)
-					{
-						player.transform.position = gameState.spawnPoint3.transform.position;
-					}
-					else if(gameState.level == 4)
-					{
-						player.transform.position = gameState.spawnPoint4.transform.position;
-					}
+					player.transform.position = gameState.spawnPoints[gameState.level-1].transform.position;
 
 					//Call code that scene transitions and set apporpriate variables for next level
 					playerState.stamina = playerState.playerStats.max_stamina;
 					playerState.health = playerState.playerStats.max_health;
-						//Call possible scene transition before starting level
-						//Reset health and stamina possible for starting the next level and maybe weapon ammo?
-						
+
+					//Call possible scene transition before starting level
+
+					//Reset health and stamina possible for starting the next level and maybe weapon ammo?
 					gameState.paused = false;
 				}
 			}
