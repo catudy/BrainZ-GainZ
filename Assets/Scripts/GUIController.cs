@@ -14,6 +14,10 @@ public class GUIController : MonoBehaviour
 	public Texture2D gainz_icon;
 	public Texture2D fire_extinguisher_icon;
 	public Texture2D flamer_icon;
+	public Texture2D staminaBar;
+	public Texture2D healthBar;
+	public Texture2D powerupBar;
+	public Texture2D statBox;
 	
 	//Reno box variables
 	private int levelBoxWidth = 100;
@@ -50,6 +54,9 @@ public class GUIController : MonoBehaviour
 	private Vector3 scale;
 
 	public bool showObjectives = true;
+
+	public float a,b,c,d =0;
+	public int w,x,y,z = 0;
 	
 	
 	void Start()
@@ -115,8 +122,18 @@ public class GUIController : MonoBehaviour
 				}
 			}
 
-			createText (294,43,400,400,"HP: " + playerState.health.ToString());
+			GUI.DrawTexture( new Rect(7f,14f,179f,73f), statBox);
+
+			if(playerState.GetHealth() >= 1)
+			{
+				GUI.DrawTexture( new Rect(79f,35f,100*(playerState.GetHealthPercent()),8f), healthBar);
+				createText(79,15,200,30,playerState.health.ToString()+"/"+playerState.playerStats.max_health.ToString());
+				//Add health as text as well possibly
+				//Health text under bar
+			}
 			// End Make me look purty
+
+
 
 			//Create pause button
 			pauseButton = createButton(578,6,59,20, "PAUSE");
@@ -128,20 +145,23 @@ public class GUIController : MonoBehaviour
 			}
 			
 			//Displaying brainz and gainz score on HUD
-			createImage(59,50,48,23, brainz_icon);
-			createText(72,64,20,25, gameState.brainz.ToString());
+			//createImage(59,50,48,23, brainz_icon);
+			//createText(72,64,20,25, gameState.brainz.ToString());
 		
-			createImage(98,48,20,27, gainz_icon);
-			createText(104,64,20,25, gameState.gainz.ToString());
+			//createImage(98,48,20,27, gainz_icon);
+			//createText(104,64,20,25, gameState.gainz.ToString());
 
 
 			//Displaying stamina bar on HUD
-			if(playerState.GetStaminaPercent() *200 >=12)
+			if(playerState.GetStaminaPercent()*100 >=1)
 			{
-				createBox(224,18, playerState.GetStaminaPercent() *175, 27, "");
+				GUI.DrawTexture( new Rect(79f,55f,100*playerState.GetStaminaPercent(),8f), staminaBar);
+				createText(79,38,200,30,playerState.stamina.ToString("F1")+"/"+playerState.playerStats.max_stamina.ToString("F1"));
+
+				//Add stamina as text as well possibly
+				//Stamina text under bar
 			}
-			createText(284,22,133,35,"STAMINA");
-			
+			/*
 			if(gameState.active_item == Item.FIRE_EXTINGUISHER){
 				// Fire Extinguisher Status
 				float extinguisher_ammo = gameState.GetItem(Item.FIRE_EXTINGUISHER);
@@ -157,9 +177,42 @@ public class GUIController : MonoBehaviour
 					createImage(10,8,132,51, flamer_icon);
 				}
 			}
-			
+			*/
 			//Displaying power-up bar on HUD if player has one
-			float powerup_width = playerState.power_up_time_remaining *8;
+			//float powerup_width = playerState.power_up_time_remaining *8;
+			if(playerState.GetPowerupPercent()*100 >=1)
+			{
+				GUI.DrawTexture( new Rect(79f,75,100*playerState.GetPowerupPercent(),8f), powerupBar);
+
+				if(playerState.power_up.ToString() == "INVISIBILITY")
+				{
+					createText(80,59,200,30,"INVISIBILITY");
+				}
+				else if(playerState.power_up.ToString() == "BLINK")
+				{
+					createText(80,59,200,30,"BLINK");
+				}
+				
+				else if(playerState.power_up.ToString() == "STUN")
+				{
+					createText(80,59,200,30,"STUN");
+				}
+				
+				else if(playerState.power_up.ToString() == "SECOND_WIND")
+				{
+					createText(80,59,200,30,"SECOND WIND");
+				}
+				
+				else if(playerState.power_up.ToString() == "INVULNERABLE")
+				{
+					createText(80,59,200,30,"INVULNERABLE");
+				}
+			}
+			else
+			{
+				createText(80,59,200,30,"NO POWERUP");
+			}
+			/*
 			if(playerState.power_up_time_remaining > 0.64f)
 			{
 				createBox(246,47,powerup_width,12,"");
@@ -188,6 +241,7 @@ public class GUIController : MonoBehaviour
 				}
 				//createBox(Screen.width - powerup_width, Screen.height - 30, powerup_width, 20, playerState.power_up.ToString());
 			}
+			*/
 
 		}
 		

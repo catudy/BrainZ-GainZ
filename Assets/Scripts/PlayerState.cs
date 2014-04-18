@@ -16,7 +16,7 @@ public struct PlayerStats{
 	public int base_health;
 	public float base_wepon_damage;
 	public float base_stamina;
-	public int max_health;
+	public float max_health;
 	public float weapon_damage;
 	public float max_stamina;
 	public int health_level;
@@ -30,7 +30,7 @@ public class PlayerState : MonoBehaviour
 	public float power_up_time_remaining = 0.0f;
 	public float stamina_recovery_rate = 1.0f; // how much stamina you recover per WaitForSeconds.
 	public float stamina; // How much stamina you currently have
-	public int health;
+	public float health;
 	private bool sneaking = false;
 	public bool running = false;
 	public PlayerStats playerStats;
@@ -207,7 +207,7 @@ public class PlayerState : MonoBehaviour
 	public void SetPowerUp(PowerUp set)
 	{
 		power_up = set;
-		power_up_time_remaining = 15.0f;
+		power_up_time_remaining = 10.0f;
 		if (power_up == PowerUp.INVISIBILITY) {
 			GameObject.Find ("Bip001 Pelvis").GetComponent<SkinnedMeshRenderer> ().enabled = false;
 		} 
@@ -299,6 +299,18 @@ public class PlayerState : MonoBehaviour
 
 	public float GetStaminaPercent() {
 		return stamina / playerStats.max_stamina;
+	}
+
+	public float GetHealthPercent() {
+		return health / playerStats.max_health;
+	}
+
+	public float GetPowerupPercent() {
+		return power_up_time_remaining / 10f;
+	}
+
+	public float GetHealth() {
+		return health;
 	}
 
 	public void DealDamage(int damage){
