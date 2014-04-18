@@ -92,7 +92,7 @@ public class UpgradeGUI : MonoBehaviour
 			gameState.paused = true;
 
 			//Change to 7 or 8 later
-			if(gameState.level == 2 || gameState.level == 8)
+			if(gameState.level == 8)//gameState.level == 2 || gameState.level == 8)
 			{
 				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("You beat the game! Your gains are superior!", null, ""));
 				//Insert score screen code (completed objectives and current brainZ and gainZ acquired

@@ -69,15 +69,15 @@ public class EnemyAI : MonoBehaviour
 			mod_aggro_range = 0.0f;
 		}
 
-		else if (player.GetComponent<PlayerState> ().GetSneaking()) 
-		{
-			mod_aggro_range = aggro_range / 2;
-		} 
+		//else if (player.GetComponent<PlayerState> ().GetSneaking()) 
+		//{
+		//	mod_aggro_range = aggro_range / 2;
+		//} 
 
-		else if (player.GetComponent<PlayerState> ().GetRunning()) 
-		{
-			mod_aggro_range = aggro_range * 2;
-		}
+		//else if (player.GetComponent<PlayerState> ().GetRunning()) 
+		//{
+		//	mod_aggro_range = aggro_range * 2;
+		//}
 		return ((player_pos - enemy_pos).magnitude < mod_aggro_range);
 	}
 }
