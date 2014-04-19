@@ -10,6 +10,8 @@ public class UpgradeGUI : MonoBehaviour
 	public Texture2D LevelupB2;
 	public Texture2D LevelupB3;
 
+	public GUISkin upgrade_skin;
+
 	private PlayerState playerState;
 	private GameState gameState;
 	public GameObject player;
@@ -36,6 +38,9 @@ public class UpgradeGUI : MonoBehaviour
 	public int upgrade_weapon_brain_cost = 25;
 	public int upgrade_weapon_gain_cost = 25;
 	public int weapon_cost_increase_rate = 25;
+
+	public int a,b,c,d = 0;
+	public int w,x,y,z = 0;
 
 	
 	void Start()
@@ -87,6 +92,8 @@ public class UpgradeGUI : MonoBehaviour
 		Matrix4x4 svMat = GUI.matrix;
 		GUI.matrix = Matrix4x4.TRS(Vector3.zero,Quaternion.identity,scale);
 
+		GUI.skin = upgrade_skin;
+
 		if(gameState.primary_objective.completed)
 		{
 			gameState.paused = true;
@@ -105,10 +112,74 @@ public class UpgradeGUI : MonoBehaviour
 			else if(!showUpgradeMenu)
 			{
 				//Level X completed message
-				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("Congratulations! Level "+gameState.level.ToString()+" completed", null, ""));
+				GUI.Label(new Rect(240,20,300,100), new GUIContent("Level "+gameState.level.ToString()+" Complete", null, ""));
+				GUI.Label(new Rect(115,115,400,100), new GUIContent("SECONDARY OBJECTIVES COMPLETED",null,""));
 
+				//Displaying secondary objectives
+				int yy = 0;
+				int offset_y = 30;
+				int gainz_earned = 0;
+				int brainz_earned = 0;
+				int sec_obj_comp = 0;
+
+				foreach(Objective objective in gameState.secondary_objectives)
+				{
+					if(objective.completed)
+					{
+						if(objective.type == ObjectiveType.KILL)
+						{
+							//GUI.DrawTexture( new Rect(528,20+yy,15,15), obj_kill);
+
+							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" ZOMBIES KILLED","");
+							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"");
+							gainz_earned += objective.reward_amount;
+
+							yy += offset_y;
+							sec_obj_comp +=1;
+						}
+							          
+						else if(objective.type == ObjectiveType.FIRE)
+						{
+							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" FIRES PUT OUT","");
+							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"");
+							brainz_earned += objective.reward_amount;
+							
+							yy += offset_y;
+							sec_obj_comp +=1;						
+						}
+						else if(objective.type == ObjectiveType.SCAVENGER)
+						{
+							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" SECRET ITEMS FOUND","");
+							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"");
+							brainz_earned += objective.reward_amount;
+
+							yy += offset_y;
+							sec_obj_comp +=1;	
+						}
+						else if(objective.type == ObjectiveType.DAMAGE)
+						{
+
+							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" DAMAGE TAKEN","");
+							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"");
+							gainz_earned += objective.reward_amount;
+
+							yy += offset_y;
+							sec_obj_comp +=1;
+						}
+					}
+				}
+
+				if(sec_obj_comp == 0)
+				{
+					GUI.Label(new Rect(115,170,100,100), new GUIContent("NONE",null,""));
+				}
+
+				GUI.Label(new Rect(115,400,100,100),"GainZ earned: "+gainz_earned.ToString(),"");
+				GUI.Label(new Rect(280,400,100,100),"BrainZ earned: "+brainz_earned.ToString(),"");
+				
+				
 				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
-				if(GUI.Button( new Rect(250,300,100,100),"Continue")) 
+				if(GUI.Button( new Rect(556,441,77,30),"Continue")) 
 				{
 					showUpgradeMenu = true;
 				}
@@ -121,7 +192,6 @@ public class UpgradeGUI : MonoBehaviour
 				GUI.DrawTexture( new Rect(250f, 254f, 100f, 100f), StaminaTexture);
 				GUI.DrawTexture( new Rect(350f, 185f, 250f, 250f), WeaponLogo);
 
-				//GUI.Box(new Rect(a,b,c,d),"");
 
 				float current_wepdmg = playerState.playerStats.weapon_damage;
 				float next_wepdmg = playerState.playerStats.base_wepon_damage + (0.5f*(playerState.playerStats.weapon_level+1)-0.5f);
@@ -217,6 +287,8 @@ public class UpgradeGUI : MonoBehaviour
 				{
 					//Increment game level and set new primary objective
 					gameState.level++;
+					playerState.power_up = PowerUp.NONE;
+					playerState.power_up_time_remaining = 0.0f;
 					gameState.InitializeLevel();
 					showUpgradeMenu = false;
 				}

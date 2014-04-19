@@ -44,9 +44,7 @@ public class GUIController : MonoBehaviour
 	
 	//Scene loading variables
 	private string currentScene = null;
-	//private string companyLogo = "_CompanyLogo";
 	private string mainMenu = "_MainMenu";
-	private string reno = "_Reno";
 	private string newReno = "New_reno";
 	
 	//Pause button variables
@@ -59,13 +57,9 @@ public class GUIController : MonoBehaviour
 	private float originalHeight;
 	private Vector3 scale;
 
-	public bool showObjectives = true;
-
+	//TEST VARS
 	public float a,b,c,d =0;
 	public int w,x,y,z = 0;
-	//public int ww,xx,yy,zz = 0;
-	//public int offset_y = 0;
-	
 	
 	void Start()
 	{
@@ -73,7 +67,7 @@ public class GUIController : MonoBehaviour
 		currentScene = Application.loadedLevelName;
 
 		//Get reno level start variables
-		if(currentScene == reno || currentScene == newReno)
+		if(currentScene == newReno)
 		{
 			//Getting gamestate and player state and gui variables
 			gameState = GameObject.Find("GameController").GetComponent<GameState>();
@@ -176,6 +170,28 @@ public class GUIController : MonoBehaviour
 			}
 
 			///////////////////////////
+			//////DRAWING WEAPONS//////
+			///////////////////////////
+
+			/*
+			if(gameState.active_item == Item.FIRE_EXTINGUISHER){
+				// Fire Extinguisher Status
+				float extinguisher_ammo = gameState.GetItem(Item.FIRE_EXTINGUISHER);
+				if(extinguisher_ammo > 0.0f){
+					createText(18,52,54,31, extinguisher_ammo.ToString("F2"));
+					createImage(12,3,42,80, fire_extinguisher_icon);
+				}
+			} else if (gameState.active_item == Item.FLAME_THROWER){
+				// Fire Extinguisher Status
+				float flamer_ammo = gameState.GetItem(Item.FLAME_THROWER);
+				if(flamer_ammo > 0.0f){
+					createText(15,52,54,31, flamer_ammo.ToString("F2"));
+					createImage(10,8,132,51, flamer_icon);
+				}
+			}
+			*/
+			
+			///////////////////////////
 			/////DRAWING OBJECTIVES////
 			///////////////////////////
 
@@ -243,36 +259,6 @@ public class GUIController : MonoBehaviour
 			{
 				Application.LoadLevel(mainMenu);
 			}
-			
-			//Displaying brainz and gainz score on HUD
-			//createImage(59,50,48,23, brainz_icon);
-			//createText(72,64,20,25, gameState.brainz.ToString());
-		
-			//createImage(98,48,20,27, gainz_icon);
-			//createText(104,64,20,25, gameState.gainz.ToString());
-
-			/*
-			if(gameState.active_item == Item.FIRE_EXTINGUISHER){
-				// Fire Extinguisher Status
-				float extinguisher_ammo = gameState.GetItem(Item.FIRE_EXTINGUISHER);
-				if(extinguisher_ammo > 0.0f){
-					createText(18,52,54,31, extinguisher_ammo.ToString("F2"));
-					createImage(12,3,42,80, fire_extinguisher_icon);
-				}
-			} else if (gameState.active_item == Item.FLAME_THROWER){
-				// Fire Extinguisher Status
-				float flamer_ammo = gameState.GetItem(Item.FLAME_THROWER);
-				if(flamer_ammo > 0.0f){
-					createText(15,52,54,31, flamer_ammo.ToString("F2"));
-					createImage(10,8,132,51, flamer_icon);
-				}
-			}
-			*/
-			//Displaying power-up bar on HUD if player has one
-			//float powerup_width = playerState.power_up_time_remaining *8;
-
-
-
 		}
 
 		GUI.matrix = svMat;

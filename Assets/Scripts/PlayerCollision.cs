@@ -20,6 +20,7 @@ public class PlayerCollision : MonoBehaviour
 			if(playerState.power_up == PowerUp.INVULNERABLE){ 
 				// Fuck you Zambie
 				gameState.RemoveObject(collision.gameObject);
+				gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
 			} else {
 				playerState.DealDamage(1);
 				Debug.Log ("Took Damage from " + collision.gameObject.name);
