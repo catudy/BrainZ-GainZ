@@ -18,7 +18,11 @@ public class GUIController : MonoBehaviour
 	public Texture2D healthBar;
 	public Texture2D powerupBar;
 	public Texture2D statBox;
-	
+	public Texture2D obj_kill;
+	public Texture2D obj_fire;
+	public Texture2D obj_scavange;
+	public Texture2D obj_damage;
+
 	//Reno box variables
 	private int levelBoxWidth = 100;
 	private int levelBoxHeight = 50;
@@ -57,6 +61,8 @@ public class GUIController : MonoBehaviour
 
 	public float a,b,c,d =0;
 	public int w,x,y,z = 0;
+	//public int ww,xx,yy,zz = 0;
+	//public int offset_y = 0;
 	
 	
 	void Start()
@@ -106,84 +112,34 @@ public class GUIController : MonoBehaviour
 		}
 		
 		//Load GUI for reno level
-		else if(currentScene == reno || currentScene == newReno)
+		else if(currentScene == newReno)
 		{
-			if(showObjectives)
-			{
-				//// Make me look purty
-				createText (10, 100, 200,30, gameState.primary_objective.GetString());
+			///////////////////////////
+			////////DRAWING HUD////////
+			///////////////////////////
 
-				int offset_y = 35;
-				foreach (Objective objective in gameState.secondary_objectives) {
-					if(!objective.completed){
-						createText(10,100+offset_y,400,400,objective.GetString());
-						offset_y += 35;
-					}
-				}
-			}
-
+			//Drawing background box for stats and items
 			GUI.DrawTexture( new Rect(7f,14f,179f,73f), statBox);
 
+			//Drawing health bar and text for health
 			if(playerState.GetHealth() >= 1)
 			{
 				GUI.DrawTexture( new Rect(79f,35f,100*(playerState.GetHealthPercent()),8f), healthBar);
-				createText(79,15,200,30,playerState.health.ToString()+"/"+playerState.playerStats.max_health.ToString());
-				//Add health as text as well possibly
-				//Health text under bar
+				createText(79,15,200,30,"Health: "+playerState.health.ToString()+"/"+playerState.playerStats.max_health.ToString());
 			}
-			// End Make me look purty
 
-
-
-			//Create pause button
-			pauseButton = createButton(578,6,59,20, "PAUSE");
-			
-			//If the pause button is pressed open the pause menu (but for now just returns to main menu)
-			if(pauseButton || Input.GetButton("Back"))
-			{
-				Application.LoadLevel(mainMenu);
-			}
-			
-			//Displaying brainz and gainz score on HUD
-			//createImage(59,50,48,23, brainz_icon);
-			//createText(72,64,20,25, gameState.brainz.ToString());
-		
-			//createImage(98,48,20,27, gainz_icon);
-			//createText(104,64,20,25, gameState.gainz.ToString());
-
-
-			//Displaying stamina bar on HUD
+			//Drawing stamina bar and text for stamina
 			if(playerState.GetStaminaPercent()*100 >=1)
 			{
 				GUI.DrawTexture( new Rect(79f,55f,100*playerState.GetStaminaPercent(),8f), staminaBar);
-				createText(79,38,200,30,playerState.stamina.ToString("F1")+"/"+playerState.playerStats.max_stamina.ToString("F1"));
+				createText(79,38,200,30,"Stamina: "+playerState.stamina.ToString("F1")+"/"+playerState.playerStats.max_stamina.ToString("F1"));
+			}
 
-				//Add stamina as text as well possibly
-				//Stamina text under bar
-			}
-			/*
-			if(gameState.active_item == Item.FIRE_EXTINGUISHER){
-				// Fire Extinguisher Status
-				float extinguisher_ammo = gameState.GetItem(Item.FIRE_EXTINGUISHER);
-				if(extinguisher_ammo > 0.0f){
-					createText(18,52,54,31, extinguisher_ammo.ToString("F2"));
-					createImage(12,3,42,80, fire_extinguisher_icon);
-				}
-			} else if (gameState.active_item == Item.FLAME_THROWER){
-				// Fire Extinguisher Status
-				float flamer_ammo = gameState.GetItem(Item.FLAME_THROWER);
-				if(flamer_ammo > 0.0f){
-					createText(15,52,54,31, flamer_ammo.ToString("F2"));
-					createImage(10,8,132,51, flamer_icon);
-				}
-			}
-			*/
-			//Displaying power-up bar on HUD if player has one
-			//float powerup_width = playerState.power_up_time_remaining *8;
+			//Drawing powerup bar and text for powerup
 			if(playerState.GetPowerupPercent()*100 >=1)
 			{
 				GUI.DrawTexture( new Rect(79f,75,100*playerState.GetPowerupPercent(),8f), powerupBar);
-
+				
 				if(playerState.power_up.ToString() == "INVISIBILITY")
 				{
 					createText(80,59,200,30,"INVISIBILITY");
@@ -212,36 +168,97 @@ public class GUIController : MonoBehaviour
 			{
 				createText(80,59,200,30,"NO POWERUP");
 			}
-			/*
-			if(playerState.power_up_time_remaining > 0.64f)
+
+			///////////////////////////
+			/////DRAWING OBJECTIVES////
+			///////////////////////////
+
+			//Drawing background box for primary and secondary objectives
+			GUI.DrawTexture( new Rect(454,14f,179f,85), statBox);
+
+			//Displaying primary objective (TIME)
+			createText(465,30,100,100,"SURVIVE");
+			createText(490,49,100,100,(gameState.primary_objective.target-gameState.primary_objective.current).ToString("F0"));
+
+			//Displaying secondary objectives
+			int yy = 0;
+			int offset_y = 15;
+			foreach(Objective objective in gameState.secondary_objectives)
 			{
-				createBox(246,47,powerup_width,12,"");
-				if(playerState.power_up.ToString() == "INVISIBILITY")
+
+				if(!objective.completed)
 				{
-					createText(248,43,90,50,"INVISIBILITY");
+					if(objective.type == ObjectiveType.KILL)
+					{
+						GUI.DrawTexture( new Rect(528,20+yy,15,15), obj_kill);
+						createText(548,17+yy,100,100,objective.current.ToString()+"/"+objective.target.ToString());
+
+						yy += offset_y;
+						
+					}
+					else if(objective.type == ObjectiveType.FIRE)
+					{
+						GUI.DrawTexture( new Rect(528,20+yy,15,15), obj_fire);
+						createText(548,17+yy,100,100,objective.current.ToString()+"/"+objective.target.ToString());
+						yy += offset_y;
+							
+					}
+					else if(objective.type == ObjectiveType.SCAVENGER)
+					{
+						GUI.DrawTexture( new Rect(528,20+yy,15,15), obj_scavange);
+						createText(548,17+yy,100,100,objective.current.ToString()+"/"+objective.target.ToString());
+						yy += offset_y;
+							
+					}
+					else if(objective.type == ObjectiveType.DAMAGE)
+					{
+						GUI.DrawTexture( new Rect(528,20+yy,15,15), obj_damage);
+						createText(548,17+yy,100,100,objective.current.ToString()+"/"+objective.target.ToString());
+						yy += offset_y;
+							
+					}
 				}
-				else if(playerState.power_up.ToString() == "BLINK")
-				{
-					createText(248,43,90,50,"BLINK");
+			}
+
+			///////////////////////////
+			//////DRAWING BUTTONS//////
+			///////////////////////////
+			pauseButton = createButton(568,41,58,32, "PAUSE");
+			
+			//If the pause button is pressed open the pause menu (but for now just returns to main menu)
+			if(pauseButton || Input.GetButton("Back"))
+			{
+				Application.LoadLevel(mainMenu);
+			}
+			
+			//Displaying brainz and gainz score on HUD
+			//createImage(59,50,48,23, brainz_icon);
+			//createText(72,64,20,25, gameState.brainz.ToString());
+		
+			//createImage(98,48,20,27, gainz_icon);
+			//createText(104,64,20,25, gameState.gainz.ToString());
+
+			/*
+			if(gameState.active_item == Item.FIRE_EXTINGUISHER){
+				// Fire Extinguisher Status
+				float extinguisher_ammo = gameState.GetItem(Item.FIRE_EXTINGUISHER);
+				if(extinguisher_ammo > 0.0f){
+					createText(18,52,54,31, extinguisher_ammo.ToString("F2"));
+					createImage(12,3,42,80, fire_extinguisher_icon);
 				}
-				
-				else if(playerState.power_up.ToString() == "STUN")
-				{
-					createText(248,43,90,50,"STUN");
+			} else if (gameState.active_item == Item.FLAME_THROWER){
+				// Fire Extinguisher Status
+				float flamer_ammo = gameState.GetItem(Item.FLAME_THROWER);
+				if(flamer_ammo > 0.0f){
+					createText(15,52,54,31, flamer_ammo.ToString("F2"));
+					createImage(10,8,132,51, flamer_icon);
 				}
-				
-				else if(playerState.power_up.ToString() == "SECOND_WIND")
-				{
-					createText(248,43,90,50,"SECOND WIND");
-				}
-				
-				else if(playerState.power_up.ToString() == "INVULNERABLE")
-				{
-					createText(248,43,90,50,"INVULNERABLE");
-				}
-				//createBox(Screen.width - powerup_width, Screen.height - 30, powerup_width, 20, playerState.power_up.ToString());
 			}
 			*/
+			//Displaying power-up bar on HUD if player has one
+			//float powerup_width = playerState.power_up_time_remaining *8;
+
+
 
 		}
 		
