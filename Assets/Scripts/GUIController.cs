@@ -23,6 +23,8 @@ public class GUIController : MonoBehaviour
 	public Texture2D obj_scavange;
 	public Texture2D obj_damage;
 
+	public GUISkin stat_skin;
+
 	//Reno box variables
 	private int levelBoxWidth = 100;
 	private int levelBoxHeight = 50;
@@ -118,27 +120,31 @@ public class GUIController : MonoBehaviour
 			////////DRAWING HUD////////
 			///////////////////////////
 
+			GUI.skin = stat_skin;
+
 			//Drawing background box for stats and items
 			GUI.DrawTexture( new Rect(7f,14f,179f,73f), statBox);
 
 			//Drawing health bar and text for health
 			if(playerState.GetHealth() >= 1)
 			{
-				GUI.DrawTexture( new Rect(79f,35f,100*(playerState.GetHealthPercent()),8f), healthBar);
-				createText(79,15,200,30,"Health: "+playerState.health.ToString()+"/"+playerState.playerStats.max_health.ToString());
+				GUI.DrawTexture( new Rect(79f,28,100*(playerState.GetHealthPercent()),8f), healthBar);
+				createText(79,16,200,30,"Health: "+playerState.health.ToString()+"/"+playerState.playerStats.max_health.ToString());
 			}
 
 			//Drawing stamina bar and text for stamina
 			if(playerState.GetStaminaPercent()*100 >=1)
 			{
-				GUI.DrawTexture( new Rect(79f,55f,100*playerState.GetStaminaPercent(),8f), staminaBar);
-				createText(79,38,200,30,"Stamina: "+playerState.stamina.ToString("F1")+"/"+playerState.playerStats.max_stamina.ToString("F1"));
+				GUI.DrawTexture( new Rect(79f,50,100*playerState.GetStaminaPercent(),8f), staminaBar);
+
 			}
 
+			createText(79,38,200,30,"Stamina: "+playerState.stamina.ToString("F1")+"/"+playerState.playerStats.max_stamina.ToString("F1"));
+			
 			//Drawing powerup bar and text for powerup
 			if(playerState.GetPowerupPercent()*100 >=1)
 			{
-				GUI.DrawTexture( new Rect(79f,75,100*playerState.GetPowerupPercent(),8f), powerupBar);
+				GUI.DrawTexture( new Rect(79f,72,100*playerState.GetPowerupPercent(),8f), powerupBar);
 				
 				if(playerState.power_up.ToString() == "INVISIBILITY")
 				{
@@ -177,8 +183,12 @@ public class GUIController : MonoBehaviour
 			GUI.DrawTexture( new Rect(454,14f,179f,85), statBox);
 
 			//Displaying primary objective (TIME)
-			createText(465,30,100,100,"SURVIVE");
-			createText(490,49,100,100,(gameState.primary_objective.target-gameState.primary_objective.current).ToString("F0"));
+			GUI.Label(new Rect(462,22,100,100), "SURVIVE","obj_style");
+
+			GUI.Label(new Rect(460,49,100,100),(gameState.primary_objective.target-gameState.primary_objective.current).ToString("F0"),"prim_style");
+
+			GUI.Label(new Rect(591,22,100,100),"LVL","obj_style");
+			GUI.Label(new Rect(554,3,100,100), gameState.level.ToString(),"lvl_style");
 
 			//Displaying secondary objectives
 			int yy = 0;
@@ -191,7 +201,7 @@ public class GUIController : MonoBehaviour
 					if(objective.type == ObjectiveType.KILL)
 					{
 						GUI.DrawTexture( new Rect(528,20+yy,15,15), obj_kill);
-						createText(548,17+yy,100,100,objective.current.ToString()+"/"+objective.target.ToString());
+						GUI.Label(new Rect(548,21+yy,100,100),objective.current.ToString()+"/"+objective.target.ToString(),"obj_style");
 
 						yy += offset_y;
 						
@@ -199,21 +209,24 @@ public class GUIController : MonoBehaviour
 					else if(objective.type == ObjectiveType.FIRE)
 					{
 						GUI.DrawTexture( new Rect(528,20+yy,15,15), obj_fire);
-						createText(548,17+yy,100,100,objective.current.ToString()+"/"+objective.target.ToString());
+						GUI.Label(new Rect(548,21+yy,100,100),objective.current.ToString()+"/"+objective.target.ToString(),"obj_style");
+
 						yy += offset_y;
 							
 					}
 					else if(objective.type == ObjectiveType.SCAVENGER)
 					{
 						GUI.DrawTexture( new Rect(528,20+yy,15,15), obj_scavange);
-						createText(548,17+yy,100,100,objective.current.ToString()+"/"+objective.target.ToString());
+						GUI.Label(new Rect(548,21+yy,100,100),objective.current.ToString()+"/"+objective.target.ToString(),"obj_style");
+
 						yy += offset_y;
 							
 					}
 					else if(objective.type == ObjectiveType.DAMAGE)
 					{
 						GUI.DrawTexture( new Rect(528,20+yy,15,15), obj_damage);
-						createText(548,17+yy,100,100,objective.current.ToString()+"/"+objective.target.ToString());
+						GUI.Label(new Rect(548,21+yy,100,100),objective.current.ToString()+"/"+objective.target.ToString(),"obj_style");
+
 						yy += offset_y;
 							
 					}
@@ -223,7 +236,7 @@ public class GUIController : MonoBehaviour
 			///////////////////////////
 			//////DRAWING BUTTONS//////
 			///////////////////////////
-			pauseButton = createButton(568,41,58,32, "PAUSE");
+			pauseButton = createButton(585,73,43,20, "PAUSE");
 			
 			//If the pause button is pressed open the pause menu (but for now just returns to main menu)
 			if(pauseButton || Input.GetButton("Back"))
@@ -261,7 +274,7 @@ public class GUIController : MonoBehaviour
 
 
 		}
-		
+
 		GUI.matrix = svMat;
 		
 	}
