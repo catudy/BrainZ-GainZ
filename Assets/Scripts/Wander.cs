@@ -9,7 +9,7 @@ public class Wander : MonoBehaviour
 	private Vector3 target_destination;
 	private Vector3 movement_vector;
 	private CharacterController cc;
-
+	
 	// Use this for initialization
 	void Start () 
 	{

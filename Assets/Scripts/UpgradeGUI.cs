@@ -103,7 +103,7 @@ public class UpgradeGUI : MonoBehaviour
 			//Change to 7 or 8 later
 			if(gameState.level == 8)//gameState.level == 2 || gameState.level == 8)
 			{
-				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("You beat the game! Your gains are superior!", null, ""));
+				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("You beat the game! Your gains are superior!", null, "Basic"));
 				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
 				if(GUI.Button( new Rect(250,300,100,100),"Main Menu"))
 				{
@@ -114,8 +114,8 @@ public class UpgradeGUI : MonoBehaviour
 			else if(!showUpgradeMenu)
 			{
 				//Level X completed message
-				GUI.Label(new Rect(240,20,300,100), new GUIContent("Level "+gameState.level.ToString()+" Complete", null, ""));
-				GUI.Label(new Rect(115,115,400,100), new GUIContent("SECONDARY OBJECTIVES COMPLETED",null,""));
+				GUI.Label(new Rect(240,20,300,100), new GUIContent("Level "+gameState.level.ToString()+" Complete", null, "Basic"));
+				GUI.Label(new Rect(115,115,400,100), new GUIContent("SECONDARY OBJECTIVES COMPLETED",null,"Basic"));
 
 				//Displaying secondary objectives
 				int yy = 0;
@@ -132,8 +132,8 @@ public class UpgradeGUI : MonoBehaviour
 						{
 							//GUI.DrawTexture( new Rect(528,20+yy,15,15), obj_kill);
 
-							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" ZOMBIES KILLED","");
-							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"");
+							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" ZOMBIES KILLED","Basic");
+							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"Basic");
 							gainz_earned += objective.reward_amount;
 
 							yy += offset_y;   
@@ -142,8 +142,8 @@ public class UpgradeGUI : MonoBehaviour
 							          
 						else if(objective.type == ObjectiveType.FIRE)
 						{
-							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" FIRES PUT OUT","");
-							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"");
+							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" FIRES PUT OUT","Basic");
+							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"Basic");
 							brainz_earned += objective.reward_amount;
 							
 							yy += offset_y;
@@ -151,8 +151,8 @@ public class UpgradeGUI : MonoBehaviour
 						}
 						else if(objective.type == ObjectiveType.SCAVENGER)
 						{
-							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" SECRET ITEMS FOUND","");
-							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"");
+							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" SECRET ITEMS FOUND","Basic");
+							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"Basic");
 							brainz_earned += objective.reward_amount;
 
 							yy += offset_y;
@@ -161,8 +161,8 @@ public class UpgradeGUI : MonoBehaviour
 						else if(objective.type == ObjectiveType.DAMAGE)
 						{
 
-							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" DAMAGE TAKEN","");
-							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"");
+							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" DAMAGE TAKEN","Basic");
+							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"Basic");
 							gainz_earned += objective.reward_amount;
 
 							yy += offset_y;
@@ -173,7 +173,7 @@ public class UpgradeGUI : MonoBehaviour
 
 				if(sec_obj_comp == 0)
 				{
-					GUI.Label(new Rect(115,170,400,100), new GUIContent("NONE COMPLETED",null,""));
+					GUI.Label(new Rect(115,170,400,100), new GUIContent("NONE COMPLETED",null,"Basic"));
 				}
 
 				GUI.Label(new Rect(115,400,100,100),"GainZ earned: "+gainz_earned.ToString(),"Big");
@@ -301,6 +301,7 @@ public class UpgradeGUI : MonoBehaviour
 					gameState.level++;
 					playerState.power_up = PowerUp.NONE;
 					playerState.power_up_time_remaining = 0.0f;
+					GameObject.Find("baseMale").GetComponent<SkinnedMeshRenderer>().enabled = true;
 					gameState.InitializeLevel();
 					showUpgradeMenu = false;
 				}

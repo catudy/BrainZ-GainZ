@@ -91,6 +91,7 @@ public class PlayerState : MonoBehaviour
 
 			if (power_up_time_remaining < 0.0f) 
 			{
+				Debug.Log("test");
 				DeletePowerup();
 			}
 		}
