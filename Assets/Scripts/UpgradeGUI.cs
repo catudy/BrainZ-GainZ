@@ -6,7 +6,7 @@ public class UpgradeGUI : MonoBehaviour
 	public Texture2D HeartTexture, StaminaTexture;
 	public Texture2D LevelupB1, LevelupB2, LevelupB3;
 	public Texture2D MeleeTexture, GunTexture, PulseTexture, FTTexture, FETexture;
-	public Texture2D AmmoTexture, LifeupTexture , BrainTexture, GainTexture, XTexture;
+	public Texture2D AmmoTexture, LifeupTexture , XTexture;
 
 	public GUISkin upgrade_skin;
 

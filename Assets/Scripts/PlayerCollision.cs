@@ -9,7 +9,8 @@ using System.Collections.Generic;
 
 public class PlayerCollision : MonoBehaviour 
 {
-	private PlayerState playerState; 
+	private PlayerState playerState;
+	private WeaponSystem weaponSystem;
 	GameState gameState;
 
 	void OnControllerColliderHit(ControllerColliderHit collision) {
@@ -49,21 +50,41 @@ public class PlayerCollision : MonoBehaviour
 		else if(collision.gameObject.tag == "gun")
 		{
 			Destroy(collision.gameObject);
+			weaponSystem.activeWeaponList[1] = true;
+			if(weaponSystem.activeWeaponList[1] == true)
+			{
+				weaponSystem.gunAmmo = weaponSystem.gunAmmo_max;
+			}
 		}
 
 		else if(collision.gameObject.tag == "pulse")
 		{
 			Destroy(collision.gameObject);
+			weaponSystem.activeWeaponList[2] = true;
+			if(weaponSystem.activeWeaponList[2] == true)
+			{
+				weaponSystem.pulseAmmo = weaponSystem.pulseAmmo_max;
+			}
 		}
 
 		else if(collision.gameObject.tag == "flame")
 		{
 			Destroy(collision.gameObject);
+			weaponSystem.activeWeaponList[3] = true;
+			if(weaponSystem.activeWeaponList[3] == true)
+			{
+				weaponSystem.flameAmmo = weaponSystem.flameAmmo_max;
+			}
 		}
 
 		else if(collision.gameObject.tag == "extinguish")
 		{
 			Destroy(collision.gameObject);
+			weaponSystem.activeWeaponList[4] = true;
+			if(weaponSystem.activeWeaponList[4] == true)
+			{
+				weaponSystem.feAmmo = weaponSystem.feAmmo_max;
+			}
 		}
 
 		else if (collision.gameObject.tag == "Powerup") {
@@ -119,6 +140,7 @@ public class PlayerCollision : MonoBehaviour
 	void Start () 
 	{
 		playerState = GetComponent<PlayerState>();
+		weaponSystem = GetComponent<WeaponSystem> ();
 		gameState = GameObject.Find("GameController").GetComponent<GameState>();
 	}
 	

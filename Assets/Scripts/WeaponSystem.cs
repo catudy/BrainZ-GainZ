@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class WeaponSystem : MonoBehaviour {
 
+	private GameObject player;
+	private GameState gameState;
+
+	private ParticleSystem flamer;
+	private ParticleSystem fire_ex;
+
 	private int currentWeapon = 0;
 	private int maxWeapon = 5;
 	public GameObject melee;
@@ -20,10 +26,14 @@ public class WeaponSystem : MonoBehaviour {
 
 	//upgrade variables
 	public int weaponLevelCap = 5;
+
+	//melee varaibles
 	public float meleeAttackSpeed;
 	public float meleeAttackSpeed_base;
 	public int meleeAttackSpeed_level;
 	public float meleeAttackSpeed_max;
+
+	//gun variables
 	public int gunAmmo;
 	public int gunAmmo_base;
 	public int gunAmmo_level;
@@ -32,39 +42,66 @@ public class WeaponSystem : MonoBehaviour {
 	public float fireRate_base;
 	public int fireRate_level;
 	public float fireRate_max;
+
+	//pulse variables
 	public int pulseAmmo;
 	public int pulseAmmo_base;
 	public int pulseAmmo_level;
 	public int pulseAmmo_max;
+
+	//flamethrower variables
+	public float flameAmmo;
+	public float flameAmmo_base;
+	public float flameAmmo_level;
+	public float flameAmmo_max;
+
+	//fire extinguisher variables
+	public float feAmmo;
+	public float feAmmo_base;
+	public float feAmmo_level;
+	public float feAmmo_max;
 
 
 
 	// Use this for initialization
 	void Start () {
 
+		player = GameObject.Find ("Player");
+		gameState = GameObject.Find ("GameController").GetComponentInChildren<GameState> ();
+		flamer = GameObject.Find ("FlamethrowerParticleEffect").GetComponent<ParticleSystem> ();
+		fire_ex = GameObject.Find ("FireExtinguisherParticleEffect").GetComponent<ParticleSystem> ();
+
 		//initialize base stats
 		meleeAttackSpeed_base = 1.0f;
 		gunAmmo_base = 10;
 		fireRate_base = 0.5f;
 		pulseAmmo_base = 3;
+		flameAmmo_base = 5.0f;
+		feAmmo_base = 5.0f;
 
 		//initialize stat levels
 		meleeAttackSpeed_level = 1;
 		gunAmmo_level = 1;
 		fireRate_level = 1;
 		pulseAmmo_level = 1;
+		flameAmmo_level = 1;
+		feAmmo_level = 1;
 
 		//set base as max
 		meleeAttackSpeed_max = meleeAttackSpeed_base;
 		gunAmmo_max = gunAmmo_base;
 		fireRate_max = fireRate_base;
 		pulseAmmo_max = pulseAmmo_base;
+		flameAmmo_max = flameAmmo_base;
+		feAmmo_max = feAmmo_base;
 
 		//set max to actual
 		meleeAttackSpeed = meleeAttackSpeed_max;
 		gunAmmo = gunAmmo_max;
 		fireRate = fireRate_max;
 		pulseAmmo = pulseAmmo_max;
+		flameAmmo = flameAmmo_max;
+		feAmmo = feAmmo_max;
 
 		activeWeaponList [0] = true;
 		melee.collider.enabled = false;
@@ -85,6 +122,7 @@ public class WeaponSystem : MonoBehaviour {
 		//melee attack
 		if (Input.GetKey("a") && canAttack) 
 		{
+			//melee attack
 			if(currentWeapon == 0)
 			{
 				melee.animation.Play();
@@ -94,6 +132,8 @@ public class WeaponSystem : MonoBehaviour {
 				}
 				StartCoroutine(WaitForAttack (meleeAttackSpeed));
 			}
+
+			//gun attack
 			if(currentWeapon == 1)
 			{
 				if(gunAmmo > 0)
@@ -103,6 +143,8 @@ public class WeaponSystem : MonoBehaviour {
 					StartCoroutine(WaitForAttack(fireRate));
 				}
 			}
+
+			//pulse attack
 			if(currentWeapon == 2)
 			{
 				if(pulseAmmo > 0)
@@ -116,6 +158,68 @@ public class WeaponSystem : MonoBehaviour {
 					StartCoroutine(WaitForAttack(1.0f));
 				}
 			}
+
+			//flamethrower attack
+			if(currentWeapon == 3)
+			{
+				if(flameAmmo > 0.0f)
+				{
+					RaycastHit hit;
+					Vector3 forward = player.transform.forward;
+					Vector3 ray_start = player.transform.position;
+					ray_start.y += 0.5f;
+
+					for(float i=-10; i < 10; i=i+0.1f)
+					{
+						Vector3 ray = new Vector3(forward.x,forward.y,forward.z+i);
+						if(Physics.Raycast(ray_start,ray,out hit))
+						{
+							Debug.DrawRay (ray_start,ray);
+							flamer.enableEmission = true;
+							if(hit.distance < 5.0f)
+							{
+								if(hit.collider.gameObject.tag == "Deadly"){
+									Destroy (hit.collider.gameObject);
+									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
+								}
+								flameAmmo -= Time.deltaTime;
+							}
+						}
+					}
+				}
+			}
+
+
+			//fire extinguisher attack
+			if(currentWeapon == 4)
+			{
+				if(feAmmo > 0.0f)
+				{
+					RaycastHit hit;
+					Vector3 forward = player.transform.forward;
+					Vector3 ray_start = player.transform.position;
+					ray_start.y += 0.5f;
+					
+					for(float i=-10; i < 10; i=i+0.1f)
+					{
+						Vector3 ray = new Vector3(forward.x,forward.y,forward.z+i);
+						if(Physics.Raycast(ray_start,ray,out hit))
+						{
+							Debug.DrawRay (ray_start,ray);
+							fire_ex.enableEmission = true;
+							if(hit.distance < 5.0f)
+							{
+								if(hit.collider.gameObject.tag == "Fire"){
+									Destroy (hit.collider.gameObject);
+									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
+								}
+								feAmmo -= Time.deltaTime;
+							}
+						}
+					}
+				}
+			}
+
 		}
 		DisableAttackCollider ();
 	
