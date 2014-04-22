@@ -3,18 +3,16 @@ using System.Collections;
 
 public class UpgradeGUI : MonoBehaviour
 {
-	public Texture2D HeartTexture;
-	public Texture2D StaminaTexture;
-	public Texture2D WeaponLogo;
-	public Texture2D LevelupB1;
-	public Texture2D LevelupB2;
-	public Texture2D LevelupB3;
+	public Texture2D HeartTexture, StaminaTexture;
+	public Texture2D LevelupB1, LevelupB2, LevelupB3;
+	public Texture2D MeleeTexture, GunTexture, PulseTexture, FTTexture, FETexture;
+	public Texture2D AmmoTexture, LifeupTexture , BrainTexture, GainTexture, XTexture;
 
 	public GUISkin upgrade_skin;
 
 	private PlayerState playerState;
 	private GameState gameState;
-	public GameObject player;
+	private GameObject player;
 
 	//Resolution variables
 	private float originalWidth;
@@ -29,18 +27,22 @@ public class UpgradeGUI : MonoBehaviour
 	public bool startNextLevel = false;
 	public bool gameCompleted = false;
 
-	public int upgrade_health_brain_cost = 25;
-	public int upgrade_health_gain_cost = 25;
-	public int health_cost_increase_rate = 25;
-	public int upgrade_stamina_brain_cost = 25;
-	public int upgrade_stamina_gain_cost = 25;
-	public int stamina_cost_increase_rate = 25;
-	public int upgrade_weapon_brain_cost = 25;
-	public int upgrade_weapon_gain_cost = 25;
-	public int weapon_cost_increase_rate = 25;
+	private int upgrade_health_brain_cost = 25;
+	private int upgrade_health_gain_cost = 25;
+	private int health_cost_increase_rate = 25;
 
-	public int a,b,c,d = 0;
-	public int w,x,y,z = 0;
+	private int upgrade_stamina_brain_cost = 25;
+	private int upgrade_stamina_gain_cost = 25;
+	private int stamina_cost_increase_rate = 25;
+
+	private int melee_speed_brain_cost = 25;
+	private int melee_speed_gain_cost = 25;
+	private int melee_speed_increase_rate = 25;
+
+	public int melee_range_brain_cost = 25;
+	public int melee_range_gain_cost = 25;
+
+	public int a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = 0;
 
 	
 	void Start()
@@ -134,7 +136,7 @@ public class UpgradeGUI : MonoBehaviour
 							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"");
 							gainz_earned += objective.reward_amount;
 
-							yy += offset_y;
+							yy += offset_y;   
 							sec_obj_comp +=1;
 						}
 							          
@@ -171,11 +173,11 @@ public class UpgradeGUI : MonoBehaviour
 
 				if(sec_obj_comp == 0)
 				{
-					GUI.Label(new Rect(115,170,100,100), new GUIContent("NONE",null,""));
+					GUI.Label(new Rect(115,170,400,100), new GUIContent("NONE COMPLETED",null,""));
 				}
 
-				GUI.Label(new Rect(115,400,100,100),"GainZ earned: "+gainz_earned.ToString(),"");
-				GUI.Label(new Rect(280,400,100,100),"BrainZ earned: "+brainz_earned.ToString(),"");
+				GUI.Label(new Rect(115,400,100,100),"GainZ earned: "+gainz_earned.ToString(),"Big");
+				GUI.Label(new Rect(115,425,100,100),"BrainZ earned: "+brainz_earned.ToString(),"Big");
 				
 				
 				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
@@ -187,90 +189,49 @@ public class UpgradeGUI : MonoBehaviour
 
 			if(showUpgradeMenu)
 			{
-				//Fade out and fade in again and show the upgrade menu
-				GUI.DrawTexture( new Rect(75f, 254f, 100f, 100f), HeartTexture);
-				GUI.DrawTexture( new Rect(250f, 254f, 100f, 100f), StaminaTexture);
-				GUI.DrawTexture( new Rect(350f, 185f, 250f, 250f), WeaponLogo);
+				//Upgrade menu
+				GUI.Label( new Rect(265,10,0,0),"Upgrades","Big");
 
+				//Drawing textures for stats
+				GUI.DrawTexture( new Rect(25,50,20,20), HeartTexture);
+				GUI.DrawTexture( new Rect(25,96,20,20), StaminaTexture);
+				GUI.DrawTexture( new Rect(25,139,20,20), MeleeTexture);
+				//GUI.DrawTexture( new Rect(0,0,100,100), GunTexture);
+				//GUI.DrawTexture( new Rect(0,0,100,100), PulseTexture);
+				//GUI.DrawTexture( new Rect(0,0,100,100), FTTexture);
+				//GUI.DrawTexture( new Rect(0,0,100,100), FETexture);
+				//GUI.DrawTexture( new Rect(0,0,100,100), AmmoTexture);
+				//GUI.DrawTexture( new Rect(0,0,100,100), LifeupTexture);
 
-				float current_wepdmg = playerState.playerStats.weapon_damage;
-				float next_wepdmg = playerState.playerStats.base_wepon_damage + (0.5f*(playerState.playerStats.weapon_level+1)-0.5f);
+				//Calculating current and next level stats to be displayed
 				float current_health = playerState.playerStats.max_health;
 				float next_health = playerState.playerStats.base_health + (playerState.playerStats.health_level);
 				float current_stamina = playerState.playerStats.max_stamina;
 				float next_stamina = playerState.playerStats.base_stamina + (playerState.playerStats.stamina_level);
 
-				//Draw upgrade text logos
-				//Edit these to show the actual level values
-				GUI.Label( new Rect(92f, 195f, 250f, 250f), new GUIContent(current_health+"->"+next_health, null, ""));
-				GUI.Label( new Rect(262f, 195f, 250f, 250f), new GUIContent(current_stamina+"->"+next_stamina, null, ""));
-				GUI.Label( new Rect(439, 195f, 250f, 250f), new GUIContent(current_wepdmg+"->"+next_wepdmg, null, ""));
-				GUI.Label( new Rect(280f, 25f, 77f, 50f), new GUIContent("Upgrades", null, ""));
+				//Draw current and next level stats
+				GUI.Label( new Rect(168,33,0,0), current_health+" => "+next_health+" Max Health", "Small");
+				GUI.Label( new Rect(171,81,0,0),current_stamina+" => "+next_stamina+" Max Stamina" ,"Small");
+				GUI.Label( new Rect(171,129,0,0),"XX => YY Attack"+" Speed","Small"); //Print current and next stat for melee speed
 
-				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("Current total BrainZ: "+gameState.brainz.ToString(), null, ""));
-				GUI.Label( new Rect(400f,100f,400f,100f), new GUIContent("Current total GainZ: "+gameState.gainz.ToString(), null, ""));
+				//Draw current amount of brainZ and gainZ
+				GUI.Label( new Rect(5,456,0,0),"Current total BrainZ: "+gameState.brainz.ToString(), "Big");
+				GUI.Label( new Rect(5,427,0,0),"Current total GainZ: "+gameState.gainz.ToString(), "Big");
 
-				GUI.Label( new Rect(66f,429f,200f,100f), new GUIContent("BrainZ needed: "+upgrade_health_brain_cost, null, ""));
-				GUI.Label( new Rect(66f,448f,200f,100f), new GUIContent("GainZ needed: "+upgrade_health_gain_cost, null, ""));
-
-				GUI.Label( new Rect(241f,429f,200f,100f), new GUIContent("BrainZ needed: "+upgrade_stamina_brain_cost, null, ""));
-				GUI.Label( new Rect(241f,448f,200f,100f), new GUIContent("GainZ needed: "+upgrade_stamina_gain_cost, null, ""));
-
-				GUI.Label( new Rect(432f,429f,200f,100f), new GUIContent("BrainZ needed: "+upgrade_weapon_brain_cost, null, ""));
-				GUI.Label( new Rect(432f,448f,200f,100f), new GUIContent("GainZ needed: "+upgrade_weapon_gain_cost, null, ""));
-
-				//Draw upgrade button logos 
-
-				// Weapon upgrade pressed
-				if(gameState.brainz >= upgrade_weapon_brain_cost && gameState.gainz >= upgrade_weapon_gain_cost)
-				{
-					//GUI.Label( new Rect(418f,357f,117f,20f), new GUIContent("Press B to level up", null, ""));
-
-					if(GUI.Button( new Rect(452,379, 50f, 50f), new GUIContent("", LevelupB1, "")))
-					{
-						//Call code that upgrades the players weapon damage modifier
-						gameState.SpendBrainzNGainz(upgrade_weapon_brain_cost, upgrade_weapon_gain_cost);
-						upgrade_weapon_brain_cost += weapon_cost_increase_rate;
-						upgrade_weapon_gain_cost += weapon_cost_increase_rate;
-						playerState.playerStats.weapon_level++;
-						playerState.UpdateMaxWeaponDamage();
-					}
-				}
-				else
-				{
-					//Show something instead of the button?
-				}
-
-				//Stamina upgrade pressed
-				//Check to see if enough brainZ or gainZ aquired
-				if(gameState.brainz >= upgrade_stamina_brain_cost && gameState.gainz >= upgrade_stamina_gain_cost)
-				{
-					//GUI.Label( new Rect(237f,357f,117f,20f), new GUIContent("Press A to level up", null, ""));
-
-					if(GUI.Button( new Rect(272f,379f,50f,50f), new GUIContent("", LevelupB2, "")))
-					{
-						//Call code that upgrades the players stamina duration or speed modifier
-						gameState.SpendBrainzNGainz(upgrade_stamina_brain_cost, upgrade_stamina_gain_cost);
-						upgrade_stamina_brain_cost += stamina_cost_increase_rate;
-						upgrade_stamina_gain_cost += stamina_cost_increase_rate;
-						playerState.playerStats.stamina_level++;
-						playerState.UpdateMaxStamina();
-					}
-				}
-				else
-				{
-					//Show something instead of the button?
-				}
+				//Draw costs of each upgrade
+				GUI.Label( new Rect(54,50,0,0), "BrainZ needed: "+upgrade_health_brain_cost, "Small");
+				GUI.Label( new Rect(54,64,0,0), "GainZ needed: "+upgrade_health_gain_cost, "Small");
+				GUI.Label( new Rect(54,109,0,0),"BrainZ needed: "+upgrade_stamina_brain_cost, "Small");
+				GUI.Label( new Rect(54,95,0,0),"GainZ needed: "+upgrade_stamina_gain_cost, "Small");
+				GUI.Label( new Rect(54,140,0,0),"BrainZ needed: "+melee_speed_brain_cost,"Small");
+				GUI.Label( new Rect(54,154,0,0),"GainZ needed: "+melee_speed_gain_cost,"Small");
 
 				// Health upgrade pressed
 				if(gameState.brainz >= upgrade_health_brain_cost && gameState.gainz >= upgrade_health_gain_cost)
 				{
-					//GUI.Label( new Rect(66f,357f,117f,20f), new GUIContent("Press X to level up", null, ""));
-
-					if(GUI.Button( new Rect(98f,379f,50f,50f), new GUIContent("", LevelupB3, "")))
+					if(GUI.Button( new Rect(168,49,25,25), new GUIContent("", LevelupB3, "")))
 					{
-						//Call the code that upgrades the players maximum health
-						gameState.SpendBrainzNGainz(upgrade_health_brain_cost, upgrade_weapon_gain_cost);
+						gameState.SpendBrainzNGainz(upgrade_health_brain_cost, upgrade_health_gain_cost);
 						playerState.playerStats.health_level++;
 						playerState.UpdateMaxHealth();
 						upgrade_health_brain_cost += health_cost_increase_rate;
@@ -280,7 +241,58 @@ public class UpgradeGUI : MonoBehaviour
 				else
 				{
 					//Show something instead of the button?
+					GUI.Button( new Rect(168,49,25,25), new GUIContent("", XTexture, ""));
 				}
+
+				//Stamina upgrade pressed
+				if(gameState.brainz >= upgrade_stamina_brain_cost && gameState.gainz >= upgrade_stamina_gain_cost)
+				{
+					if(GUI.Button( new Rect(168,95,25,25), new GUIContent("", LevelupB2, "")))
+					{
+						gameState.SpendBrainzNGainz(upgrade_stamina_brain_cost, upgrade_stamina_gain_cost);
+						upgrade_stamina_brain_cost += stamina_cost_increase_rate;
+						upgrade_stamina_gain_cost += stamina_cost_increase_rate;
+						playerState.playerStats.stamina_level++;
+						playerState.UpdateMaxStamina();
+					}
+				}
+				else
+				{
+					GUI.Button( new Rect(168,95,25,25), new GUIContent("", XTexture, ""));
+				}
+
+				//Melee attack speed upgrade pressed
+				if(gameState.brainz >= melee_speed_brain_cost && gameState.gainz >= melee_speed_gain_cost)
+				{
+					if(GUI.Button( new Rect(168,141,25,25), new GUIContent("", LevelupB2, "")))
+					{
+						gameState.SpendBrainzNGainz(melee_speed_brain_cost, melee_speed_gain_cost);
+						melee_speed_brain_cost += melee_speed_increase_rate;
+						melee_speed_gain_cost += melee_speed_increase_rate;
+						//Increment melee speed level
+						//Call updatemaxmeleespeed()
+
+					}
+				}
+				else
+				{
+					GUI.Button( new Rect(168,141,25,25), new GUIContent("", XTexture, ""));
+				}
+
+				//Add other upgrades here but follow format above. 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 				//User is done applying upgrades
 				if(GUI.Button( new Rect(589f,440f,45f,32f), new GUIContent("Done", null, "")))
