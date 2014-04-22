@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public enum PowerUp
 {
@@ -38,16 +37,6 @@ public class PlayerState : MonoBehaviour
 	private float damage_cooldown = 0.0f;
 	private GameState gameState;
 
-	//weapon vars TODO: Update this to be an enumerable array.
-	private int currentWeapon = 0;
-	private int maxWeapon = 4;
-	public GameObject melee;
-	public GameObject wep1;
-	public GameObject wep2;
-	public GameObject wep3;
-
-	public bool[] activeWeaponList; // TODO: Rename and reimplement to remove warning.
-	public bool canAttack = true;
 
 	// Use this for initialization
 	void Start () 
@@ -69,8 +58,6 @@ public class PlayerState : MonoBehaviour
 		stamina = playerStats.max_stamina;
 		health = playerStats.max_health;
 
-		activeWeaponList [0] = true;
-		//melee.collider.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -88,31 +75,6 @@ public class PlayerState : MonoBehaviour
 			ProcessAbilityInput();
 		}
 
-		SetWeapon ();
-
-		if(Input.GetKeyDown("v"))
-		{
-			Swap ();
-			Debug.Log (currentWeapon);
-		}
-
-		//melee attack
-		if (Input.GetKey("a") && canAttack) 
-		{
-			if(currentWeapon == 0)
-			{
-				melee.animation.Play();
-				if(melee.animation.isPlaying)
-				{
-					melee.collider.enabled = true;
-				}
-				//StartCoroutine(Wait ());
-			}
-		}
-		if(!melee.animation.isPlaying)
-		{
-			//melee.collider.enabled = false;
-		}
 	}
 
 	void UpdateTimers()
@@ -216,59 +178,6 @@ public class PlayerState : MonoBehaviour
 		} 
 	}
 
-	void Swap() { 
-		int current = currentWeapon;
-		
-		if (current+1 == maxWeapon) {
-			currentWeapon = 0;
-		} else {
-			while(current+1 < maxWeapon) {
-				current++;
-				if(activeWeaponList[current] == true) {
-					currentWeapon = current;
-					break;
-				}
-				else if(current+1 == maxWeapon) {
-					currentWeapon = 0;
-					break;
-				}
-			}
-		}
-	}
-	
-	void SetWeapon() {
-		//TODO: Wep1,Wep2,Wep3 need to go into an array.
-		if(currentWeapon == 0) {
-			melee.SetActive(true);
-			wep1.SetActive(false);
-			wep2.SetActive(false);
-			wep3.SetActive(false);
-		}
-		if(currentWeapon == 1) {
-			melee.SetActive(false);
-			wep1.SetActive(true);
-			wep2.SetActive(false);
-			wep3.SetActive(false);
-		}
-		if(currentWeapon == 2) {
-			melee.SetActive(false);
-			wep1.SetActive(false);
-			wep2.SetActive(true);
-			wep3.SetActive(false);
-		}
-		if(currentWeapon == 3) {
-			melee.SetActive(false);
-			wep1.SetActive(false);
-			wep2.SetActive(false);
-			wep3.SetActive(true);
-		}
-	}
-
-	IEnumerator Wait() {
-		canAttack = false;
-		yield return new WaitForSeconds(1.0f);
-		canAttack = true;
-	}
 
 	public void SetSneaking() {
 		sneaking = true;

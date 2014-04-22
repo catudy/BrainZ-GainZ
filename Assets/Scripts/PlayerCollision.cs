@@ -46,7 +46,22 @@ public class PlayerCollision : MonoBehaviour
 			Destroy (collision.gameObject);
 		} 
 
-		else if(collision.gameObject.tag == "ak")
+		else if(collision.gameObject.tag == "gun")
+		{
+			Destroy(collision.gameObject);
+		}
+
+		else if(collision.gameObject.tag == "pulse")
+		{
+			Destroy(collision.gameObject);
+		}
+
+		else if(collision.gameObject.tag == "flame")
+		{
+			Destroy(collision.gameObject);
+		}
+
+		else if(collision.gameObject.tag == "extinguish")
 		{
 			Destroy(collision.gameObject);
 		}
