@@ -216,13 +216,29 @@ public class GameState : MonoBehaviour {
 
 	public void InitializeObjectives(){
 		// Primary Objective time for now
-		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 15*level, 0);
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 1*level, 0);
 		
 		// Set secondary Objectives
 		secondary_objectives = new Objective[num_objectives];
 		for(int i=0; i<secondary_objectives.Length; i++){
 			secondary_objectives[i] = new Objective();
-			secondary_objectives[i].SetRandomObjective(level);
+			//secondary_objectives[i].SetRandomObjective(level);
+			//TESTING HAVING EVERY OBJECTIVE ONCE ONLY PER LEVEL
+			secondary_objectives[i].type = (ObjectiveType)i+1;
+			secondary_objectives[i].reward_amount = Random.Range (20 * level, 30 * level);
+			if (secondary_objectives[i].type == ObjectiveType.DAMAGE){
+				secondary_objectives[i].target = Random.Range(level, level*5);
+				secondary_objectives[i].reward = ObjectiveReward.GAINZ;
+			} else if (secondary_objectives[i].type == ObjectiveType.KILL){
+				secondary_objectives[i].target = Random.Range(level * 5, level * 10);
+				secondary_objectives[i].reward = ObjectiveReward.GAINZ;
+			} else if (secondary_objectives[i].type == ObjectiveType.SCAVENGER){
+				secondary_objectives[i].target = Random.Range(1, level*2);
+				secondary_objectives[i].reward = ObjectiveReward.BRAINZ;
+			} else if (secondary_objectives[i].type == ObjectiveType.FIRE){
+				secondary_objectives[i].target = Random.Range (5*level, 10*level);
+				secondary_objectives[i].reward = ObjectiveReward.BRAINZ;
+			}
 		}
 	}
 
