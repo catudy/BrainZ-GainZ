@@ -18,7 +18,7 @@ public class Spawner : MonoBehaviour
 	public GameObject[] spawn_points; // Around What we are Spawning
 	private float timer = 0.0f;
 	private GameState gameState;
-
+	public float spawnHeight = 0.2f;
 	// Use this for initialization
 	void Start () 
 	{
@@ -62,7 +62,7 @@ public class Spawner : MonoBehaviour
 		do 
 		{ 
 			enemy_pos = Random.onUnitSphere * Random.Range(min_distance, max_distance) + spawn_pos;
-			enemy_pos.y = 0.2f;
+			enemy_pos.y = spawnHeight;
 		} while ((enemy_pos - spawn_pos).magnitude < min_distance);
 
 		return enemy_pos;

@@ -25,6 +25,10 @@ public class PlayerCollision : MonoBehaviour
 			} else {
 				playerState.DealDamage(1);
 				Debug.Log ("Took Damage from " + collision.gameObject.name);
+				if(collision.gameObject.tag == "Fire")
+				{
+					Destroy(collision.gameObject);
+				}
 			}
 		} else if (collision.gameObject.tag == "Projectile"){
 			gameState.game_over = true;

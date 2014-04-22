@@ -156,7 +156,7 @@ public class PlayerState : MonoBehaviour
 	{
 		if (power_up == PowerUp.INVISIBILITY) 
 		{
-			GameObject.Find("Bip001 Pelvis").GetComponent<SkinnedMeshRenderer>().enabled = true;
+			GameObject.Find("baseMale").GetComponent<SkinnedMeshRenderer>().enabled = true;
 		} 
 		else if (power_up == PowerUp.INVULNERABLE) 
 		{
@@ -171,7 +171,7 @@ public class PlayerState : MonoBehaviour
 		power_up = set;
 		power_up_time_remaining = 10.0f;
 		if (power_up == PowerUp.INVISIBILITY) {
-			GameObject.Find ("Bip001 Pelvis").GetComponent<SkinnedMeshRenderer> ().enabled = false;
+			GameObject.Find ("baseMale").GetComponent<SkinnedMeshRenderer> ().enabled = false;
 		} 
 		else if (power_up == PowerUp.INVULNERABLE) {
 	//		GetComponent<ParticleSystem>().enableEmission = true;
