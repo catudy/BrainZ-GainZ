@@ -10,7 +10,7 @@ public class WeaponSystem : MonoBehaviour {
 	private ParticleSystem flamer;
 	private ParticleSystem fire_ex;
 
-	private int currentWeapon = 0;
+	public int currentWeapon = 0;
 	private int maxWeapon = 5;
 	public GameObject melee;
 	public GameObject gun;
@@ -183,13 +183,17 @@ public class WeaponSystem : MonoBehaviour {
 									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
 								}
 								flameAmmo -= Time.deltaTime;
+
+								if(flameAmmo<=0.0f)
+								{
+									flameAmmo = 0.0f;
+								}
 							}
 						}
 					}
 				}
 			}
-
-
+		
 			//fire extinguisher attack
 			if(currentWeapon == 4)
 			{
@@ -214,6 +218,10 @@ public class WeaponSystem : MonoBehaviour {
 									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
 								}
 								feAmmo -= Time.deltaTime;
+								if(flameAmmo<=0.0f)
+								{
+									flameAmmo = 0.0f;
+								}
 							}
 						}
 					}

@@ -8,6 +8,8 @@ public class GUIController : MonoBehaviour
 	
 	//Variable for the current player
 	private PlayerState playerState;
+
+	private WeaponSystem weaponSystem;
 	
 	//Texture variables
 	public Texture2D brainz_icon;
@@ -22,6 +24,7 @@ public class GUIController : MonoBehaviour
 	public Texture2D obj_fire;
 	public Texture2D obj_scavange;
 	public Texture2D obj_damage;
+	public Texture2D meleeTexture, gunTexture, pulseTexture, feTexture, ftTexture , infinityTexture;
 
 	public GUISkin stat_skin;
 
@@ -72,6 +75,7 @@ public class GUIController : MonoBehaviour
 			//Getting gamestate and player state and gui variables
 			gameState = GameObject.Find("GameController").GetComponent<GameState>();
 			playerState = GameObject.Find("Player").GetComponent<PlayerState>();
+			weaponSystem = GameObject.Find("Player").GetComponent<WeaponSystem>();
 		}
 	}
 	
@@ -169,31 +173,40 @@ public class GUIController : MonoBehaviour
 				createText(80,59,200,30,"NO POWERUP");
 			}
 
-			///////////////////////////
-			//////DRAWING WEAPONS//////
-			///////////////////////////
-
-			/*
-			if(gameState.active_item == Item.FIRE_EXTINGUISHER){
-				// Fire Extinguisher Status
-				float extinguisher_ammo = gameState.GetItem(Item.FIRE_EXTINGUISHER);
-				if(extinguisher_ammo > 0.0f){
-					createText(18,52,54,31, extinguisher_ammo.ToString("F2"));
-					createImage(12,3,42,80, fire_extinguisher_icon);
-				}
-			} else if (gameState.active_item == Item.FLAME_THROWER){
-				// Fire Extinguisher Status
-				float flamer_ammo = gameState.GetItem(Item.FLAME_THROWER);
-				if(flamer_ammo > 0.0f){
-					createText(15,52,54,31, flamer_ammo.ToString("F2"));
-					createImage(10,8,132,51, flamer_icon);
-				}
+			//Draw melee weapon and stats
+			if(weaponSystem.currentWeapon == 0)
+			{
+				GUI.DrawTexture( new Rect(20,19,45,45), meleeTexture);
+				GUI.DrawTexture( new Rect(38,63,20,20), infinityTexture);
 			}
-			*/
-			
-			///////////////////////////
-			/////DRAWING OBJECTIVES////
-			///////////////////////////
+
+			else if(weaponSystem.currentWeapon == 1)
+			//Draw gun weapon and stats
+			{
+				GUI.DrawTexture( new Rect(21,19,45,45), gunTexture);
+				createText(34,69,200,20,weaponSystem.gunAmmo.ToString()+"/"+weaponSystem.gunAmmo_max.ToString());
+			}
+
+			//Draw pulse weapon and stats
+			else if(weaponSystem.currentWeapon == 2)
+			{
+				GUI.DrawTexture( new Rect(23,19,45,45), pulseTexture);
+				createText(34,69,200,20,weaponSystem.pulseAmmo.ToString()+"/"+weaponSystem.pulseAmmo_max.ToString());
+			}
+
+			//Draw flamethrower and stats
+			else if(weaponSystem.currentWeapon == 3)
+			{
+				GUI.DrawTexture( new Rect(24,20,40,40), ftTexture);
+				createText(34,69,200,20,weaponSystem.flameAmmo.ToString("F2")+"/"+weaponSystem.flameAmmo_max.ToString("F2"));
+			}
+
+			//Draw fireextinguisher and stats
+			else if(weaponSystem.currentWeapon == 4)
+			{
+				GUI.DrawTexture( new Rect(34,22,20,40), feTexture);
+				createText(34,69,200,20,weaponSystem.feAmmo.ToString("F2")+"/"+weaponSystem.feAmmo_max.ToString("F2"));
+			}
 
 			//Drawing background box for primary and secondary objectives
 			GUI.DrawTexture( new Rect(454,14f,179f,85), statBox);
