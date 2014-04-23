@@ -75,13 +75,13 @@ public class Objective {
 			target = Random.Range(level, level*5);
 			reward = ObjectiveReward.GAINZ;
 		} else if (type == ObjectiveType.KILL){
-			target = Random.Range(level * 5, level * 10);
+			target = Random.Range(level * 10, level * 20);
 			reward = ObjectiveReward.GAINZ;
 		} else if (type == ObjectiveType.SCAVENGER){
-			target = Random.Range(1, level*2);
+			target = Random.Range(level, level*2);
 			reward = ObjectiveReward.BRAINZ;
 		} else if (type == ObjectiveType.FIRE){
-			target = Random.Range (5*level, 10*level);
+			target = Random.Range (10*level, 20*level);
 			reward = ObjectiveReward.BRAINZ;
 		}
 	}
