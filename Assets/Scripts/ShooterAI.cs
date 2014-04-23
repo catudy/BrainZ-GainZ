@@ -35,11 +35,11 @@ public class ShooterAI : MonoBehaviour {
 	{
 		Vector3 diff = player_pos - enemy_pos;
 		float distance = diff.magnitude;
-
-		if (Physics.Raycast (transform.position, diff, distance - 2.0f)) {
-			return false;
-		} else {
-			return true;
+		if(distance > 2.0f){
+			if (Physics.Raycast (transform.position, diff, distance - 2.0f)) {
+				return false;
+			} 
 		}
+		return true;
 	}
 }

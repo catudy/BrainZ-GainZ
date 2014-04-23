@@ -9,10 +9,10 @@ using System.Collections;
 public class EnemyAI : MonoBehaviour 
 {
 	public float aggro_range = 5.0f; // range in feet at which enemy will aggro
-	public float max_speed = 2.0f; // maximum speed that enemy can have.
-	public float acceleration = 1.0f; 
+	public float speed = 2.0f; // maximum speed that enemy can have.
+	public float turn_rate = 15.0f; // degrees per second
 	public bool aggro;
-	private Vector3 velocity = new Vector3(0,0,0); // current enemy velocity.
+	public Vector3 velocity = new Vector3(0,0,0); // current enemy velocity.
 	private Vector3 target_pos;
 	private GameObject player;
 	private CharacterController cc;
@@ -37,8 +37,9 @@ public class EnemyAI : MonoBehaviour
 		if(aggro) {
 			wander.enabled = false;
 			Quaternion target_rotation = Quaternion.LookRotation(player.transform.position - transform.position);
-			transform.rotation = Quaternion.RotateTowards(transform.rotation, target_rotation, 1.0f);
-			velocity = transform.forward.normalized * max_speed;
+			Debug.Log (target_rotation);
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, target_rotation, Time.deltaTime*turn_rate);
+			velocity = transform.forward.normalized * speed;
 			velocity.y = 0;
 		} else {
 			wander.enabled = true;
@@ -50,8 +51,7 @@ public class EnemyAI : MonoBehaviour
 		if (velocity.magnitude > 0) 
 		{
 			// Face zambie in right direction and move
-			transform.LookAt(velocity);
-			cc.SimpleMove (velocity);
+			cc.SimpleMove (velocity*Time.deltaTime);
 		}
 	}
 
