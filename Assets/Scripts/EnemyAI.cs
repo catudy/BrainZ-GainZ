@@ -27,7 +27,6 @@ public class EnemyAI : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-
 		aggro = IsAggroed (player.transform.position, transform.position);
 		UpdateZombieMovement ();
 		MoveZombie ();
@@ -36,14 +35,13 @@ public class EnemyAI : MonoBehaviour
 	// Updates velocity component
 	private void UpdateZombieMovement(){
 		if(aggro) {
-			wander.enabled = true;
-			velocity = velocity + ((player.transform.position - transform.position).normalized)*acceleration;
-			velocity.y = 0;
-			if(velocity.magnitude > max_speed ){
-				velocity = velocity.normalized * max_speed;
-			}
-		} else {
 			wander.enabled = false;
+			Quaternion target_rotation = Quaternion.LookRotation(player.transform.position - transform.position);
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, target_rotation, 1.0f);
+			velocity = transform.forward.normalized * max_speed;
+			velocity.y = 0;
+		} else {
+			wander.enabled = true;
 		}
 	}
 
@@ -51,14 +49,13 @@ public class EnemyAI : MonoBehaviour
 	private void MoveZombie(){
 		if (velocity.magnitude > 0) 
 		{
-			// Face zambie in right direction
-			Vector3 look = new Vector3(player.transform.position.x,transform.position.y,player.transform.position.z);
-			transform.LookAt(look);
-			velocity.y = 0;
-			// Move Zombies
+			// Face zambie in right direction and move
+			transform.LookAt(velocity);
 			cc.SimpleMove (velocity);
 		}
 	}
+
+
 
 	private bool IsAggroed(Vector3 player_pos, Vector3 enemy_pos)
 	{
@@ -68,16 +65,6 @@ public class EnemyAI : MonoBehaviour
 		{
 			mod_aggro_range = 0.0f;
 		}
-
-		//else if (player.GetComponent<PlayerState> ().GetSneaking()) 
-		//{
-		//	mod_aggro_range = aggro_range / 2;
-		//} 
-
-		//else if (player.GetComponent<PlayerState> ().GetRunning()) 
-		//{
-		//	mod_aggro_range = aggro_range * 2;
-		//}
 		return ((player_pos - enemy_pos).magnitude < mod_aggro_range);
 	}
 }
