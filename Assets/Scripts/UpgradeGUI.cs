@@ -12,7 +12,6 @@ public class UpgradeGUI : MonoBehaviour
 
 	private PlayerState playerState;
 	private GameState gameState;
-	private GameObject player;
 
 	//Resolution variables
 	private float originalWidth;
@@ -42,12 +41,9 @@ public class UpgradeGUI : MonoBehaviour
 	public int melee_range_brain_cost = 25;
 	public int melee_range_gain_cost = 25;
 
-	public int a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = 0;
-
 	
 	void Start()
 	{
-		player = GameObject.Find("Player");
 		playerState = GameObject.Find("Player").GetComponentInChildren<PlayerState>();
 		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 	}
