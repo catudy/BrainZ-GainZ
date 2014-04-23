@@ -13,13 +13,33 @@ public class Wander : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		SetRandomDestination ();	
+		//SetRandomDestination ();	
 		cc = GetComponent<CharacterController> ();
 		time_remaining = 0.0f;
+		movement_vector = transform.forward;
 	}
-	
+
+	void Update(){
+		time_remaining -= Time.deltaTime;
+
+		if(time_remaining < 0.0f){
+			time_remaining = 1.0f;
+			SetRandomDestination();
+		}
+		movement_vector = transform.forward;
+		Vector3 velocity = movement_vector.normalized * wander_speed;
+		velocity.y = 0;
+		cc.SimpleMove (velocity * Time.deltaTime);
+	}
+
+	void SetRandomDestination(){
+		Vector3 yaxis = new Vector3 (0, 1, 0);
+		float angle = Random.Range (-15.0f, 15.0f);
+		transform.Rotate (yaxis, angle, Space.Self);
+	}
+
 	// Update is called once per frame
-	void Update () 
+	/*void Update () 
 	{
 		time_remaining -= Time.deltaTime;
 		movement_vector = target_destination - transform.position;
@@ -45,5 +65,5 @@ public class Wander : MonoBehaviour
 		Vector3 current_pos = transform.position;
 		target_destination.Set (current_pos.x + dest.x, current_pos.y, current_pos.z + dest.y);
 		time_remaining = 1.0f;
-	}
+	}*/
 }
