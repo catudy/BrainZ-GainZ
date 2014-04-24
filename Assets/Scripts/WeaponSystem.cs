@@ -49,6 +49,10 @@ public class WeaponSystem : MonoBehaviour {
 	public int pulseAmmo_base;
 	public int pulseAmmo_level;
 	public int pulseAmmo_max;
+	public int pulse_radius;
+	public int pulse_radius_base;
+	public int pulse_radius_level;
+	public int pulse_radius_max;
 
 	//flamethrower variables
 	public float flameAmmo;
@@ -79,6 +83,7 @@ public class WeaponSystem : MonoBehaviour {
 		pulseAmmo_base = 3;
 		flameAmmo_base = 5.0f;
 		feAmmo_base = 5.0f;
+		pulse_radius_base = 50;
 
 		//initialize stat levels
 		meleeAttackSpeed_level = 1;
@@ -87,6 +92,7 @@ public class WeaponSystem : MonoBehaviour {
 		pulseAmmo_level = 1;
 		flameAmmo_level = 1;
 		feAmmo_level = 1;
+		pulse_radius_level = 1;
 
 		//set base as max
 		meleeAttackSpeed_max = meleeAttackSpeed_base;
@@ -95,6 +101,7 @@ public class WeaponSystem : MonoBehaviour {
 		pulseAmmo_max = pulseAmmo_base;
 		flameAmmo_max = flameAmmo_base;
 		feAmmo_max = feAmmo_base;
+		pulse_radius_max = pulse_radius_base;
 
 		//set max to actual
 		meleeAttackSpeed = meleeAttackSpeed_max;
@@ -103,6 +110,7 @@ public class WeaponSystem : MonoBehaviour {
 		pulseAmmo = pulseAmmo_max;
 		flameAmmo = flameAmmo_max;
 		feAmmo = feAmmo_max;
+		pulse_radius = pulse_radius_max;
 
 		activeWeaponList [0] = true;
 		melee.collider.enabled = false;
@@ -150,7 +158,27 @@ public class WeaponSystem : MonoBehaviour {
 			{
 				if(pulseAmmo > 0)
 				{
-					pulse.animation.Play ();
+					if(pulse_radius_level == 1)
+					{
+						pulse.animation.Play ("pulseAttack");
+					}
+					else if(pulse_radius_level == 2)
+					{
+						pulse.animation.Play ("pulseAttack_75");
+					}
+					else if(pulse_radius_level == 3)
+					{
+						pulse.animation.Play ("pulseAttack_100");
+					}
+					else if(pulse_radius_level == 4)
+					{
+						pulse.animation.Play ("pulseAttack_125");
+					}
+					else if(pulse_radius_level == 5)
+					{
+						pulse.animation.Play ("pulseAttack_150");
+					}
+
 					pulseAmmo--;
 					if(pulse.animation.isPlaying)
 					{
@@ -258,12 +286,11 @@ public class WeaponSystem : MonoBehaviour {
 	public void UpgradeMeleeAttackSpeed()
 	{
 		meleeAttackSpeed_max = meleeAttackSpeed_base - ((meleeAttackSpeed_level-1) * 0.25f);
-
 	}
 
 	public void UpgradeGunAmmo()
 	{
-		gunAmmo_max = gunAmmo_base + (gunAmmo_level - 1 * 5);
+		gunAmmo_max = gunAmmo_base + ((gunAmmo_level - 1) * 5);
 	}
 
 	public void UpgradeFireRate()
@@ -273,17 +300,22 @@ public class WeaponSystem : MonoBehaviour {
 
 	public void UpgradePulseAmmo()
 	{
-		pulseAmmo_max = pulseAmmo_base + (pulseAmmo_level - 1 * 1);
+		pulseAmmo_max = pulseAmmo_base + ((pulseAmmo_level - 1) * 1);
 	}
 
 	public void UpgradeFlameAmmo()
 	{
-		flameAmmo_max = flameAmmo_base + (flameAmmo_level - 1 * 1.0f);
+		flameAmmo_max = flameAmmo_base + ((flameAmmo_level - 1) * 1.0f);
 	}
 
 	public void UpgradeFEAmmo()
 	{
-		feAmmo_max = feAmmo_base + (feAmmo_level - 1 * 1.0f);
+		feAmmo_max = feAmmo_base + ((feAmmo_level - 1) * 1.0f);
+	}
+
+	public void UpgradePulseRadius()
+	{
+		pulse_radius_max = pulse_radius_base + ((pulse_radius_level - 1) * 25);
 	}
 
 	void DisableAttackCollider()
