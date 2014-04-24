@@ -56,6 +56,8 @@ public class UpgradeGUI : MonoBehaviour
 
 		if(gameState.primary_objective.completed)
 		{
+			Despawn();
+
 			//Toggle background plane for upgrade menu
 			upgradeBG.SetActive(true);
 			//Code to disable GUI
@@ -317,5 +319,23 @@ public class UpgradeGUI : MonoBehaviour
 		}
 
 		GUI.matrix = svMat;
+	}
+
+	// TODO: Def Move later
+	void Despawn(){
+		Debug.Log ("Hello, i am here");
+		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Deadly")){
+			Debug.Log ("Destroyed Deadly " + o.name);
+			Destroy(o);
+		}
+		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Item")){
+			Destroy(o);
+		}
+		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Powerup")){
+			Destroy(o);
+		}
+		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Fire")){
+			Destroy(o);
+		}
 	}
 }
