@@ -27,17 +27,17 @@ public class UpgradeGUI : MonoBehaviour
 	public bool startNextLevel = false;
 	public bool gameCompleted = false;
 
-	private int upgrade_health_brain_cost = 25;
-	private int upgrade_health_gain_cost = 25;
-	private int health_cost_increase_rate = 25;
+	public int upgrade_health_brain_cost = 25;
+	public int upgrade_health_gain_cost = 25;
+	public int health_cost_increase_rate = 25;
 
-	private int upgrade_stamina_brain_cost = 25;
-	private int upgrade_stamina_gain_cost = 25;
-	private int stamina_cost_increase_rate = 25;
+	public int upgrade_stamina_brain_cost = 25;
+	public int upgrade_stamina_gain_cost = 25;
+	public int stamina_cost_increase_rate = 25;
 
-	private int melee_speed_brain_cost = 25;
-	private int melee_speed_gain_cost = 25;
-	private int melee_speed_increase_rate = 25;
+	public int melee_speed_brain_cost = 25;
+	public int melee_speed_gain_cost = 25;
+	public int melee_speed_increase_rate = 25;
 
 	public int melee_range_brain_cost = 25;
 	public int melee_range_gain_cost = 25;
@@ -50,6 +50,14 @@ public class UpgradeGUI : MonoBehaviour
 	public int gun_ammo_brain_cost = 25;
 	public int gun_ammo_gain_cost = 25;
 	public int gun_ammo_increase_rate = 25;
+
+	public int pulse_range_brain_cost = 25;
+	public int pulse_range_gain_cost = 25;
+	public int pulse_range_increase_rate = 25;
+
+	public int pulse_ammo_brain_cost = 25;
+	public int pulse_ammo_gain_cost = 25;
+	public int pulse_ammo_increase_rate = 25;
 
 	public int a,b,c,d = 0;
 
@@ -210,7 +218,8 @@ public class UpgradeGUI : MonoBehaviour
 				GUI.DrawTexture( new Rect(25,182,20,20), MeleeTexture);
 				GUI.DrawTexture( new Rect(25,230,20,20), GunTexture);
 				GUI.DrawTexture( new Rect(25,278,20,20), GunTexture);
-				//GUI.DrawTexture( new Rect(0,0,100,100), PulseTexture);
+				GUI.DrawTexture( new Rect(25,322,20,20), PulseTexture);
+				GUI.DrawTexture( new Rect(25,370,20,20), PulseTexture);
 				//GUI.DrawTexture( new Rect(0,0,100,100), FTTexture);
 				//GUI.DrawTexture( new Rect(0,0,100,100), FETexture);
 				//GUI.DrawTexture( new Rect(0,0,100,100), AmmoTexture);
@@ -229,7 +238,11 @@ public class UpgradeGUI : MonoBehaviour
 				float current_g_atkspeed = weaponSystem.fireRate_max;
 				float next_g_atkspeed = weaponSystem.fireRate_base - weaponSystem.fireRate_level*0.1f;
 				float current_g_ammo = weaponSystem.gunAmmo_max;
-				float next_g_ammo = weaponSystem.gunAmmo_base + ((weaponSystem.gunAmmo_level) * 5);
+				float next_g_ammo = weaponSystem.gunAmmo_base + ((weaponSystem.gunAmmo_level) * 5); 
+				float current_p_range = weaponSystem.pulse_radius_max;
+				float next_p_range = weaponSystem.pulse_radius_base + ((weaponSystem.pulse_radius_level) * 25);
+				float current_p_ammo = weaponSystem.pulseAmmo_max;
+				float next_p_ammo = weaponSystem.pulseAmmo_base + ((weaponSystem.pulseAmmo_level) * 1);
 
 
 				//Draw current and next level stats
@@ -239,7 +252,7 @@ public class UpgradeGUI : MonoBehaviour
 
 				if(weaponSystem.meleeAttackSpeed_level == weaponSystem.weaponLevelCap)
 				{
-					GUI.Label( new Rect(171,129,0,0),"MAX LEVEL: "+weaponSystem.meleeAttackSpeed.ToString("F2")+" Attack speed","Small"); //Print current and next stat for melee speed
+					GUI.Label( new Rect(171,129,0,0),"MAX LEVEL: "+weaponSystem.meleeAttackSpeed_max.ToString("F2")+" Attack speed","Small"); //Print current and next stat for melee speed
 				}
 				else if (weaponSystem.meleeAttackSpeed_level < weaponSystem.weaponLevelCap)
 				{
@@ -249,7 +262,7 @@ public class UpgradeGUI : MonoBehaviour
 				//Change to the hit box one later
 				if(weaponSystem.meleeAttackSpeed_level == weaponSystem.weaponLevelCap)
 				{
-					GUI.Label( new Rect(171,177,0,0),"MAX LEVEL: "+weaponSystem.meleeAttackSpeed.ToString("F2")+" Range","Small"); //Print current and next stat for melee speed
+					GUI.Label( new Rect(171,177,0,0),"MAX LEVEL: "+weaponSystem.meleeAttackSpeed_max.ToString("F2")+" Range","Small"); //Print current and next stat for melee speed
 				}
 				else if (weaponSystem.meleeAttackSpeed_level < weaponSystem.weaponLevelCap)
 				{
@@ -267,11 +280,29 @@ public class UpgradeGUI : MonoBehaviour
 
 				if(weaponSystem.gunAmmo_level == weaponSystem.weaponLevelCap)
 				{
-					GUI.Label( new Rect(171,273,0,0),"MAX LEVEL: "+weaponSystem.gunAmmo.ToString()+" Ammo","Small"); //Print current and next stat for melee speed
+					GUI.Label( new Rect(171,273,0,0),"MAX LEVEL: "+weaponSystem.gunAmmo_max.ToString()+" Ammo","Small"); //Print current and next stat for melee speed
 				}
 				else if (weaponSystem.gunAmmo_level < weaponSystem.weaponLevelCap)
 				{
 					GUI.Label( new Rect(171,273,0,0),current_g_ammo+" => "+next_g_ammo.ToString()+" Ammo","Small"); //Print current and next stat for melee speed
+				}
+
+				if(weaponSystem.pulse_radius_level == weaponSystem.weaponLevelCap)
+				{
+					GUI.Label( new Rect(171,321,0,0),"MAX LEVEL: "+weaponSystem.pulse_radius_max.ToString()+" Range","Small"); //Print current and next stat for melee speed
+				}
+				else if (weaponSystem.pulse_radius_level < weaponSystem.weaponLevelCap)
+				{
+					GUI.Label( new Rect(171,321,0,0),current_p_range+" => "+next_p_range.ToString()+" Range","Small"); //Print current and next stat for melee speed
+				}
+
+				if(weaponSystem.pulseAmmo_level == weaponSystem.weaponLevelCap)
+				{
+					GUI.Label( new Rect(171,369,0,0),"MAX LEVEL: "+weaponSystem.pulseAmmo_max.ToString()+" Ammo","Small"); //Print current and next stat for melee speed
+				}
+				else if (weaponSystem.pulseAmmo_level < weaponSystem.weaponLevelCap)
+				{
+					GUI.Label( new Rect(171,369,0,0),current_p_ammo+" => "+next_p_ammo.ToString()+" Ammo","Small"); //Print current and next stat for melee speed
 				}
 
 				//Draw current amount of brainZ and gainZ
@@ -292,6 +323,10 @@ public class UpgradeGUI : MonoBehaviour
 				GUI.Label( new Rect(54,244,0,0),"GainZ needed: "+gun_speed_gain_cost,"Small");
 				GUI.Label( new Rect(54,275,0,0),"BrainZ needed: "+gun_ammo_brain_cost,"Small");
 				GUI.Label( new Rect(54,289,0,0),"GainZ needed: "+gun_ammo_gain_cost,"Small");
+				GUI.Label( new Rect(54,320,0,0),"BrainZ needed: "+pulse_range_brain_cost,"Small");
+				GUI.Label( new Rect(54,334,0,0),"GainZ needed: "+pulse_range_gain_cost,"Small");
+				GUI.Label( new Rect(54,365,0,0),"BrainZ needed: "+pulse_ammo_brain_cost,"Small");
+				GUI.Label( new Rect(54,379,0,0),"GainZ needed: "+pulse_ammo_gain_cost,"Small");
 
 				// Health upgrade pressed
 				if(gameState.brainz >= upgrade_health_brain_cost && gameState.gainz >= upgrade_health_gain_cost)
@@ -410,6 +445,48 @@ public class UpgradeGUI : MonoBehaviour
 				else
 				{
 					GUI.Button( new Rect(168,288,25,25), new GUIContent("", XTexture, ""));
+				}
+
+				//Pulse attack radius upgrade
+				if(gameState.brainz >= pulse_range_brain_cost && gameState.gainz >= pulse_range_brain_cost && weaponSystem.pulse_radius_level < weaponSystem.weaponLevelCap)
+				{
+					if(GUI.Button( new Rect(168,337,25,25), new GUIContent("", LevelupB2, "")))
+					{
+						gameState.SpendBrainzNGainz(pulse_range_brain_cost, pulse_range_brain_cost);
+						pulse_range_brain_cost += pulse_range_increase_rate;
+						pulse_range_gain_cost += pulse_range_increase_rate;
+						//Increment melee speed level
+						weaponSystem.pulse_radius_level++;
+						//Call updatemaxmeleespeed()
+						weaponSystem.UpgradePulseRadius();
+						weaponSystem.pulse_radius = weaponSystem.pulse_radius_max;
+						
+					}
+				}
+				else
+				{
+					GUI.Button( new Rect(168,337,25,25), new GUIContent("", XTexture, ""));
+				}
+
+				//Pulse ammo upgrade
+				if(gameState.brainz >= pulse_ammo_brain_cost && gameState.gainz >= pulse_ammo_gain_cost && weaponSystem.pulseAmmo_level < weaponSystem.weaponLevelCap)
+				{
+					if(GUI.Button( new Rect(168,386,25,25), new GUIContent("", LevelupB2, "")))
+					{
+						gameState.SpendBrainzNGainz(pulse_ammo_brain_cost, pulse_ammo_gain_cost);
+						pulse_ammo_brain_cost += pulse_ammo_increase_rate;
+						pulse_ammo_gain_cost += pulse_ammo_increase_rate;
+						//Increment melee speed level
+						weaponSystem.pulseAmmo_level++;
+						//Call updatemaxmeleespeed()
+						weaponSystem.UpgradePulseAmmo();
+						weaponSystem.pulseAmmo = weaponSystem.pulseAmmo_max;
+						
+					}
+				}
+				else
+				{
+					GUI.Button( new Rect(168,386,25,25), new GUIContent("", XTexture, ""));
 				}
 
 
