@@ -7,8 +7,9 @@ public class WeaponSystem : MonoBehaviour {
 	private GameObject player;
 	private GameState gameState;
 
-	private ParticleSystem flamer;
+	private GameObject flamer;
 	private ParticleSystem fire_ex;
+	
 
 	public int currentWeapon = 0;
 	private int maxWeapon = 5;
@@ -68,7 +69,7 @@ public class WeaponSystem : MonoBehaviour {
 
 		player = GameObject.Find ("Player");
 		gameState = GameObject.Find ("GameController").GetComponentInChildren<GameState> ();
-		flamer = GameObject.Find ("FlamethrowerParticleEffect").GetComponent<ParticleSystem> ();
+		flamer = GameObject.Find ("FlameEmission");
 		fire_ex = GameObject.Find ("FireExtinguisherParticleEffect").GetComponent<ParticleSystem> ();
 
 		//initialize base stats
@@ -165,31 +166,41 @@ public class WeaponSystem : MonoBehaviour {
 				if(flameAmmo > 0.0f)
 				{
 					RaycastHit hit;
-					Vector3 forward = player.transform.forward;
-					Vector3 ray_start = player.transform.position;
-					ray_start.y += 0.5f;
+					Vector3 forward = flamethrower.transform.forward;
+					Vector3 ray_start = flamethrower.transform.position;
+					//ray_start.y += 1.0f;
+					//ray_start.z -= 0.1f;
+					//ray_start.x += 0.5f;
 
-					for(float i=-10; i < 10; i=i+0.1f)
+
+					flameAmmo -= Time.deltaTime;
+
+					for(float i=-1; i < 1; i=i+0.1f)
 					{
-						Vector3 ray = new Vector3(forward.x,forward.y,forward.z+i);
+						Vector3 ray = new Vector3(forward.x+i,forward.y,forward.z);
+
+						Vector3 temp = flamethrower.transform.position + player.transform.forward.normalized * 2.0f;
+						temp.y = 0.5f; 
+						flamer.transform.position = temp;
+						flamer.transform.rotation = flamethrower.transform.rotation;
+						flamer.SetActive(true);// = true;
 						if(Physics.Raycast(ray_start,ray,out hit))
 						{
 							Debug.DrawRay (ray_start,ray);
-							flamer.enableEmission = true;
+
 							if(hit.distance < 5.0f)
 							{
 								if(hit.collider.gameObject.tag == "Deadly"){
 									Destroy (hit.collider.gameObject);
 									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
 								}
-								flameAmmo -= Time.deltaTime;
 
-								if(flameAmmo<=0.0f)
-								{
-									flameAmmo = 0.0f;
-								}
 							}
 						}
+					}
+					if(flameAmmo < 0.0f)
+					{
+						flameAmmo = 0.0f;
 					}
 				}
 			}
@@ -202,14 +213,21 @@ public class WeaponSystem : MonoBehaviour {
 					RaycastHit hit;
 					Vector3 forward = player.transform.forward;
 					Vector3 ray_start = player.transform.position;
-					ray_start.y += 0.5f;
+					//ray_start.y += 0.0f;
+					//ray_start.z -= 0.0f;
+					//ray_start.x -= 5.0f;
+					feAmmo -= Time.deltaTime;
 					
-					for(float i=-10; i < 10; i=i+0.1f)
+					for(float i=-1; i < 1; i=i+0.1f)
 					{
-						Vector3 ray = new Vector3(forward.x,forward.y,forward.z+i);
+						Vector3 ray = new Vector3(forward.x+i,forward.y,forward.z);
 						if(Physics.Raycast(ray_start,ray,out hit))
 						{
 							Debug.DrawRay (ray_start,ray);
+							Vector3 temp = extinguisher.transform.position + player.transform.forward.normalized * 2.0f;
+							temp.y = 0.5f;
+							fire_ex.transform.position = temp;
+							fire_ex.transform.rotation = extinguisher.transform.rotation;
 							fire_ex.enableEmission = true;
 							if(hit.distance < 5.0f)
 							{
@@ -217,13 +235,12 @@ public class WeaponSystem : MonoBehaviour {
 									Destroy (hit.collider.gameObject);
 									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
 								}
-								feAmmo -= Time.deltaTime;
-								if(flameAmmo<=0.0f)
-								{
-									flameAmmo = 0.0f;
-								}
 							}
 						}
+					}
+					if(feAmmo < 0.0f)
+					{
+						feAmmo = 0.0f;
 					}
 				}
 			}
@@ -251,6 +268,16 @@ public class WeaponSystem : MonoBehaviour {
 	void UpgradePulseAmmo()
 	{
 		pulseAmmo_max = pulseAmmo_base + (pulseAmmo_level - 1 * 1);
+	}
+
+	void UpgradeFlameAmmo()
+	{
+		flameAmmo_max = flameAmmo_base + (flameAmmo_level - 1 * 1.0f);
+	}
+
+	void UpgradeFEAmmo()
+	{
+		feAmmo_max = feAmmo_base + (feAmmo_level - 1 * 1.0f);
 	}
 
 	void DisableAttackCollider()

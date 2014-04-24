@@ -292,10 +292,12 @@ public class GameState : MonoBehaviour {
 			RaycastHit hit;
 			Vector3 forward = player.transform.forward;
 			Vector3 ray_start = player.transform.position;
-			ray_start.y += 0.5f; // Shoot ray from head
+			ray_start.y += 1.0f; // Shoot ray from head
+			ray_start.z -= 0.1f;
+			ray_start.x += 0.5f;
 
 			// Shoot rays in spread
-			for(float i=-10; i < 10; i=i+0.1f){
+			for(float i=-1; i < 1; i=i+0.1f){
 				Vector3 ray = new Vector3(forward.x,forward.y,forward.z+i);
 				if(Physics.Raycast(ray_start,ray,out hit)){
 					Debug.DrawRay (ray_start,ray);
