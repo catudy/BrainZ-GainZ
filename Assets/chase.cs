@@ -71,7 +71,7 @@ public class chase : MonoBehaviour
 	public float wanderSpeed = 1.0f;
 	public float newWanderDirTime = 1.0f;
 	public float aggro_range = 5.0f;
-	public bool aggro;
+	private bool aggro;
 	
 	void Start()
 	{

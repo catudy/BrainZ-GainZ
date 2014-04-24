@@ -6,20 +6,6 @@
 using UnityEngine;
 using System.Collections;
 
-struct Inventory{
-	public float fire_extinguisher;
-	public float flame_thrower;
-};
-
-public enum Item
-{
-	NONE,
-	FIRE_EXTINGUISHER,
-	FLAME_THROWER,
-	BRAINZ,
-	GAINZ
-};
-
 public enum ObjectiveType
 {
 	NONE,
@@ -110,50 +96,18 @@ public class Objective {
 			gameState.gainz += reward_amount;
 		}
 	}
-
-	public string GetString(){
-		string ret;
-		if(type == ObjectiveType.KILL){
-			ret = "Kill Zombies: ";
-		} else if (type == ObjectiveType.TIME){
-			ret = "Survive: ";
-		} else if (type == ObjectiveType.DAMAGE){
-			ret = "Take Damage: ";
-		} else if (type == ObjectiveType.SCAVENGER){
-			ret = "Collect Items: ";
-		} else if (type == ObjectiveType.FIRE){
-			ret = "Put out Fires: ";
-		} else {
-			return "NO_OBJECTIVE";
-		}
-
-		ret = ret + current.ToString("F0") + " / " + target + " Reward: " + reward_amount;
-
-		if(reward == ObjectiveReward.BRAINZ){
-			ret += " Brainz";
-		} else if (reward == ObjectiveReward.GAINZ){
-			ret += " Gainz";
-		}
-		return ret;
-	}
 };
 
 public class GameState : MonoBehaviour {
 	public bool game_over = false;
-	public int brainz = 500;
-	public int gainz = 500;
-	public int pickup_temp = 0;
-	public float cutscene_length_seconds = 35.0f;
+	public int brainz = 0;
+	public int gainz = 0;
 	public bool paused = false;
-	public Item active_item = Item.FLAME_THROWER;
 	public ParticleSystem explosion;
 	public int level = 1;
 	public Objective primary_objective = new Objective();
 	public Objective[] secondary_objectives;
 	public int num_objectives = 4;
-	private bool in_cutscene = true;
-	Inventory inventory;
-	public bool inUpgradeMenu = false;
 	public GameObject[] spawn_points;
 	private GameObject player;
 	private PlayerState playerState;
@@ -171,24 +125,6 @@ public class GameState : MonoBehaviour {
 		if (paused) {
 			return;
 		}
-		/*
-		if (Time.time > cutscene_length_seconds || Input.GetButtonDown("Sprint") || Input.GetButton("Start")) {
-			in_cutscene = false;
-			cam.enabled = true;
-		} 
-
-		else {
-
-		}
-		*/
-	 
-		if (game_over) 
-		{
-			// Call game over scene transition
-
-			// Return player to main menu
-			//Application.LoadLevel("_MainMenu");
-		}
 
 		UpdateObjectives ();
 		 
@@ -203,8 +139,6 @@ public class GameState : MonoBehaviour {
 	}
 
 	public void InitializePlayer(){
-		inventory.fire_extinguisher = 10.0f;
-		inventory.flame_thrower = 10.0f;
 		playerState.stamina = playerState.playerStats.max_stamina;
 		playerState.health = playerState.playerStats.max_health;
 	}
@@ -216,7 +150,7 @@ public class GameState : MonoBehaviour {
 
 	public void InitializeObjectives(){
 		// Primary Objective time for now
-		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 30*level, 0);
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 1*level, 0);
 
 
 		// Set secondary Objectives
@@ -245,8 +179,7 @@ public class GameState : MonoBehaviour {
 			primary_objective.UpdateObjective(value);
 		}
 	}
-
-
+	
 	// Removes object from the scene.
 	public void RemoveObject(GameObject destroyme)
 	{
@@ -258,94 +191,6 @@ public class GameState : MonoBehaviour {
 					spawner.DestroyObject(destroyme);
 				}
 			}
-		}
-	}
-
-	public void CheckDoor(GameObject door){
-		if (door.name == "FireDoor") {
-			if(inventory.fire_extinguisher > 0){
-				Destroy (door);
-			} else {
-				game_over = true;
-			}
-		}
-	}
-
-	public bool RunGame(){
-		return (!in_cutscene);
-	}
-	
-	public bool UseItem(){
-		Item item = active_item;
-		if(UseAmmo (item)){
-			RaycastHit hit;
-			Vector3 forward = player.transform.forward;
-			Vector3 ray_start = player.transform.position;
-			ray_start.y += 1.0f; // Shoot ray from head
-			ray_start.z -= 0.1f;
-			ray_start.x += 0.5f;
-
-			// Shoot rays in spread
-			for(float i=-1; i < 1; i=i+0.1f){
-				Vector3 ray = new Vector3(forward.x,forward.y,forward.z+i);
-				if(Physics.Raycast(ray_start,ray,out hit)){
-					Debug.DrawRay (ray_start,ray);
-					if(hit.distance < 5.0f){
-						if(item == Item.FIRE_EXTINGUISHER && hit.collider.gameObject.tag == "Fire"){
-							Destroy (hit.collider.gameObject);
-							UpdateObjective(ObjectiveType.FIRE,1.0f);
-							return true;
-						} else if(item == Item.FLAME_THROWER && hit.collider.gameObject.tag == "Deadly"){
-							DestroyWithExplosion (hit.collider.gameObject);
-							UpdateObjective(ObjectiveType.KILL,1.0f);
-							return true;
-						}
-					}
-				}
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private bool UseAmmo(Item item){
-		if (item == Item.FIRE_EXTINGUISHER){
-			inventory.fire_extinguisher -= Time.deltaTime;
-			return (inventory.fire_extinguisher > 0.0f);
-		} else if (item == Item.FLAME_THROWER){
-			inventory.flame_thrower -= Time.deltaTime;
-			return (inventory.flame_thrower > 0.0f);
-		} else {
-			return false;
-		}
-	}
-
-	public void AddItem(Item item){
-		if(item == Item.FIRE_EXTINGUISHER){
-			inventory.fire_extinguisher += 5.0f;
-		} else if (item == Item.BRAINZ){
-			brainz =+ 10;
-		} else if (item == Item.GAINZ){
-			gainz =+ 10;
-		}
-	}
-
-	public float GetItem(Item item){
-		if(item == Item.FIRE_EXTINGUISHER){
-			return inventory.fire_extinguisher;
-		} else if (item == Item.FLAME_THROWER){ 
-			return inventory.flame_thrower;
-		} else {
-			return 0.0f;
-		}
-	}
-
-	public void NextItem(){
-		if(active_item == Item.FIRE_EXTINGUISHER && inventory.flame_thrower > 0.0f){
-			active_item = Item.FLAME_THROWER;
-		} else if (active_item == Item.FLAME_THROWER && inventory.fire_extinguisher > 0.0f){
-			active_item = Item.FIRE_EXTINGUISHER;
 		}
 	}
 

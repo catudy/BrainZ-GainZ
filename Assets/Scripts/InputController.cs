@@ -25,6 +25,7 @@ public class InputController : MonoBehaviour {
 		{
 			return;
 		}
+		/*
 		if(Input.GetButton("Ability")){
 			if(gameState.UseItem()){
 				if(gameState.active_item == Item.FIRE_EXTINGUISHER){
@@ -50,6 +51,7 @@ public class InputController : MonoBehaviour {
 				gameState.NextItem();
 			}
 		}
+		*/
 		/*
 		if (Input.GetButton ("Sneak")) 
 		{

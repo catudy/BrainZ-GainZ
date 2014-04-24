@@ -244,7 +244,4 @@ public class PlayerState : MonoBehaviour
 	public void UpdateMaxStamina() {
 		playerStats.max_stamina = playerStats.base_stamina + (playerStats.stamina_level-1);
 	}
-	public void UpdateMaxWeaponDamage(){
-		playerStats.weapon_damage = playerStats.base_wepon_damage + (0.5f*playerStats.weapon_level-0.5f);
-	}
 }

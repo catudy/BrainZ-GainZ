@@ -30,31 +30,17 @@ public class PlayerCollision : MonoBehaviour
 					Destroy(collision.gameObject);
 				}
 			}
-		} else if (collision.gameObject.tag == "Projectile"){
-			gameState.game_over = true;
-			collision.gameObject.GetComponent<Projectile>().DestroyWithExplosion(collision.gameObject);
-		}
+		} //else if (collision.gameObject.tag == "Projectile"){
+			//gameState.game_over = true;
+			//collision.gameObject.GetComponent<Projectile>().DestroyWithExplosion(collision.gameObject);
+		//}
 
-		else if (collision.gameObject.tag == "pickup") {
-			gameState.pickup_temp++;
-			Destroy (collision.gameObject);
-
-		}
-
-		else if (collision.gameObject.tag == "Brainz") {
-			gameState.brainz++;
-			gameState.RemoveObject(collision.gameObject);
-		} 
- 
-		else if (collision.gameObject.tag == "Gainz") {
-			gameState.gainz++;
-			Destroy (collision.gameObject);
-		} 
 
 		else if(collision.gameObject.tag == "gun")
 		{
 			Destroy(collision.gameObject);
 			weaponSystem.activeWeaponList[1] = true;
+			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
 			if(weaponSystem.activeWeaponList[1] == true)
 			{
 				weaponSystem.gunAmmo = weaponSystem.gunAmmo_max;
@@ -65,6 +51,7 @@ public class PlayerCollision : MonoBehaviour
 		{
 			Destroy(collision.gameObject);
 			weaponSystem.activeWeaponList[2] = true;
+			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
 			if(weaponSystem.activeWeaponList[2] == true)
 			{
 				weaponSystem.pulseAmmo = weaponSystem.pulseAmmo_max;
@@ -75,6 +62,7 @@ public class PlayerCollision : MonoBehaviour
 		{
 			Destroy(collision.gameObject);
 			weaponSystem.activeWeaponList[3] = true;
+			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
 			if(weaponSystem.activeWeaponList[3] == true)
 			{
 				weaponSystem.flameAmmo = weaponSystem.flameAmmo_max;
@@ -85,6 +73,7 @@ public class PlayerCollision : MonoBehaviour
 		{
 			Destroy(collision.gameObject);
 			weaponSystem.activeWeaponList[4] = true;
+			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
 			if(weaponSystem.activeWeaponList[4] == true)
 			{
 				weaponSystem.feAmmo = weaponSystem.feAmmo_max;
@@ -94,7 +83,7 @@ public class PlayerCollision : MonoBehaviour
 		else if (collision.gameObject.tag == "Powerup") {
 			// Takes current powerup away
 			playerState.DeletePowerup();
-
+			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
 			// Update based on what powerup
 			if (collision.gameObject.name == "PowerupBlink(Clone)") {
 				playerState.SetPowerUp(PowerUp.BLINK);
@@ -109,37 +98,8 @@ public class PlayerCollision : MonoBehaviour
 			// Delete Powerup Object
 			gameState.RemoveObject(collision.gameObject);
 		} 
-		else if (collision.gameObject.tag == "Item"){
-			if (collision.gameObject.name == "Extinguisher"){
-				gameState.AddItem(Item.FIRE_EXTINGUISHER);
-				Destroy (collision.gameObject);
-			} else if (collision.gameObject.name == "Brain(Clone)"){
-				gameState.AddItem (Item.BRAINZ);
-				Destroy (collision.gameObject);
-			}
-			// Update Scavenger for now
-			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
-		}
 	}
-
-	/*void OnTriggerEnter(Collider other)
-	{
-		if (other.gameObject.tag == "ak") 
-		{
-			Destroy (other.gameObject);
-			playerState.active[1] = true;
-		}
-		if(other.gameObject.tag == "smg")
-		{
-			Destroy(other.gameObject);
-			playerState.active[2] = true;
-		}
-		if(other.gameObject.tag == "rev")
-		{
-			Destroy(other.gameObject);
-			playerState.active[3] = true;
-		}
-	}*/
+	
 	// Use this for initialization
 	void Start () 
 	{

@@ -1,8 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Wander.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\WeaponSystem.cs">
     <Files>
-      <File FileName="Assets\Scripts\Wander.cs" Line="165" Column="4" />
+      <File FileName="Assets\Scripts\GameState.cs" Line="219" Column="68" />
+      <File FileName="Assets\Scripts\WeaponSystem.cs" Line="84" Column="30" />
+      <File FileName="Assets\Scripts\UpgradeGUI.cs" Line="211" Column="1" />
+      <File FileName="Assets\Scripts\PlayerState.cs" Line="216" Column="3" />
+      <File FileName="Assets\Scripts\Despawner.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Wander.cs" Line="112" Column="2" />
+      <File FileName="Assets\chase.cs" Line="145" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -10,13 +16,7 @@
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Assets to change" expanded="True" />
             <Node name="Scripts" expanded="True">
-              <Node name="Wander.cs" selected="True" />
-            </Node>
-            <Node name="Zombies" expanded="True" />
-          </Node>
-          <Node name="Assembly-CSharp-Editor" expanded="True">
-            <Node name="Zombies" expanded="True">
-              <Node name="Scripts" expanded="True" />
+              <Node name="WeaponSystem.cs" selected="True" />
             </Node>
           </Node>
           <Node name="Assembly-UnityScript" expanded="True">
@@ -29,9 +29,7 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="C:\Users\bcatudan\Documents\game-project\Assets\Scripts\UpgradeGUI.cs" line="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

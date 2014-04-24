@@ -233,7 +233,7 @@ public class WeaponSystem : MonoBehaviour {
 							{
 								if(hit.collider.gameObject.tag == "Fire"){
 									Destroy (hit.collider.gameObject);
-									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
+									gameState.UpdateObjective(ObjectiveType.FIRE,1.0f);
 								}
 							}
 						}
@@ -246,36 +246,42 @@ public class WeaponSystem : MonoBehaviour {
 			}
 
 		}
+		else
+		{
+			fire_ex.enableEmission = false;
+			flamer.SetActive(false);
+		}
 		DisableAttackCollider ();
 	
 	}
 
-	void UpgradeMeleeAttackSpeed()
+	public void UpgradeMeleeAttackSpeed()
 	{
-		meleeAttackSpeed_max = meleeAttackSpeed_base - (meleeAttackSpeed_level-1 * 0.2f);
+		meleeAttackSpeed_max = meleeAttackSpeed_base - ((meleeAttackSpeed_level-1) * 0.25f);
+
 	}
 
-	void UpgradeGunAmmo()
+	public void UpgradeGunAmmo()
 	{
 		gunAmmo_max = gunAmmo_base + (gunAmmo_level - 1 * 5);
 	}
 
-	void UpgradeFireRate()
+	public void UpgradeFireRate()
 	{
-		fireRate_max = fireRate_base - (fireRate_level - 1 * 0.1f);
+		fireRate_max = fireRate_base - ((fireRate_level - 1) * 0.1f);
 	}
 
-	void UpgradePulseAmmo()
+	public void UpgradePulseAmmo()
 	{
 		pulseAmmo_max = pulseAmmo_base + (pulseAmmo_level - 1 * 1);
 	}
 
-	void UpgradeFlameAmmo()
+	public void UpgradeFlameAmmo()
 	{
 		flameAmmo_max = flameAmmo_base + (flameAmmo_level - 1 * 1.0f);
 	}
 
-	void UpgradeFEAmmo()
+	public void UpgradeFEAmmo()
 	{
 		feAmmo_max = feAmmo_base + (feAmmo_level - 1 * 1.0f);
 	}
