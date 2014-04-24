@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Wander : MonoBehaviour 
+public class wander2 : MonoBehaviour 
 {
 	private GameState gameState;
 	
@@ -273,8 +273,8 @@ public class Wander : MonoBehaviour
 		}
 		else
 			//_animation.enabled = true;
-			
-			if (!isControllable)
+		
+		if (!isControllable)
 		{
 			// kill all inputs if not controllable.
 			Input.ResetInputAxes();
@@ -284,7 +284,7 @@ public class Wander : MonoBehaviour
 		{
 			lastJumpButtonTime = Time.time;
 		}
-		
+
 		UpdateSmoothedMovementDirection();
 		
 		// Apply gravity
@@ -302,7 +302,7 @@ public class Wander : MonoBehaviour
 		// Move the controller
 		CharacterController controller = GetComponent<CharacterController>();
 		collisionFlags = controller.Move(movement);
-		
+			
 		// Set rotation to the move direction
 		if (IsGrounded())
 		{
@@ -388,7 +388,7 @@ public class Wander : MonoBehaviour
 	{
 		gameObject.tag = "Player";
 	}
-	
+
 	public void RandomDirection()
 	{
 		ranDir = Random.Range(-1,2);
