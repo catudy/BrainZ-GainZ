@@ -263,7 +263,7 @@ public class WeaponSystem : MonoBehaviour {
 
 	public void UpgradeGunAmmo()
 	{
-		gunAmmo_max = gunAmmo_base + (gunAmmo_level - 1 * 5);
+		gunAmmo_max = gunAmmo_base + ((gunAmmo_level - 1) * 5);
 	}
 
 	public void UpgradeFireRate()

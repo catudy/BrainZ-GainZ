@@ -47,6 +47,10 @@ public class UpgradeGUI : MonoBehaviour
 	public int gun_speed_gain_cost = 25;
 	public int gun_speed_increase_rate = 25;
 
+	public int gun_ammo_brain_cost = 25;
+	public int gun_ammo_gain_cost = 25;
+	public int gun_ammo_increase_rate = 25;
+
 	public int a,b,c,d = 0;
 
 	
@@ -205,6 +209,7 @@ public class UpgradeGUI : MonoBehaviour
 				GUI.DrawTexture( new Rect(25,139,20,20), MeleeTexture);
 				GUI.DrawTexture( new Rect(25,182,20,20), MeleeTexture);
 				GUI.DrawTexture( new Rect(25,230,20,20), GunTexture);
+				GUI.DrawTexture( new Rect(25,278,20,20), GunTexture);
 				//GUI.DrawTexture( new Rect(0,0,100,100), PulseTexture);
 				//GUI.DrawTexture( new Rect(0,0,100,100), FTTexture);
 				//GUI.DrawTexture( new Rect(0,0,100,100), FETexture);
@@ -223,6 +228,9 @@ public class UpgradeGUI : MonoBehaviour
 				//float next_m_atkspeed = weaponSystem.meleeAttackSpeed_base - (weaponSystem.meleeAttackSpeed_level * 0.25f);
 				float current_g_atkspeed = weaponSystem.fireRate_max;
 				float next_g_atkspeed = weaponSystem.fireRate_base - weaponSystem.fireRate_level*0.1f;
+				float current_g_ammo = weaponSystem.gunAmmo_max;
+				float next_g_ammo = weaponSystem.gunAmmo_base + ((weaponSystem.gunAmmo_level) * 5);
+
 
 				//Draw current and next level stats
 				GUI.Label( new Rect(168,33,0,0), current_health+" => "+next_health+" Max Health", "Small");
@@ -257,6 +265,15 @@ public class UpgradeGUI : MonoBehaviour
 					GUI.Label( new Rect(171,225,0,0),current_g_atkspeed+" => "+next_g_atkspeed.ToString("F1")+" Attack speed","Small"); //Print current and next stat for melee speed
 				}
 
+				if(weaponSystem.gunAmmo_level == weaponSystem.weaponLevelCap)
+				{
+					GUI.Label( new Rect(171,273,0,0),"MAX LEVEL: "+weaponSystem.gunAmmo.ToString()+" Ammo","Small"); //Print current and next stat for melee speed
+				}
+				else if (weaponSystem.gunAmmo_level < weaponSystem.weaponLevelCap)
+				{
+					GUI.Label( new Rect(171,273,0,0),current_g_ammo+" => "+next_g_ammo.ToString()+" Ammo","Small"); //Print current and next stat for melee speed
+				}
+
 				//Draw current amount of brainZ and gainZ
 				GUI.Label( new Rect(5,456,0,0),"Current total BrainZ: "+gameState.brainz.ToString(), "Big");
 				GUI.Label( new Rect(5,427,0,0),"Current total GainZ: "+gameState.gainz.ToString(), "Big");
@@ -273,6 +290,8 @@ public class UpgradeGUI : MonoBehaviour
 				GUI.Label( new Rect(54,199,0,0),"GainZ needed: "+melee_speed_gain_cost,"Small");
 				GUI.Label( new Rect(54,230,0,0),"BrainZ needed: "+gun_speed_brain_cost,"Small");
 				GUI.Label( new Rect(54,244,0,0),"GainZ needed: "+gun_speed_gain_cost,"Small");
+				GUI.Label( new Rect(54,275,0,0),"BrainZ needed: "+gun_ammo_brain_cost,"Small");
+				GUI.Label( new Rect(54,289,0,0),"GainZ needed: "+gun_ammo_gain_cost,"Small");
 
 				// Health upgrade pressed
 				if(gameState.brainz >= upgrade_health_brain_cost && gameState.gainz >= upgrade_health_gain_cost)
@@ -356,7 +375,7 @@ public class UpgradeGUI : MonoBehaviour
 				{
 					if(GUI.Button( new Rect(168,239,25,25), new GUIContent("", LevelupB2, "")))
 					{
-						gameState.SpendBrainzNGainz(melee_speed_brain_cost, melee_speed_gain_cost);
+						gameState.SpendBrainzNGainz(gun_speed_brain_cost, gun_speed_gain_cost);
 						gun_speed_brain_cost += gun_speed_increase_rate;
 						gun_speed_gain_cost += gun_speed_increase_rate;
 						//Increment melee speed level
@@ -372,7 +391,26 @@ public class UpgradeGUI : MonoBehaviour
 					GUI.Button( new Rect(168,239,25,25), new GUIContent("", XTexture, ""));
 				}
 
-
+				//Gun attack speed upgrade
+				if(gameState.brainz >= gun_ammo_brain_cost && gameState.gainz >= gun_ammo_gain_cost && weaponSystem.gunAmmo_level < weaponSystem.weaponLevelCap)
+				{
+					if(GUI.Button( new Rect(168,288,25,25), new GUIContent("", LevelupB2, "")))
+					{
+						gameState.SpendBrainzNGainz(gun_ammo_brain_cost, gun_ammo_gain_cost);
+						gun_ammo_brain_cost += gun_ammo_increase_rate;
+						gun_ammo_gain_cost += gun_ammo_increase_rate;
+						//Increment melee speed level
+						weaponSystem.gunAmmo_level++;
+						//Call updatemaxmeleespeed()
+						weaponSystem.UpgradeGunAmmo();
+						weaponSystem.gunAmmo = weaponSystem.gunAmmo_max;
+						
+					}
+				}
+				else
+				{
+					GUI.Button( new Rect(168,288,25,25), new GUIContent("", XTexture, ""));
+				}
 
 
 
