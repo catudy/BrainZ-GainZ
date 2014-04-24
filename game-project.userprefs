@@ -1,34 +1,27 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="c:\Users\bcatudan\Documents\game-project\Assets\Zombies\Scripts\Editor\ZombieTexturerEditor.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Wander.cs">
     <Files>
-      <File FileName="Assets\Assets to change\wander2.cs" Line="9" Column="30" />
-      <File FileName="Assets\Scripts\WeaponSystem.cs" Line="1" Column="1" />
-      <File FileName="Assets\ThirdPersonController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Wander.cs" Line="7" Column="15" />
-      <File FileName="Assets\Scripts\PlayerState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\UpgradeGUI.cs" Line="1" Column="1" />
-      <File FileName="c:\Users\bcatudan\Documents\game-project\Assets\Zombies\Scripts\ZombieTexturer.cs" Line="128" Column="41" />
-      <File FileName="c:\Users\bcatudan\Documents\game-project\Assets\Zombies\Scripts\ZombieDemo.cs" Line="55" Column="3" />
-      <File FileName="c:\Users\bcatudan\Documents\game-project\Assets\Zombies\Scripts\Editor\ZombieTexturerEditor.cs" Line="10" Column="9" />
+      <File FileName="Assets\Scripts\Wander.cs" Line="165" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Assets to change" expanded="True" />
-            <Node name="Scripts" expanded="True" />
+            <Node name="Scripts" expanded="True">
+              <Node name="Wander.cs" selected="True" />
+            </Node>
+            <Node name="Zombies" expanded="True" />
+          </Node>
+          <Node name="Assembly-CSharp-Editor" expanded="True">
             <Node name="Zombies" expanded="True">
               <Node name="Scripts" expanded="True" />
             </Node>
           </Node>
-          <Node name="Assembly-CSharp-Editor" expanded="True">
-            <Node name="Zombies" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="Editor" expanded="True">
-                  <Node name="ZombieTexturerEditor.cs" selected="True" />
-                </Node>
-              </Node>
+          <Node name="Assembly-UnityScript" expanded="True">
+            <Node name="52SpecialEffectPack" expanded="True">
+              <Node name="Animation&amp;Script" expanded="True" />
             </Node>
           </Node>
         </State>

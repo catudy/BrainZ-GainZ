@@ -81,13 +81,14 @@ public class Wander : MonoBehaviour
 	
 	
 	private bool isControllable= true;
+	public float newWanderDirTime = 1.0f;
 	
 	
 	void Start()
 	{
 		playerState = GameObject.Find("Player").GetComponent<PlayerState>();
 		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
-		InvokeRepeating("RandomDirection",0,1.0f);
+		InvokeRepeating("RandomDirection",0,newWanderDirTime);
 	}
 	void  Awake ()
 	{
@@ -101,7 +102,7 @@ public class Wander : MonoBehaviour
 		bool grounded= IsGrounded();
 		
 		// Forward vector relative to the camera along the x-z plane	
-		Vector3 forward= cameraTransform.TransformDirection(Vector3.forward);
+		Vector3 forward= new Vector3 (0,0,1); //cameraTransform.TransformDirection(Vector3.forward);
 		forward.y = 0;
 		forward = forward.normalized;
 		
@@ -109,8 +110,8 @@ public class Wander : MonoBehaviour
 		// Always orthogonal to the forward vector
 		Vector3 right= new Vector3(forward.z, 0, -forward.x);
 		
-		float v= 1;//Input.GetAxisRaw("Vertical");
-		float h= ranDir;//1;//Random.Range(-1,1);//Input.GetAxisRaw("Horizontal");
+		float v= 1;
+		float h= ranDir;
 		
 		// Are we moving backwards or looking backwards
 		if (v < -0.2f)
@@ -157,57 +158,13 @@ public class Wander : MonoBehaviour
 			// Choose target speed
 			//* We want to support analog input but make sure you cant walk faster diagonally than just forward or sideways
 			float targetSpeed= Mathf.Min(targetDirection.magnitude, 1.0f);
-			
-			_characterState = CharacterState.Idle;
-			
-			bool canRun = playerState.stamina > 0.5f;
-			
-			// Pick speed modifier
-			if ((Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift) || Input.GetButton("Run")) && canRun)
-			{
-				targetSpeed *= runSpeed;
-				playerState.SetRunning();
-				_characterState = CharacterState.Running;
-			}
-			else if ((Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift) || Input.GetButton("Run")) && !canRun)
-			{
-				playerState.stamina = 0.0f;
-				targetSpeed *= trotSpeed;
-				_characterState = CharacterState.Trotting;
-				playerState.SetWalking();
-			}
-			else if (Time.time - trotAfterSeconds > walkTimeStart )
-			{
-				targetSpeed *= trotSpeed;
-				_characterState = CharacterState.Trotting;
-				playerState.SetWalking();
-			}
-			else
-			{
-				targetSpeed *= walkSpeed;
-				_characterState = CharacterState.Walking;
-				playerState.SetWalking();
-			}
-			
+
 			moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, curSmooth);   
 			
 			// Reset walk time start when we slow down
 			if (moveSpeed < walkSpeed * 0.3f)
 				walkTimeStart = Time.time;
 		}
-		// In air controls
-		else
-		{
-			// Lock camera while in air
-			if (jumping)
-				lockCameraTimer = 0.0f;
-			
-			if (isMoving)
-				inAirVelocity += targetDirection.normalized * Time.deltaTime * inAirControlAcceleration;
-		}
-		
-		
-		
 	}
 	
 	
