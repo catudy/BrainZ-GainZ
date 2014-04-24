@@ -150,7 +150,7 @@ public class GameState : MonoBehaviour {
 	public int level = 1;
 	public Objective primary_objective = new Objective();
 	public Objective[] secondary_objectives;
-	public int num_objectives = 5;
+	public int num_objectives = 4;
 	private bool in_cutscene = true;
 	Inventory inventory;
 	public bool inUpgradeMenu = false;
@@ -218,12 +218,17 @@ public class GameState : MonoBehaviour {
 		// Primary Objective time for now
 		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 30*level, 0);
 
+
 		// Set secondary Objectives
 		secondary_objectives = new Objective[num_objectives];
+		for(int i=0; i<num_objectives; i++){
+			secondary_objectives[i] = new Objective();
+		}
 		secondary_objectives[0].SetObjective(ObjectiveType.DAMAGE, ObjectiveReward.GAINZ, Random.Range(level * 2, level * 5),Random.Range(level *20, level * 50));
 		secondary_objectives[1].SetObjective(ObjectiveType.KILL, ObjectiveReward.BRAINZ, Random.Range (level * 5, level * 10),Random.Range(level *20, level * 50));
 		secondary_objectives [2].SetObjective (ObjectiveType.FIRE, ObjectiveReward.BRAINZ, Random.Range (level * 5, level * 10), Random.Range (level * 20, level * 50));
 		secondary_objectives [3].SetObjective (ObjectiveType.SCAVENGER, ObjectiveReward.BRAINZ, Random.Range (1, level), Random.Range (level * 20, level * 50));
+
 	}
 
 	private void UpdateObjectives(){

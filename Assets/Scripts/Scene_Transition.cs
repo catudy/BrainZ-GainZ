@@ -38,6 +38,7 @@ public class Scene_Transition : MonoBehaviour
 		//Must edit parameters in the future if we want to auto to a different screen
 		if(nextScene && autoNextScene)
 		{
+			Despawn (); // Despawn game objects
 			Application.LoadLevel("_MainMenu");
 		}
 
@@ -71,6 +72,16 @@ public class Scene_Transition : MonoBehaviour
 		else if(alpha <= minFade)
 		{
 			nextScene = true;
+		}
+	}	
+
+	// TODO: Move later if appropriate
+	void Despawn(){
+		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Deadly")){
+			Destroy(o);
+		}
+		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Item")){
+			Destroy(o);
 		}
 	}
 }
