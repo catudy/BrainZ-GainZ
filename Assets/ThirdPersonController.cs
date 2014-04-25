@@ -320,7 +320,7 @@ public class ThirdPersonController : MonoBehaviour
 
 		if (Input.GetButtonDown ("Jump"))
 		{
-			lastJumpButtonTime = Time.time;
+			//lastJumpButtonTime = Time.time;
 		}
 
 		UpdateSmoothedMovementDirection();
@@ -464,6 +464,19 @@ public class ThirdPersonController : MonoBehaviour
 	public void Reset ()
 	{
 		gameObject.tag = "Player";
+	}
+
+	public void increaseSprint(float increase)
+	{
+		runSpeed += increase;
+		return;
+	}
+
+	public void increaseWalk(float increase)
+	{
+		trotSpeed += increase;
+		walkSpeed += increase;
+		return;
 	}
 
 }

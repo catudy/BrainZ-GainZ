@@ -1,46 +1,15 @@
 ﻿<Properties>
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerCollision.cs">
-    <Files>
-      <File FileName="Assets\Scripts\WeaponSystem.cs" Line="260" Column="30" />
-      <File FileName="Assets\Scripts\GameState.cs" Line="213" Column="1" />
-      <File FileName="Assets\Scripts\UpgradeGUI.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PlayerState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Despawner.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Wander.cs" Line="1" Column="1" />
-      <File FileName="Assets\chase.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PlayerCollision.cs" Line="61" Column="56" />
-=======
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\UpgradeGUI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\chase.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameState.cs" Line="159" Column="46" />
-      <File FileName="Assets\Scripts\WeaponSystem.cs" Line="303" Column="19" />
-      <File FileName="Assets\Scripts\UpgradeGUI.cs" Line="287" Column="51" />
->>>>>>> 8128d2bba4cb9a85d136a67828235c331873f97b
+      <File FileName="Assets\chase.cs" Line="31" Column="30" />
+      <File FileName="Assets\Scripts\PlayerCollision.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameState.cs" Line="1" Column="1" />
+      <File FileName="Assets\ThirdPersonController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\WeaponSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UpgradeGUI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Wander.cs" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="Assets to change" expanded="True" />
-            <Node name="Scripts" expanded="True">
-<<<<<<< HEAD
-              <Node name="PlayerCollision.cs" selected="True" />
-=======
-              <Node name="UpgradeGUI.cs" selected="True" />
->>>>>>> 8128d2bba4cb9a85d136a67828235c331873f97b
-            </Node>
-          </Node>
-          <Node name="Assembly-UnityScript" expanded="True">
-            <Node name="52SpecialEffectPack" expanded="True">
-              <Node name="Animation&amp;Script" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

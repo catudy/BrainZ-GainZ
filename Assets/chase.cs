@@ -28,7 +28,7 @@ public class chase : MonoBehaviour
 	private float gravity= 20.0f;
 	// The gravity in controlled descent mode
 	private float speedSmoothing= 10.0f;
-	private float rotateSpeed= 500.0f;
+	private float rotateSpeed= 1.0f;
 	private float trotAfterSeconds= 3.0f;
 	private bool canJump= false;
 	private float jumpRepeatTime= 0.05f;

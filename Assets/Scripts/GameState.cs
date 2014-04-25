@@ -111,6 +111,7 @@ public class GameState : MonoBehaviour {
 	public GameObject[] spawn_points;
 	private GameObject player;
 	private PlayerState playerState;
+	public int baseTimePerLevel = 30;
 
 	// Use this for initialization
 	void Start () {
@@ -150,7 +151,7 @@ public class GameState : MonoBehaviour {
 
 	public void InitializeObjectives(){
 		// Primary Objective time for now
-		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 1*level, 0);
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, baseTimePerLevel*level, 0);
 
 
 		// Set secondary Objectives

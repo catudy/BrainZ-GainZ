@@ -14,15 +14,20 @@ public class PlayerCollision : MonoBehaviour
 	GameState gameState;
 
 	void OnControllerColliderHit(ControllerColliderHit collision) {
-		if (collision.gameObject.tag == "NoCollision") { // Don't care about the ground.
+		if (collision.gameObject.tag == "NoCollision") 
+		{ // Don't care about the ground.
 			return;
-		} else if (collision.gameObject.tag == "Deadly" || collision.gameObject.tag == "Fire") { 
-			// Game over if you run into something deadly
-			if(playerState.power_up == PowerUp.INVULNERABLE){ 
+		} 
+		else if (collision.gameObject.tag == "Deadly" || collision.gameObject.tag == "Fire") 
+		{ 
+			if(playerState.power_up == PowerUp.INVULNERABLE)
+			{ 
 				// Fuck you Zambie
 				gameState.RemoveObject(collision.gameObject);
-				gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
-			} else {
+				//gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
+			} 
+			else 
+			{
 				playerState.DealDamage(1);
 				Debug.Log ("Took Damage from " + collision.gameObject.name);
 				if(collision.gameObject.tag == "Fire")
@@ -30,7 +35,8 @@ public class PlayerCollision : MonoBehaviour
 					Destroy(collision.gameObject);
 				}
 			}
-		} //else if (collision.gameObject.tag == "Projectile"){
+		} 
+		//else if (collision.gameObject.tag == "Projectile"){
 			//gameState.game_over = true;
 			//collision.gameObject.GetComponent<Projectile>().DestroyWithExplosion(collision.gameObject);
 		//}
