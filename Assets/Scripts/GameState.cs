@@ -150,7 +150,7 @@ public class GameState : MonoBehaviour {
 
 	public void InitializeObjectives(){
 		// Primary Objective time for now
-		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 30*level, 0);
+		primary_objective.SetObjective (ObjectiveType.TIME, ObjectiveReward.NONE, 1*level, 0);
 
 
 		// Set secondary Objectives
