@@ -36,6 +36,38 @@ public class PlayerCollision : MonoBehaviour
 		//}
 
 
+		else if(collision.gameObject.tag == "Brainz")
+		{
+			Destroy(collision.gameObject);
+			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
+			gameState.brainz += 10;
+			
+		}
+
+		else if(collision.gameObject.tag == "Gainz")
+		{
+			Destroy(collision.gameObject);
+			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
+			gameState.gainz += 10;
+		}
+
+		else if(collision.gameObject.tag == "ammopack")
+		{
+			Destroy(collision.gameObject);
+			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
+			weaponSystem.gunAmmo = weaponSystem.gunAmmo_max;
+			weaponSystem.pulseAmmo = weaponSystem.pulseAmmo_max;
+			weaponSystem.feAmmo = weaponSystem.feAmmo_max;
+			weaponSystem.flameAmmo = weaponSystem.flameAmmo_max;
+		}
+
+		else if(collision.gameObject.tag == "healthpack")
+		{
+			Destroy(collision.gameObject);
+			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
+			playerState.health += 1;
+		}
+
 		else if(collision.gameObject.tag == "gun")
 		{
 			Destroy(collision.gameObject);
