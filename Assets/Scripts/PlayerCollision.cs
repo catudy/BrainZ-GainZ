@@ -71,7 +71,14 @@ public class PlayerCollision : MonoBehaviour
 		{
 			Destroy(collision.gameObject);
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
-			playerState.health += 1;
+			if(playerState.health >= playerState.playerStats.max_health)
+			{
+				playerState.health = playerState.playerStats.max_health;
+			}
+			else
+			{
+				playerState.health += 1;
+			}
 		}
 
 		else if(collision.gameObject.tag == "gun")
