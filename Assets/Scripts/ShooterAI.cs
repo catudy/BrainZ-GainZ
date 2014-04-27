@@ -4,6 +4,7 @@ using System.Collections;
 public class ShooterAI : MonoBehaviour {
 	public GameObject projectile;
 	public float cooldown = 5.0f;
+	public float range = 50.0f;
 	private float fire_next_rocket = 0.0f;
 
 	//ADDED
@@ -35,7 +36,7 @@ public class ShooterAI : MonoBehaviour {
 	{
 		Vector3 diff = player_pos - enemy_pos;
 		float distance = diff.magnitude;
-		if(distance > 2.0f){
+		if(distance > 2.0f && diff.magnitude < range){
 			if (Physics.Raycast (transform.position, diff, distance - 2.0f)) {
 				return false;
 			} 
