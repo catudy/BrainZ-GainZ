@@ -2,6 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum Weapon{
+	MELEE,
+	GUN,
+	PULSE,
+	FLAMER,
+	EXTINGUISHER
+}
+
 public class WeaponSystem : MonoBehaviour {
 
 	private GameObject player;
@@ -11,8 +19,8 @@ public class WeaponSystem : MonoBehaviour {
 	private ParticleSystem fire_ex;
 	
 
-	public int currentWeapon = 0;
-	private int maxWeapon = 5;
+	public Weapon currentWeapon = Weapon.MELEE;
+	private int maxWeapon = Weapon.GetNames(typeof(Weapon)).Length;
 	public GameObject melee;
 	public GameObject gun;
 	public GameObject pulse;
@@ -132,7 +140,7 @@ public class WeaponSystem : MonoBehaviour {
 		if (Input.GetKey("a") && canAttack) 
 		{
 			//melee attack
-			if(currentWeapon == 0)
+			if(currentWeapon == Weapon.MELEE)
 			{
 				melee.animation.Play();
 				if(melee.animation.isPlaying)
@@ -143,7 +151,7 @@ public class WeaponSystem : MonoBehaviour {
 			}
 
 			//gun attack
-			if(currentWeapon == 1)
+			if(currentWeapon == Weapon.GUN)
 			{
 				if(gunAmmo > 0)
 				{
@@ -154,7 +162,7 @@ public class WeaponSystem : MonoBehaviour {
 			}
 
 			//pulse attack
-			if(currentWeapon == 2)
+			if(currentWeapon == Weapon.PULSE)
 			{
 				if(pulseAmmo > 0)
 				{
@@ -189,7 +197,7 @@ public class WeaponSystem : MonoBehaviour {
 			}
 
 			//flamethrower attack
-			if(currentWeapon == 3)
+			if(currentWeapon == Weapon.FLAMER)
 			{
 				if(flameAmmo > 0.0f)
 				{
@@ -234,7 +242,7 @@ public class WeaponSystem : MonoBehaviour {
 			}
 		
 			//fire extinguisher attack
-			if(currentWeapon == 4)
+			if(currentWeapon == Weapon.EXTINGUISHER)
 			{
 				if(feAmmo > 0.0f)
 				{
@@ -331,18 +339,18 @@ public class WeaponSystem : MonoBehaviour {
 	}
 
 	void Swap() { 
-		int current = currentWeapon;
+		Weapon current = currentWeapon;
 		
-		if (current+1 == maxWeapon) {
-			currentWeapon = 0;
+		if ((int)current == maxWeapon) {
+			currentWeapon = (Weapon)0;
 		} else {
-			while(current+1 < maxWeapon) {
+			while((int)current <= maxWeapon) {
 				current++;
-				if(activeWeaponList[current] == true) {
+				if(activeWeaponList[(int)current] == true) {
 					currentWeapon = current;
 					break;
 				}
-				else if(current+1 == maxWeapon) {
+				else if((int)current+1 == maxWeapon) {
 					currentWeapon = 0;
 					break;
 				}
@@ -351,35 +359,34 @@ public class WeaponSystem : MonoBehaviour {
 	}
 	
 	void SetWeapon() {
-		//TODO: Wep1,Wep2,Wep3 need to go into an array.
-		if(currentWeapon == 0) {
+		if(currentWeapon == Weapon.MELEE) {
 			melee.SetActive(true);
 			gun.SetActive(false);
 			pulse.SetActive(false);
 			flamethrower.SetActive(false);
 			extinguisher.SetActive(false);
 		}
-		if(currentWeapon == 1) {
+		if(currentWeapon == Weapon.GUN) {
 			melee.SetActive(false);
 			gun.SetActive(true);
 			pulse.SetActive(false);
 			flamethrower.SetActive(false);
 			extinguisher.SetActive (false);
 		}
-		if(currentWeapon == 2) {
+		if(currentWeapon == Weapon.PULSE) {
 			melee.SetActive(false);
 			gun.SetActive(false);
 			pulse.SetActive(true);
 			flamethrower.SetActive(false);
 		}
-		if(currentWeapon == 3) {
+		if(currentWeapon == Weapon.FLAMER) {
 			melee.SetActive(false);
 			gun.SetActive(false);
 			pulse.SetActive(false);
 			flamethrower.SetActive(true);
 			extinguisher.SetActive(false);
 		}
-		if (currentWeapon == 4) {
+		if (currentWeapon == Weapon.EXTINGUISHER) {
 			melee.SetActive(false);
 			gun.SetActive(false);
 			pulse.SetActive(false);

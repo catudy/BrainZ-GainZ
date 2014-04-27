@@ -180,7 +180,7 @@ public class GUIController : MonoBehaviour
 				GUI.DrawTexture( new Rect(38,63,20,20), infinityTexture);
 			}
 
-			else if(weaponSystem.currentWeapon == 1)
+			else if(weaponSystem.currentWeapon == Weapon.GUN)
 			//Draw gun weapon and stats
 			{
 				GUI.DrawTexture( new Rect(21,19,45,45), gunTexture);
@@ -188,21 +188,21 @@ public class GUIController : MonoBehaviour
 			}
 
 			//Draw pulse weapon and stats
-			else if(weaponSystem.currentWeapon == 2)
+			else if(weaponSystem.currentWeapon == Weapon.PULSE)
 			{
 				GUI.DrawTexture( new Rect(23,19,45,45), pulseTexture);
 				createText(34,69,200,20,weaponSystem.pulseAmmo.ToString()+"/"+weaponSystem.pulseAmmo_max.ToString());
 			}
 
 			//Draw flamethrower and stats
-			else if(weaponSystem.currentWeapon == 3)
+			else if(weaponSystem.currentWeapon == Weapon.FLAMER)
 			{
 				GUI.DrawTexture( new Rect(24,20,40,40), ftTexture);
 				createText(34,69,200,20,weaponSystem.flameAmmo.ToString("F2")+"/"+weaponSystem.flameAmmo_max.ToString("F2"));
 			}
 
 			//Draw fireextinguisher and stats
-			else if(weaponSystem.currentWeapon == 4)
+			else if(weaponSystem.currentWeapon == Weapon.EXTINGUISHER)
 			{
 				GUI.DrawTexture( new Rect(34,22,20,40), feTexture);
 				createText(34,69,200,20,weaponSystem.feAmmo.ToString("F2")+"/"+weaponSystem.feAmmo_max.ToString("F2"));
