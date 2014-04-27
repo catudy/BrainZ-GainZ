@@ -233,6 +233,7 @@ public class WeaponSystem : MonoBehaviour {
 								if(hit.collider.gameObject.tag == "Deadly"){
 									Destroy (hit.collider.gameObject);
 									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
+									break;
 								}
 
 							}
