@@ -351,7 +351,6 @@ public class WeaponSystem : MonoBehaviour {
 		} else {
 			while((int)current +1 < maxWeapon) {
 				current++;
-				activeWeaponList[(int)current] = true;
 				if(activeWeaponList[(int)current] == true) {
 					currentWeapon = current;
 					break;
