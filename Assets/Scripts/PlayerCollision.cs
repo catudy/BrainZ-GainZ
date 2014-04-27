@@ -11,6 +11,7 @@ public class PlayerCollision : MonoBehaviour
 {
 	private PlayerState playerState;
 	private WeaponSystem weaponSystem;
+	private UpgradeGUI upgradeGUI;
 	GameState gameState;
 
 	void OnControllerColliderHit(ControllerColliderHit collision) {
@@ -46,6 +47,7 @@ public class PlayerCollision : MonoBehaviour
 		{
 			Destroy(collision.gameObject);
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
+			upgradeGUI.collected_brains+=10;
 			gameState.brainz += 10;
 			
 		}
@@ -54,6 +56,7 @@ public class PlayerCollision : MonoBehaviour
 		{
 			Destroy(collision.gameObject);
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
+			upgradeGUI.collected_gains+=10;
 			gameState.gainz += 10;
 		}
 
@@ -151,6 +154,7 @@ public class PlayerCollision : MonoBehaviour
 		playerState = GetComponent<PlayerState>();
 		weaponSystem = GetComponent<WeaponSystem> ();
 		gameState = GameObject.Find("GameController").GetComponent<GameState>();
+		upgradeGUI = GameObject.Find("GUIController").GetComponentInChildren<UpgradeGUI>();
 	}
 	
 	// Update is called once per frame

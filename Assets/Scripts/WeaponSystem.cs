@@ -393,4 +393,25 @@ public class WeaponSystem : MonoBehaviour {
 		yield return new WaitForSeconds(waitTime);
 		canAttack = true;
 	}
+
+	public bool isAmmoMaxed()
+	{
+		if(gunAmmo==gunAmmo_max && pulseAmmo==pulseAmmo_max && feAmmo==feAmmo_max && flameAmmo==flameAmmo_max)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public void maxAmmo()
+	{
+		gunAmmo = gunAmmo_max;
+		pulseAmmo = pulseAmmo_max;
+		feAmmo = feAmmo_max;
+		flameAmmo = flameAmmo_max;
+		return;
+	}
 }
