@@ -220,10 +220,14 @@ public class WeaponSystem : MonoBehaviour {
 						flamer.transform.position = temp;
 						flamer.transform.rotation = flamethrower.transform.rotation;
 						flamer.SetActive(true);// = true;
+
+						// Set particle direction like player
+						foreach (ParticleEmitter p in flamer.GetComponentsInChildren<ParticleEmitter>()){ 
+							p.worldVelocity = 5*player.transform.forward;
+						}
 						if(Physics.Raycast(ray_start,ray,out hit))
 						{
 							Debug.DrawRay (ray_start,ray);
-
 							if(hit.distance < 5.0f)
 							{
 								if(hit.collider.gameObject.tag == "Deadly"){
@@ -340,18 +344,19 @@ public class WeaponSystem : MonoBehaviour {
 
 	void Swap() { 
 		Weapon current = currentWeapon;
-		
-		if ((int)current == maxWeapon) {
-			currentWeapon = (Weapon)0;
+
+		if ((int)current +1 == maxWeapon) {
+			currentWeapon = Weapon.MELEE;
 		} else {
 			while((int)current +1 < maxWeapon) {
 				current++;
+				activeWeaponList[(int)current] = true;
 				if(activeWeaponList[(int)current] == true) {
 					currentWeapon = current;
 					break;
 				}
 				else if((int)current+1 == maxWeapon) {
-					currentWeapon = 0;
+					currentWeapon = Weapon.MELEE;
 					break;
 				}
 			}
