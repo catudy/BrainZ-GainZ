@@ -144,7 +144,7 @@ public class UpgradeGUI : MonoBehaviour
 		if(gameState.primary_objective.completed)
 		{
 			gameState.paused = true;
-
+			/*
 			//Change to 7 or 8 later
 			if(gameState.level == 8)//gameState.level == 2 || gameState.level == 8)
 			{
@@ -155,8 +155,8 @@ public class UpgradeGUI : MonoBehaviour
 					Application.LoadLevel("_MainMenu");
 				}
 			}
-
-			else if(!showUpgradeMenu)
+			*/
+			if(!showUpgradeMenu)
 			{
 				//Level X completed message
 				GUI.Label(new Rect(240,20,300,100), new GUIContent("Level "+gameState.level.ToString()+" Complete", null, "Basic"));
@@ -175,8 +175,6 @@ public class UpgradeGUI : MonoBehaviour
 					{
 						if(objective.type == ObjectiveType.KILL)
 						{
-							//GUI.DrawTexture( new Rect(528,20+yy,15,15), obj_kill);
-
 							GUI.Label(new Rect(115,170+yy,100,100),"Complete: "+objective.target.ToString()+"/"+objective.target.ToString()+" ZOMBIES KILLED","Basic");
 							GUI.Label(new Rect(405,170+yy,400,100),"Reward: "+objective.reward_amount.ToString()+" "+objective.reward.ToString(),"Basic");
 							gainz_earned += objective.reward_amount;
@@ -282,12 +280,12 @@ public class UpgradeGUI : MonoBehaviour
 				float next_p_ammo = weaponSystem.pulseAmmo_base + ((weaponSystem.pulseAmmo_level) * 1);
 				float current_ft_ammo = weaponSystem.flameAmmo_max;
 				float next_ft_ammo = weaponSystem.flameAmmo_base + ((weaponSystem.flameAmmo_level) * 1.0f);
-				//float current_ft_range = 
-				//float next_ft_range =
+				float current_ft_range = weaponSystem.flamerange_max;
+				float next_ft_range = weaponSystem.flamerange_base + ((weaponSystem.flamerange_level) * 1.0f);
 				float current_fe_ammo = weaponSystem.feAmmo_max;
 				float next_fe_ammo = weaponSystem.feAmmo_base + ((weaponSystem.feAmmo_level) * 1.0f);
-				//float current_fe_range =
-				//float next_fe_range =
+				float current_fe_range = weaponSystem.ferange_max;
+				float next_fe_range = weaponSystem.ferange_base + ((weaponSystem.ferange_level) * 1.0f);
 				float current_walk = thirdPersonController.walkSpeed;
 				float next_walk = thirdPersonController.walkSpeed + 0.2f;
 				float current_run = thirdPersonController.runSpeed;
@@ -354,14 +352,14 @@ public class UpgradeGUI : MonoBehaviour
 					GUI.Label( new Rect(500,225,0,0),current_fe_ammo+" => "+next_fe_ammo.ToString()+" Ammo","Small"); //Print current and next stat for melee speed
 				}
 				//fe range
-				//if(weaponSystem. == weaponSystem.weaponLevelCap)
-				//{
-				//	GUI.Label( new Rect(500,177,0,0),"MAX LEVEL: "+ +" Range","Small"); 
-				//}
-				//else if (weaponSystem. < weaponSystem.weaponLevelCap)
-				//{
-				//	GUI.Label( new Rect(500,177,0,0),current_fe_range+" => "+next_fe_range.ToString()+" Range","Small"); //Print current and next stat for melee speed
-				//}
+				if(weaponSystem.ferange_level == weaponSystem.weaponLevelCap)
+				{
+					GUI.Label( new Rect(500,273,0,0),"MAX LEVEL: "+weaponSystem.ferange_max.ToString()+" Range","Small"); 
+				}
+				else if (weaponSystem.ferange_level < weaponSystem.weaponLevelCap)
+				{
+					GUI.Label( new Rect(500,273,0,0),current_fe_range+" => "+next_fe_range.ToString()+" Range","Small"); //Print current and next stat for melee speed
+				}
 
 				if(weaponSystem.flameAmmo_level == weaponSystem.weaponLevelCap)
 				{
@@ -372,14 +370,14 @@ public class UpgradeGUI : MonoBehaviour
 					GUI.Label( new Rect(500,321,0,0),current_ft_ammo+" => "+next_ft_ammo.ToString()+" Ammo","Small"); //Print current and next stat for melee speed
 				}
 				//ftrange
-				//if(weaponSystem. == weaponSystem.weaponLevelCap)
-				//{
-				//	GUI.Label( new Rect(500,321,0,0),"MAX LEVEL: "+ +" Range","Small"); 
-				//}
-				//else if (weaponSystem. < weaponSystem.weaponLevelCap)
-				//{
-				//	GUI.Label( new Rect(500,321,0,0),current_ft_range+" => "+next_ft_range.ToString()+" Range","Small"); //Print current and next stat for melee speed
-				//}
+				if(weaponSystem.flamerange_level == weaponSystem.weaponLevelCap)
+				{
+					GUI.Label( new Rect(500,369,0,0),"MAX LEVEL: "+weaponSystem.flamerange_max+" Range","Small"); 
+				}
+				else if (weaponSystem.flamerange_level < weaponSystem.weaponLevelCap)
+				{
+					GUI.Label( new Rect(500,369,0,0),current_ft_range+" => "+next_ft_range.ToString()+" Range","Small"); //Print current and next stat for melee speed
+				}
 
 				if(playerState.health < playerState.playerStats.max_health)
 				{
@@ -580,25 +578,24 @@ public class UpgradeGUI : MonoBehaviour
 					GUI.Button( new Rect(498,239,25,25), new GUIContent("", XTexture, ""));
 				}
 
-/*
-				if(gameState.brainz >= fe_range_brain_cost && gameState.gainz >= fe_range_gain_cost && "FE RANGE LEVEL" < weaponSystem.weaponLevelCap)
+
+				if(gameState.brainz >= fe_range_brain_cost && gameState.gainz >= fe_range_gain_cost && weaponSystem.ferange_level < weaponSystem.weaponLevelCap)
 				{
 					if(GUI.Button( new Rect(498,288,25,25), new GUIContent("", LevelupB2, "")))
 					{
 						gameState.SpendBrainzNGainz(fe_range_brain_cost, fe_range_gain_cost);
 						fe_range_brain_cost += fe_range_increase_rate;
 						fe_range_gain_cost += fe_range_increase_rate;
-						"INCREMENT FE RANGE LEVEL"
-						"CALL UPGRADE FE RANGE FUNCTION"
-						"SET CURRENT RANGE TO MAX RANGE"
-						
+						weaponSystem.ferange_level++;
+						weaponSystem.UpgradeFERange();
+						weaponSystem.ferange = weaponSystem.ferange_max;
 					}
 				}
 				else
 				{
 					GUI.Button( new Rect(498,288,25,25), new GUIContent("", XTexture, ""));
 				}
-*/
+
 
 				//FT ammo upgrade
 				if(gameState.brainz >= ft_ammo_brain_cost && gameState.gainz >= ft_ammo_gain_cost && weaponSystem.flameAmmo_level < weaponSystem.weaponLevelCap)
@@ -618,25 +615,24 @@ public class UpgradeGUI : MonoBehaviour
 					GUI.Button( new Rect(498,337,25,25), new GUIContent("", XTexture, ""));
 				}
 
-				/*
-				if(gameState.brainz >= ft_range_brain_cost && gameState.gainz >= ft_range_gain_cost && "FT RANGE LEVEL" < weaponSystem.weaponLevelCap)
+
+				if(gameState.brainz >= ft_range_brain_cost && gameState.gainz >= ft_range_gain_cost && weaponSystem.flamerange_level < weaponSystem.weaponLevelCap)
 				{
-					if(GUI.Button( new Rect(498,288,25,25), new GUIContent("", LevelupB2, "")))
+					if(GUI.Button( new Rect(498,386,25,25), new GUIContent("", LevelupB2, "")))
 					{
 						gameState.SpendBrainzNGainz(ft_range_brain_cost, ft_range_gain_cost);
 						ft_range_brain_cost += ft_range_increase_rate;
 						ft_range_gain_cost += ft_range_increase_rate;
-						"INCREMENT FT RANGE LEVEL"
-						"CALL UPGRADE FT RANGE FUNCTION"
-						"SET CURRENT RANGE TO MAX RANGE"
-						
+						weaponSystem.flamerange_level++;
+						weaponSystem.UpgradeFlameRange();
+						weaponSystem.flamerange = weaponSystem.flamerange_max;
 					}
 				}
 				else
 				{
 					GUI.Button( new Rect(498,288,25,25), new GUIContent("", XTexture, ""));
 				}
-*/
+
 
 				// Health +1 upgrade pressed
 				if(gameState.brainz >= restorehp_brain_cost && gameState.gainz >= restorehp_gain_cost && playerState.health < playerState.playerStats.max_health)
