@@ -10,6 +10,9 @@ public class GUIController : MonoBehaviour
 	private PlayerState playerState;
 
 	private WeaponSystem weaponSystem;
+
+	public GUISkin menu_skin;
+	public Texture2D bng_logo;
 	
 	//Texture variables
 	public Texture2D brainz_icon;
@@ -60,6 +63,8 @@ public class GUIController : MonoBehaviour
 	private float originalHeight;
 	private Vector3 scale;
 
+	private bool showInstructions = false;
+
 	//TEST VARS
 	public float a,b,c,d =0;
 	public int w,x,y,z = 0;
@@ -89,8 +94,57 @@ public class GUIController : MonoBehaviour
 		GUI.matrix = Matrix4x4.TRS(Vector3.zero,Quaternion.identity,scale);
 		
 		//Load GUI for main menu
-		if(currentScene == mainMenu)
+		if(currentScene == mainMenu && showInstructions)
 		{
+			GUI.skin = menu_skin;
+			int offset = 0;
+			GUI.Label(new Rect(325,60+offset,0,0),"How to play","Big");
+			offset+=40;
+			GUI.Label(new Rect(325,60+offset,0,0),"You have awakened to a zombie apocalypse and you must","Normal");
+			offset += 20;
+			GUI.Label(new Rect(325,60+offset,0,0),"use your brainz and gainz to survive as long as possible.","Normal");
+			offset += 20;
+			GUI.Label(new Rect(325,60+offset,0,0),"NEVER STOP RUNNING IF YOU DO, YOU DIE!","Normal");
+			offset += 80;
+			GUI.Label(new Rect(325,60+offset,0,0),"CONTROLS","Big");
+			offset+=40;
+			GUI.Label(new Rect(325,60+offset,0,0),"Q - SPRINT","Normal");
+			offset+=20;
+			GUI.Label(new Rect(325,60+offset,0,0),"R - SWAP WEAPONS","Normal");
+			offset+=20;
+			GUI.Label(new Rect(325,60+offset,0,0),"SPACEBAR - ATTACK","Normal");
+			offset+=20;
+			GUI.Label(new Rect(325,60+offset,0,0),"LEFT KEY - TURN LEFT","Normal");
+			offset+=20;
+			GUI.Label(new Rect(325,60+offset,0,0),"RIGHT KEY - TURN RIGHT","Normal");
+
+			if(GUI.Button( new Rect(277,378,100,68), "Play"))
+			{
+				Application.LoadLevel("New_reno");
+			}
+		}
+		else if(currentScene == mainMenu)
+		{
+			GUI.skin = menu_skin;
+			GUI.Label(new Rect(325,60,0,0),"BRAINZ & GAINZ","Huge");
+
+			GUI.DrawTexture( new Rect(138,-90,400,400), bng_logo);
+			int offset = 0;
+			if(GUI.Button( new Rect(288,347+offset,100,20), "Start"))
+			{
+				showInstructions = true;
+			}
+			offset+=40;
+			if(GUI.Button( new Rect(288,347+offset,100,20), "Instructions"))
+			{
+				Application.LoadLevel("_Instructions");
+			}
+			offset+=40;
+			if(GUI.Button( new Rect(288,347+offset,100,20), "Quit"))
+			{
+				Application.Quit();
+			}
+			/*
 			//Creating reno box and button for level select
 			createBox (273,424,levelBoxWidth,levelBoxHeight, "Level Select");
 			renoButton = createButton(278,445,renoButtonWPlace,renoButtonHPlace,"Reno");
@@ -109,6 +163,7 @@ public class GUIController : MonoBehaviour
 			{
 				Application.Quit();
 			}
+			*/
 		}
 		
 		//Load GUI for reno level
@@ -272,6 +327,7 @@ public class GUIController : MonoBehaviour
 			{
 				Application.LoadLevel(mainMenu);
 			}
+
 		}
 
 		GUI.matrix = svMat;

@@ -53,7 +53,7 @@ public class Instructions : MonoBehaviour
 
 			GUI.Label(new Rect(325,60+offset,0,0),"You have awakened to a zombie apocalypse and you must","Normal");
 			offset += 20;
-			GUI.Label(new Rect(325,60+offset,0,0),"use your brains and gains to survive as long as possible.","Normal");
+			GUI.Label(new Rect(325,60+offset,0,0),"use your brainz and gainz to survive as long as possible.","Normal");
 			offset += 20;
 			GUI.Label(new Rect(325,60+offset,0,0),"NEVER STOP RUNNING IF YOU DO, YOU DIE!","Normal");
 			offset += 80;
@@ -139,13 +139,13 @@ public class Instructions : MonoBehaviour
 			}
 			
 			GUI.Label(new Rect(325,60+offset,0,0),"Primary objectives","Normal");
-			offset += 20;
+			offset += 40;
 			GUI.Label(new Rect(325,60+offset,0,0),"Survive the required amount of time to","Normal");
 			offset += 20;
 			GUI.Label(new Rect(325,60+offset,0,0),"move on to the next level.","Normal");
-			offset += 40;
-			GUI.Label(new Rect(325,60+offset,0,0),"Secondary objectives","Big");
-			offset+=20;
+			offset += 60;
+			GUI.Label(new Rect(325,60+offset,0,0),"Secondary objectives","Normal");
+			offset+=40;
 			GUI.Label(new Rect(325,60+offset,0,0),"Secondary objectives dont need to be completed","Normal");
 			offset+=20;
 			GUI.Label(new Rect(325,60+offset,0,0),"but will significantly aid your chances of survival.","Normal");
@@ -209,14 +209,14 @@ public class Instructions : MonoBehaviour
 				}
 			}
 				
-			GUI.Label(new Rect(325,60+offset,0,0),"Upgrades can be purchased from the aquired brains and gains","Normal");
+			GUI.Label(new Rect(325,60+offset,0,0),"Upgrades for your weapons and stats can be purchased","Normal");
 			offset+=20;
-			GUI.Label(new Rect(325,60+offset,0,0),"from completing objectives and other means.","Normal");
+			GUI.Label(new Rect(325,60+offset,0,0),"by aquiring brainz and gainz from completing","Normal");
 			offset+=20;
-			GUI.Label(new Rect(325,60+offset,0,0),"Your weapons and personal stats can be upgraded.","Normal");
+			GUI.Label(new Rect(325,60+offset,0,0),"objectives and other means.","Normal");
 			offset+=40;
 			GUI.Label(new Rect(325,60+offset,0,0),"Pickups","Big");
-			offset+=20;
+			offset+=40;
 			GUI.Label(new Rect(325,60+offset,0,0),"Various pickups can be found throughout the level","Normal");
 			offset+=20;
 			GUI.Label(new Rect(325,60+offset,0,0),"to aid in your survival.","Normal");
@@ -235,7 +235,7 @@ public class Instructions : MonoBehaviour
 			offset+=20;
 			GUI.Label(new Rect(325,60+offset,0,0),"Invisibility - Unable to attract zombies for ten seconds.","Normal");
 			offset+=20;
-			GUI.Label(new Rect(325,60+offset,0,0),"Second wind - Large boost in stamina regeneration","Normal");
+			GUI.Label(new Rect(325,60+offset,0,0),"Second wind - Large boost in stamina regeneration for ten seconds","Normal");
 		}
 		if(GUI.Button(new Rect(4,453,55,22),"BACK"))
 		{
