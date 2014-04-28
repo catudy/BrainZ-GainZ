@@ -720,7 +720,6 @@ public class UpgradeGUI : MonoBehaviour
 	// TODO: Def Move later
 	void Despawn(){
 		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Deadly")){
-			Debug.Log ("Destroyed Deadly " + o.name);
 			Destroy(o);
 		}
 		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Item")){
@@ -730,6 +729,15 @@ public class UpgradeGUI : MonoBehaviour
 			Destroy(o);
 		}
 		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Fire")){
+			Destroy(o);
+		}
+		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Effect")){
+			Destroy(o);
+		}
+		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Brainz")){
+			Destroy(o);
+		}
+		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Gainz")){
 			Destroy(o);
 		}
 	}
