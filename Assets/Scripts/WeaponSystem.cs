@@ -16,6 +16,12 @@ public class WeaponSystem : MonoBehaviour {
 	private GameState gameState;
 
 	private GameObject flamer;
+	private GameObject fe;
+	public GameObject p_50;
+	public GameObject p_75;
+	public GameObject p_100;
+	public GameObject p_125;
+	public GameObject p_150;
 	private ParticleSystem fire_ex;
 	
 
@@ -29,7 +35,8 @@ public class WeaponSystem : MonoBehaviour {
 	
 	public GameObject bullet;
 	public Transform bulletSpawn;
-	
+
+
 	public bool[] activeWeaponList;
 	public bool canAttack = true;
 
@@ -67,12 +74,20 @@ public class WeaponSystem : MonoBehaviour {
 	public float flameAmmo_base;
 	public float flameAmmo_level;
 	public float flameAmmo_max;
+	public float flamerange;
+	public float flamerange_base;
+	public int flamerange_level;
+	public float flamerange_max;
 
 	//fire extinguisher variables
 	public float feAmmo;
 	public float feAmmo_base;
 	public float feAmmo_level;
 	public float feAmmo_max;
+	public float ferange;
+	public float ferange_base;
+	public int ferange_level;
+	public float ferange_max;
 
 
 
@@ -81,8 +96,8 @@ public class WeaponSystem : MonoBehaviour {
 
 		player = GameObject.Find ("Player");
 		gameState = GameObject.Find ("GameController").GetComponentInChildren<GameState> ();
-		flamer = GameObject.Find ("FlameEmission");
-		fire_ex = GameObject.Find ("FireExtinguisherParticleEffect").GetComponent<ParticleSystem> ();
+		flamer = GameObject.Find ("FlamerEmission");
+		fe = GameObject.Find ("FeEmission");
 
 		//initialize base stats
 		meleeAttackSpeed_base = 1.0f;
@@ -92,6 +107,8 @@ public class WeaponSystem : MonoBehaviour {
 		flameAmmo_base = 5.0f;
 		feAmmo_base = 5.0f;
 		pulse_radius_base = 50;
+		flamerange_base = 5.0f;
+		ferange_base = 5.0f;
 
 		//initialize stat levels
 		meleeAttackSpeed_level = 1;
@@ -101,6 +118,8 @@ public class WeaponSystem : MonoBehaviour {
 		flameAmmo_level = 1;
 		feAmmo_level = 1;
 		pulse_radius_level = 1;
+		flamerange_level = 1;
+		ferange_level = 1;
 
 		//set base as max
 		meleeAttackSpeed_max = meleeAttackSpeed_base;
@@ -110,6 +129,8 @@ public class WeaponSystem : MonoBehaviour {
 		flameAmmo_max = flameAmmo_base;
 		feAmmo_max = feAmmo_base;
 		pulse_radius_max = pulse_radius_base;
+		flamerange_max = flamerange_base;
+		ferange_max = ferange_base;
 
 		//set max to actual
 		meleeAttackSpeed = meleeAttackSpeed_max;
@@ -119,6 +140,8 @@ public class WeaponSystem : MonoBehaviour {
 		flameAmmo = flameAmmo_max;
 		feAmmo = feAmmo_max;
 		pulse_radius = pulse_radius_max;
+		flamerange = flamerange_max;
+		ferange = ferange_max;
 
 		activeWeaponList [0] = true;
 		melee.collider.enabled = false;
@@ -168,22 +191,27 @@ public class WeaponSystem : MonoBehaviour {
 				{
 					if(pulse_radius_level == 1)
 					{
+						Instantiate(p_50, player.transform.position, new Quaternion());
 						pulse.animation.Play ("pulseAttack");
 					}
 					else if(pulse_radius_level == 2)
 					{
+						Instantiate(p_75, player.transform.position, new Quaternion());
 						pulse.animation.Play ("pulseAttack_75");
 					}
 					else if(pulse_radius_level == 3)
 					{
+						Instantiate(p_100, player.transform.position, new Quaternion());
 						pulse.animation.Play ("pulseAttack_100");
 					}
 					else if(pulse_radius_level == 4)
 					{
+						Instantiate(p_125, player.transform.position, new Quaternion());
 						pulse.animation.Play ("pulseAttack_125");
 					}
 					else if(pulse_radius_level == 5)
 					{
+						Instantiate(p_150, player.transform.position, new Quaternion());
 						pulse.animation.Play ("pulseAttack_150");
 					}
 
@@ -204,10 +232,6 @@ public class WeaponSystem : MonoBehaviour {
 					RaycastHit hit;
 					Vector3 forward = flamethrower.transform.forward;
 					Vector3 ray_start = flamethrower.transform.position;
-					//ray_start.y += 1.0f;
-					//ray_start.z -= 0.1f;
-					//ray_start.x += 0.5f;
-
 
 					flameAmmo -= Time.deltaTime;
 
@@ -219,16 +243,17 @@ public class WeaponSystem : MonoBehaviour {
 						temp.y = 0.5f; 
 						flamer.transform.position = temp;
 						flamer.transform.rotation = flamethrower.transform.rotation;
-						flamer.SetActive(true);// = true;
 
 						// Set particle direction like player
 						foreach (ParticleEmitter p in flamer.GetComponentsInChildren<ParticleEmitter>()){ 
 							p.worldVelocity = 5*player.transform.forward;
+							p.emit = true;
 						}
 						if(Physics.Raycast(ray_start,ray,out hit))
 						{
 							Debug.DrawRay (ray_start,ray);
-							if(hit.distance < 5.0f)
+							Debug.Log(hit.distance);
+							if(hit.distance < flamerange)
 							{
 								if(hit.collider.gameObject.tag == "Deadly"){
 									Destroy (hit.collider.gameObject);
@@ -254,23 +279,26 @@ public class WeaponSystem : MonoBehaviour {
 					RaycastHit hit;
 					Vector3 forward = player.transform.forward;
 					Vector3 ray_start = player.transform.position;
-					//ray_start.y += 0.0f;
-					//ray_start.z -= 0.0f;
-					//ray_start.x -= 5.0f;
+
 					feAmmo -= Time.deltaTime;
-					
+
 					for(float i=-1; i < 1; i=i+0.1f)
 					{
 						Vector3 ray = new Vector3(forward.x+i,forward.y,forward.z);
+
+						// Set particle direction like player
+						foreach (ParticleEmitter p in fe.GetComponentsInChildren<ParticleEmitter>()){ 
+							p.worldVelocity = 5*player.transform.forward;
+							p.emit = true;
+						}
 						if(Physics.Raycast(ray_start,ray,out hit))
 						{
 							Debug.DrawRay (ray_start,ray);
 							Vector3 temp = extinguisher.transform.position + player.transform.forward.normalized * 2.0f;
 							temp.y = 0.5f;
-							fire_ex.transform.position = temp;
-							fire_ex.transform.rotation = extinguisher.transform.rotation;
-							fire_ex.enableEmission = true;
-							if(hit.distance < 5.0f)
+							fe.transform.position = temp;
+							fe.transform.rotation = extinguisher.transform.rotation;
+							if(hit.distance < ferange)
 							{
 								if(hit.collider.gameObject.tag == "Fire"){
 									Destroy (hit.collider.gameObject);
@@ -289,8 +317,13 @@ public class WeaponSystem : MonoBehaviour {
 		}
 		else
 		{
-			fire_ex.enableEmission = false;
-			flamer.SetActive(false);
+			//fire_ex.enableEmission = false;
+			foreach (ParticleEmitter p in fe.GetComponentsInChildren<ParticleEmitter>()){ 
+				p.emit = false;
+			}
+			foreach (ParticleEmitter p in flamer.GetComponentsInChildren<ParticleEmitter>()){ 
+				p.emit = false;
+			}
 		}
 		DisableAttackCollider ();
 	
@@ -329,6 +362,16 @@ public class WeaponSystem : MonoBehaviour {
 	public void UpgradePulseRadius()
 	{
 		pulse_radius_max = pulse_radius_base + ((pulse_radius_level - 1) * 25);
+	}
+
+	public void UpgradeFlameRange()
+	{
+		flamerange_max = flamerange_base + ((flamerange_level - 1) * 1.0f);
+	}
+
+	public void UpgradeFERange()
+	{
+		ferange_max = ferange_base + ((ferange_level - 1) * 1.0f);
 	}
 
 	void DisableAttackCollider()
