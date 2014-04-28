@@ -153,13 +153,13 @@ public class WeaponSystem : MonoBehaviour {
 
 		SetWeapon ();
 
-		if(Input.GetKeyDown("s"))
+		if(Input.GetKeyDown("r"))
 		{
 			Swap ();
 		}
 
 		//melee attack
-		if (Input.GetKey("a") && canAttack) 
+		if (Input.GetKey("space") && canAttack) 
 		{
 			//melee attack
 			if(currentWeapon == Weapon.MELEE)

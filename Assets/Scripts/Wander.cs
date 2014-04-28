@@ -70,6 +70,8 @@ public class Wander : MonoBehaviour
 	public float wanderSpeed = 1.0f;
 	public float newWanderDirTime = 1.0f;
 
+	private Animation _animation;
+
 	void Start()
 	{
 		playerState = GameObject.Find("Player").GetComponent<PlayerState>();
@@ -79,6 +81,7 @@ public class Wander : MonoBehaviour
 	void  Awake ()
 	{
 		moveDirection = transform.TransformDirection(Vector3.forward);
+		_animation = GetComponent<Animation>();
 	}
 	
 	
@@ -211,11 +214,11 @@ public class Wander : MonoBehaviour
 		//Pauses the player if pause is pressed
 		if(gameState.paused)
 		{
-			//_animation.enabled = false;
+			_animation.enabled = false;
 			return;
 		}
 		else
-			//_animation.enabled = true;
+			_animation.enabled = true;
 			
 			if (!isControllable)
 		{

@@ -1,12 +1,18 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\UpgradeGUI.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameState.cs">
     <Files>
-      <File FileName="Assets\Scripts\UpgradeGUI.cs" Line="106" Column="4" />
-      <File FileName="Assets\Instructions.cs" Line="277" Column="1" />
-      <File FileName="Assets\Scripts\GUIController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Scene_Transition.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UpgradeGUI.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\WeaponSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GUIController.cs" Line="289" Column="1" />
+      <File FileName="Assets\Scripts\Wander.cs" Line="84" Column="1" />
+      <File FileName="Assets\Scripts\ShooterAI.cs" Line="1" Column="1" />
+      <File FileName="Assets\ThirdPersonController.cs" Line="1" Column="1" />
+      <File FileName="Assets\chase.cs" Line="233" Column="4" />
+      <File FileName="Assets\FireDoor.cs" Line="25" Column="17" />
+      <File FileName="Assets\Scripts\Spawner.cs" Line="43" Column="34" />
+      <File FileName="Assets\Scripts\GameState.cs" Line="185" Column="26" />
+      <File FileName="Assets\Scripts\PlayerState.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

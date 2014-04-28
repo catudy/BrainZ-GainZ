@@ -33,15 +33,16 @@ public class Spawner : MonoBehaviour
 		{
 			return;
 		}
-		// If we are ready to spawn a new entity, due so
-		if (timer < Time.time ) 
-		{
-			int index = Random.Range(0,spawn_objects.Length);
-			Quaternion rotation = new Quaternion ();
-			GameObject temp = (GameObject)Instantiate(spawn_objects[index], GetValidRandomEnemySpawnPoint(), rotation);
-			timer = Time.time + spawn_frequency;
-			Destroy (temp, max_count*spawn_frequency);
-		}
+
+			// If we are ready to spawn a new entity, due so
+			if (timer < Time.time ) 
+			{
+				int index = Random.Range(0,spawn_objects.Length);
+				Quaternion rotation = new Quaternion ();
+				GameObject temp = (GameObject)Instantiate(spawn_objects[index], GetValidRandomEnemySpawnPoint(), rotation);
+				timer = Time.time + spawn_frequency;
+				Destroy (temp, max_count*spawn_frequency);
+			}
 	}
 
 	void Spawn(Vector3 position, GameObject obj)

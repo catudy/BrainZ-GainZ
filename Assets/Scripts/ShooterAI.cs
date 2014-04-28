@@ -14,14 +14,22 @@ public class ShooterAI : MonoBehaviour {
 	private Vector3 target_pos;
 	private GameObject player;
 
+	private GameState gameState;
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find("Player");
 		fire_next_rocket = Time.time + cooldown;
+		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		if(gameState.paused)
+		{
+			return;
+		}
 		aggro = IsAggroed (player.transform.position, transform.position);
 
 		if(Time.time > fire_next_rocket && aggro){

@@ -323,9 +323,27 @@ public class GUIController : MonoBehaviour
 			pauseButton = createButton(585,73,43,20, "PAUSE");
 			
 			//If the pause button is pressed open the pause menu (but for now just returns to main menu)
-			if(pauseButton || Input.GetButton("Back"))
+			if(pauseButton && !gameState.paused)
 			{
-				Application.LoadLevel(mainMenu);
+				gameState.paused = true;
+				//Application.LoadLevel(mainMenu);
+			}
+			else if (pauseButton && gameState.paused)
+			{
+				gameState.paused = false;
+			}
+
+			if(gameState.paused)
+			{
+				GUI.Box(new Rect(170,140,300,200),"PAUSED");
+				if(GUI.Button( new Rect(270,240,100,50), "Quit"))
+				{
+					Application.LoadLevel("_MainMenu");
+				}
+				if(GUI.Button( new Rect(270,175,100,50), "Resume"))
+				{
+					gameState.paused = false;
+				}
 			}
 
 		}
