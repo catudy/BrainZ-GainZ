@@ -156,7 +156,6 @@ public class WeaponSystem : MonoBehaviour {
 		if(Input.GetKeyDown("s"))
 		{
 			Swap ();
-			Debug.Log (currentWeapon);
 		}
 
 		//melee attack
@@ -264,7 +263,7 @@ public class WeaponSystem : MonoBehaviour {
 						if(Physics.Raycast(ray_start,ray,out hit))
 						{
 							Debug.DrawRay (ray_start,ray);
-							Debug.Log(hit.distance);
+
 							if(hit.distance < flamerange)
 							{
 								if(hit.collider.gameObject.tag == "Deadly"){

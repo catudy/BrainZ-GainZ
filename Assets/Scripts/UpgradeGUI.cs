@@ -719,7 +719,6 @@ public class UpgradeGUI : MonoBehaviour
 
 	// TODO: Def Move later
 	void Despawn(){
-		Debug.Log ("Hello, i am here");
 		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Deadly")){
 			Debug.Log ("Destroyed Deadly " + o.name);
 			Destroy(o);
