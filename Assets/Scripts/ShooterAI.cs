@@ -39,8 +39,12 @@ public class ShooterAI : MonoBehaviour {
 		if(distance > 2.0f && diff.magnitude < range){
 			if (Physics.Raycast (transform.position, diff, distance - 2.0f)) {
 				return false;
-			} 
-		}
-		return true;
+			} else {
+				return true;
+			}
+		}  else {
+			return false;
+		}	
+
 	}
 }
