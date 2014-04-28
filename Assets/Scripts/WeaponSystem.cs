@@ -174,18 +174,24 @@ public class WeaponSystem : MonoBehaviour {
 			}
 
 			//gun attack
-			if(currentWeapon == Weapon.GUN)
+			else if(currentWeapon == Weapon.GUN)
 			{
 				if(gunAmmo > 0)
 				{
 					Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
 					gunAmmo--;
 					StartCoroutine(WaitForAttack(fireRate));
+					if(gunAmmo == 0)
+					{
+						StartCoroutine(WaitForAttack(0.5f));
+						activeWeaponList[(int)currentWeapon] = false;
+						Swap ();
+					}
 				}
 			}
 
 			//pulse attack
-			if(currentWeapon == Weapon.PULSE)
+			else if(currentWeapon == Weapon.PULSE)
 			{
 				if(pulseAmmo > 0)
 				{
@@ -221,11 +227,17 @@ public class WeaponSystem : MonoBehaviour {
 						pulse.collider.enabled = true;
 					}
 					StartCoroutine(WaitForAttack(1.0f));
+					if(pulseAmmo == 0)
+					{
+						StartCoroutine(WaitForAttack(0.5f));
+						activeWeaponList[(int)currentWeapon] = false;
+						Swap ();
+					}
 				}
 			}
 
 			//flamethrower attack
-			if(currentWeapon == Weapon.FLAMER)
+			else if(currentWeapon == Weapon.FLAMER)
 			{
 				if(flameAmmo > 0.0f)
 				{
@@ -268,11 +280,17 @@ public class WeaponSystem : MonoBehaviour {
 					{
 						flameAmmo = 0.0f;
 					}
+					if(flameAmmo == 0)
+					{
+						StartCoroutine(WaitForAttack(0.5f));
+						activeWeaponList[(int)currentWeapon] = false;
+						Swap ();
+					}
 				}
 			}
 		
 			//fire extinguisher attack
-			if(currentWeapon == Weapon.EXTINGUISHER)
+			else if(currentWeapon == Weapon.EXTINGUISHER)
 			{
 				if(feAmmo > 0.0f)
 				{
@@ -310,6 +328,12 @@ public class WeaponSystem : MonoBehaviour {
 					if(feAmmo < 0.0f)
 					{
 						feAmmo = 0.0f;
+					}
+					if(feAmmo == 0)
+					{
+						StartCoroutine(WaitForAttack(0.5f));
+						activeWeaponList[(int)currentWeapon] = false;
+						Swap ();
 					}
 				}
 			}

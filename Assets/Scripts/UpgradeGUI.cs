@@ -439,6 +439,7 @@ public class UpgradeGUI : MonoBehaviour
 						gameState.SpendBrainzNGainz(upgrade_health_brain_cost, upgrade_health_gain_cost);
 						playerState.playerStats.health_level++;
 						playerState.UpdateMaxHealth();
+						playerState.health +=1;
 						upgrade_health_brain_cost += health_cost_increase_rate;
 						upgrade_health_gain_cost += health_cost_increase_rate;
 					}
