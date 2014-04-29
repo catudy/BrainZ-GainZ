@@ -244,8 +244,8 @@ public class UpgradeGUI : MonoBehaviour
 				GUI.Label( new Rect(265,10,0,0),"Upgrades","Big");
 
 				//Draw current amount of brainZ and gainZ
-				GUI.Label( new Rect(5,456,0,0),"Current total BrainZ: "+gameState.brainz.ToString(), "Big");
-				GUI.Label( new Rect(5,427,0,0),"Current total GainZ: "+gameState.gainz.ToString(), "Big");
+				GUI.Label( new Rect(5,427,0,0),"Current total BrainZ: "+gameState.brainz.ToString(), "Big");
+				GUI.Label( new Rect(5,456,0,0),"Current total GainZ: "+gameState.gainz.ToString(), "Big");
 
 				//Drawing textures for stats
 				GUI.DrawTexture( new Rect(25,96,20,20), HeartTexture);

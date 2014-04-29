@@ -14,6 +14,7 @@ public class WeaponSystem : MonoBehaviour {
 
 	private GameObject player;
 	private GameState gameState;
+	private UpgradeGUI upgradeGUI;
 
 	private GameObject flamer;
 	private GameObject fe;
@@ -98,6 +99,7 @@ public class WeaponSystem : MonoBehaviour {
 		gameState = GameObject.Find ("GameController").GetComponentInChildren<GameState> ();
 		flamer = GameObject.Find ("FlamerEmission");
 		fe = GameObject.Find ("FeEmission");
+		upgradeGUI = GameObject.Find("GUIController").GetComponentInChildren<UpgradeGUI>();
 
 		//initialize base stats
 		meleeAttackSpeed_base = 1.0f;
@@ -269,6 +271,10 @@ public class WeaponSystem : MonoBehaviour {
 								if(hit.collider.gameObject.tag == "Deadly"){
 									Destroy (hit.collider.gameObject);
 									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
+									upgradeGUI.collected_brains += 10;
+									gameState.brainz += 10;
+									upgradeGUI.collected_gains += 10;
+									gameState.gainz += 10;
 									break;
 								}
 
