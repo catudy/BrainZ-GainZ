@@ -30,10 +30,10 @@ public class PlayerCollision : MonoBehaviour
 			else 
 			{
 				playerState.DealDamage(1);
-				if(collision.gameObject.tag == "Fire")
-				{
-					Destroy(collision.gameObject);
-				}
+				//if(collision.gameObject.tag == "Fire")
+				//{
+				//	Destroy(collision.gameObject);
+				//}
 			}
 		} 
 		//else if (collision.gameObject.tag == "Projectile"){

@@ -10,6 +10,9 @@ public class ThirdPersonController : MonoBehaviour
 	public AnimationClip walkAnimation;
 	public AnimationClip runAnimation;
 	public AnimationClip jumpPoseAnimation;
+	public AnimationClip sprintAnimation;
+
+
 
 	public float walkMaxAnimationSpeed = 0.75f;
 	public float trotMaxAnimationSpeed = 1.0f;
@@ -27,6 +30,7 @@ public class ThirdPersonController : MonoBehaviour
 		Trotting = 2,
 		Running = 3,
 		Jumping = 4,
+		Sprinting = 5
 	}
 
 	private CharacterState _characterState;
@@ -203,28 +207,61 @@ public class ThirdPersonController : MonoBehaviour
 			// Pick speed modifier
 			if ((Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift) || Input.GetButton("Run")) && canRun)
 			{
-					targetSpeed *= runSpeed;
-					playerState.SetRunning();
+				targetSpeed *= runSpeed;
+				playerState.SetRunning();
+
+				if(runSpeed >= 8)
+				{
+					_characterState = CharacterState.Sprinting;
+				}
+				else
+				{
 					_characterState = CharacterState.Running;
+				}
+
+
+
 			}
 			else if ((Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift) || Input.GetButton("Run")) && !canRun)
 			{
 				playerState.stamina = 0.0f;
 				targetSpeed *= trotSpeed;
-				_characterState = CharacterState.Trotting;
 				playerState.SetWalking();
+
+				if(walkSpeed >= 4 || trotSpeed >= 4)
+				{
+					_characterState = CharacterState.Running;
+				}
+				else
+				{
+				_characterState = CharacterState.Trotting;
+				}
 			}
 			else if (Time.time - trotAfterSeconds > walkTimeStart )
 			{
 				targetSpeed *= trotSpeed;
-				_characterState = CharacterState.Trotting;
 				playerState.SetWalking();
+				if(walkSpeed >= 4 || trotSpeed >= 4)
+				{
+					_characterState = CharacterState.Running;
+				}
+				else
+				{
+					_characterState = CharacterState.Trotting;
+				}
 			}
 			else
 			{
 				targetSpeed *= walkSpeed;
-				_characterState = CharacterState.Walking;
 				playerState.SetWalking();
+				if(walkSpeed >= 4 || trotSpeed >= 4)
+				{
+					_characterState = CharacterState.Running;
+				}
+				else
+				{
+					_characterState = CharacterState.Trotting;
+				}
 			}
 
 			moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, curSmooth);   

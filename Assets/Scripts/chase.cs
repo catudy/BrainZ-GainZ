@@ -305,12 +305,28 @@ public class chase : MonoBehaviour
 	
 	void OnControllerColliderHit(ControllerColliderHit hit)
 	{
-		if(hit.gameObject.tag == "Player")
+		if(hit.gameObject.tag == "Player" && playerState.power_up != PowerUp.INVULNERABLE)
 		{
 			playerState.DealDamage(1);
 		}
 		if (hit.moveDirection.y > 0.01f) 
 			return;
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if(other.gameObject.tag == "Player" && playerState.power_up != PowerUp.INVULNERABLE)
+		{
+			playerState.DealDamage(1);
+		}
+	}
+
+	void OnTriggerStay(Collider other)
+	{
+		if(other.gameObject.tag == "Player" && playerState.power_up != PowerUp.INVULNERABLE)
+		{
+			playerState.DealDamage(1);
+		}
 	}
 	
 	public float GetSpeed ()
