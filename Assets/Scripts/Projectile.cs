@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider collision) {
-		if(collision.gameObject.name == "Shooter(Clone)"){
+		if(collision.gameObject.name == "Shooter(Clone)" || collision.gameObject.name == "SpawnInsideMe"){
 			return;
 		} else if(collision.gameObject.tag == "Deadly"){
 			DestroyWithExplosion(collision.gameObject);

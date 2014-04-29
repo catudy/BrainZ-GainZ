@@ -33,7 +33,9 @@ public class ShooterAI : MonoBehaviour {
 		aggro = IsAggroed (player.transform.position, transform.position);
 
 		if(Time.time > fire_next_rocket && aggro){
-			Vector3 SpawnAt = new Vector3(transform.position.x, 0.8f, transform.position.z);
+			Vector3 diff = player.transform.position - transform.position;
+			transform.rotation = Quaternion.LookRotation(diff);
+			Vector3 SpawnAt = new Vector3(transform.position.x, 0.8f, transform.position.z) + transform.forward * 1.0f;
 			GameObject rocket = (GameObject)Instantiate(projectile, SpawnAt, transform.rotation);
 			Destroy (rocket, cooldown*15.0f);
 			fire_next_rocket = Time.time + cooldown;
