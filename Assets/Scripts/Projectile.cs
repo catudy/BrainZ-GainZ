@@ -17,7 +17,9 @@ public class Projectile : MonoBehaviour {
 		target = GameObject.Find("Player").transform.position;
 		start = transform.position;
 		start_time = Time.time;
-		transform.rotation = new Quaternion (0, 0, 0, 0);
+		transform.rotation = Quaternion.LookRotation(target - transform.position);
+		transform.Rotate (90, 0, 0);
+
 		velocity = (target - start).normalized * 5.0f;
 	}
 	

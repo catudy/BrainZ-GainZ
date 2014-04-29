@@ -37,7 +37,6 @@ public class EnemyAI : MonoBehaviour
 		if(aggro) {
 			wander.enabled = false;
 			Quaternion target_rotation = Quaternion.LookRotation(player.transform.position - transform.position);
-			Debug.Log (target_rotation);
 			transform.rotation = Quaternion.RotateTowards(transform.rotation, target_rotation, Time.deltaTime*turn_rate);
 			velocity = transform.forward.normalized * speed;
 			velocity.y = 0;
