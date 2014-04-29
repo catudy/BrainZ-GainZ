@@ -19,11 +19,13 @@ public class Spawner : MonoBehaviour
 	private float timer = 0.0f;
 	private GameState gameState;
 	public float spawnHeight = 0.2f;
+	public Bounds bounds;
 	// Use this for initialization
 	void Start () 
 	{
 		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 		timer = Time.time;
+		bounds = GameObject.Find ("SpawnInsideMe").GetComponent<BoxCollider> ().bounds;
 	}
 	
 	// Update is called once per frame
@@ -60,11 +62,13 @@ public class Spawner : MonoBehaviour
 
 		// Pick a point within circle around player
 		Vector3 enemy_pos;
+		int count = 0;
 		do 
 		{ 
+			count++;
 			enemy_pos = Random.onUnitSphere * Random.Range(min_distance, max_distance) + spawn_pos;
 			enemy_pos.y = spawnHeight;
-		} while ((enemy_pos - spawn_pos).magnitude < min_distance);
+		} while (((enemy_pos - spawn_pos).magnitude < min_distance || !bounds.Contains(enemy_pos)) && count < 1000);
 
 		return enemy_pos;
 	}
