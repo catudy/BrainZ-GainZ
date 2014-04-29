@@ -232,7 +232,7 @@ public class GUIController : MonoBehaviour
 			if(weaponSystem.currentWeapon == 0)
 			{
 				GUI.DrawTexture( new Rect(20,19,45,45), meleeTexture);
-				GUI.DrawTexture( new Rect(38,63,20,20), infinityTexture);
+				//GUI.DrawTexture( new Rect(38,63,20,20), infinityTexture);
 			}
 
 			else if(weaponSystem.currentWeapon == Weapon.GUN)

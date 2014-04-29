@@ -630,7 +630,7 @@ public class UpgradeGUI : MonoBehaviour
 				}
 				else
 				{
-					GUI.Button( new Rect(498,288,25,25), new GUIContent("", XTexture, ""));
+					GUI.Button( new Rect(498,386,25,25), new GUIContent("", XTexture, ""));
 				}
 
 

@@ -20,4 +20,24 @@ public class pulseAttack : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerExit(Collider other)
+	{
+		if(other.gameObject.tag == "Deadly")
+		{
+			gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
+			Destroy(other.gameObject);
+			Debug.Log ("pulse works");
+		}
+	}
+
+	void OnTriggerStay(Collider other)
+	{
+		if(other.gameObject.tag == "Deadly")
+		{
+			gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
+			Destroy(other.gameObject);
+			Debug.Log ("pulse works");
+		}
+	}
+
 }
