@@ -103,7 +103,7 @@ public class UpgradeGUI : MonoBehaviour
 
 		if(gameState.primary_objective.completed)
 		{
-			Despawn();
+			//Despawn();
 
 			//Toggle background plane for upgrade menu
 			upgradeBG.SetActive(true);
@@ -392,7 +392,7 @@ public class UpgradeGUI : MonoBehaviour
 				{
 					GUI.Label( new Rect(500,177,0,0),"AMMO IS MAXED OUT","Small");
 				}
-				else if (weaponSystem.meleeAttackSpeed_level < weaponSystem.weaponLevelCap)
+				else
 				{
 					GUI.Label( new Rect(500,177,0,0),"REFILL AMMO","Small"); 
 				}

@@ -25,6 +25,11 @@ public class WeaponSystem : MonoBehaviour {
 	public GameObject p_150;
 	private ParticleSystem fire_ex;
 	
+	public AudioClip gunsound;
+	public AudioClip swordsound;
+	public AudioClip pulsesound;
+	public AudioClip flamersound;
+	public AudioClip fesound;
 
 	public Weapon currentWeapon = Weapon.MELEE;
 	private int maxWeapon = Weapon.GetNames(typeof(Weapon)).Length;
@@ -36,6 +41,7 @@ public class WeaponSystem : MonoBehaviour {
 	
 	public GameObject bullet;
 	public Transform bulletSpawn;
+	public float volumelevel = 0.5f;
 
 
 	public bool[] activeWeaponList;
@@ -89,6 +95,8 @@ public class WeaponSystem : MonoBehaviour {
 	public float ferange_base;
 	public int ferange_level;
 	public float ferange_max;
+
+	public bool playSound = true;
 
 
 
@@ -147,12 +155,16 @@ public class WeaponSystem : MonoBehaviour {
 
 		activeWeaponList [0] = true;
 		melee.collider.enabled = false;
+
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		if(gameState.paused)
+		{
+			return;
+		}
 		SetWeapon ();
 
 		if(Input.GetKeyDown("r"))
@@ -166,6 +178,8 @@ public class WeaponSystem : MonoBehaviour {
 			//melee attack
 			if(currentWeapon == Weapon.MELEE)
 			{
+				audio.volume = 1;
+				audio.PlayOneShot(swordsound);
 				melee.animation.Play();
 				if(melee.animation.isPlaying)
 				{
@@ -179,6 +193,8 @@ public class WeaponSystem : MonoBehaviour {
 			{
 				if(gunAmmo > 0)
 				{
+					audio.volume = 0.5f;
+					audio.PlayOneShot(gunsound);
 					Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
 					gunAmmo--;
 					StartCoroutine(WaitForAttack(fireRate));
@@ -196,6 +212,8 @@ public class WeaponSystem : MonoBehaviour {
 			{
 				if(pulseAmmo > 0)
 				{
+					audio.volume = 1;
+					audio.PlayOneShot(pulsesound);
 					if(pulse_radius_level == 1)
 					{
 						Instantiate(p_50, player.transform.position, new Quaternion());
@@ -242,6 +260,14 @@ public class WeaponSystem : MonoBehaviour {
 			{
 				if(flameAmmo > 0.0f)
 				{
+					if(playSound)
+					{
+
+						audio.clip = flamersound;
+							audio.loop = false;
+							audio.Play();
+							StartCoroutine(WaitForSound(0.5f));
+					}
 					RaycastHit hit;
 					Vector3 forward = flamethrower.transform.forward;
 					Vector3 ray_start = flamethrower.transform.position;
@@ -299,6 +325,16 @@ public class WeaponSystem : MonoBehaviour {
 			{
 				if(feAmmo > 0.0f)
 				{
+					if(playSound)
+					{
+						
+						audio.clip = fesound;
+						audio.loop = false;
+						audio.Play();
+						StartCoroutine(WaitForSound(0.5f));
+					}
+					//audio.volume = 0.5f;
+					//audio.PlayOneShot(fesound);
 					RaycastHit hit;
 					Vector3 forward = player.transform.forward;
 					Vector3 ray_start = player.transform.position;
@@ -498,4 +534,11 @@ public class WeaponSystem : MonoBehaviour {
 		flameAmmo = flameAmmo_max;
 		return;
 	}
+
+	IEnumerator WaitForSound(float waitTime) {
+		playSound = false;
+		yield return new WaitForSeconds(waitTime);
+		playSound = true;
+	}
+
 }

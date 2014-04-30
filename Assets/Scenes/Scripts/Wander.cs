@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class chase : MonoBehaviour 
+public class Wander : MonoBehaviour 
 {
 	enum CharacterState 
 	{
@@ -28,7 +28,7 @@ public class chase : MonoBehaviour
 	private float gravity= 20.0f;
 	// The gravity in controlled descent mode
 	private float speedSmoothing= 10.0f;
-	private float rotateSpeed= 1.0f;
+	private float rotateSpeed= 500.0f;
 	private float trotAfterSeconds= 3.0f;
 	private bool canJump= false;
 	private float jumpRepeatTime= 0.05f;
@@ -60,21 +60,22 @@ public class chase : MonoBehaviour
 	private Vector3 inAirVelocity= Vector3.zero;
 	private float lastGroundedTime= 0.0f;
 	private bool isControllable= true;
-	
+
 	//Our stuff
 	private GameState gameState;
 	private CharacterState _characterState;
 	private PlayerState playerState;
 	private GameObject player;
 	private float ranDir = 0.0f;
-	public float chaseSpeed = 1.0f;
 	public float wanderSpeed = 1.0f;
 	public float newWanderDirTime = 1.0f;
-	public float aggro_range = 5.0f;
-	private bool aggro;
 
 	private Animation _animation;
-	
+
+	public bool playSound = true;
+	public AudioClip shooterSound;
+	public AudioClip wandererSound;
+
 	void Start()
 	{
 		playerState = GameObject.Find("Player").GetComponent<PlayerState>();
@@ -103,8 +104,8 @@ public class chase : MonoBehaviour
 		// Always orthogonal to the forward vector
 		Vector3 right= new Vector3(forward.z, 0, -forward.x);
 		
-		float v = 1;
-		float h = ranDir;
+		float v= 1;
+		float h= ranDir;
 		
 		// Are we moving backwards or looking backwards
 		if (v < -0.2f)
@@ -113,20 +114,10 @@ public class chase : MonoBehaviour
 			movingBack = false;
 		
 		bool wasMoving= isMoving;
-
 		isMoving = Mathf.Abs (h) > 0.1f || Mathf.Abs (v) > 0.1f;
-
-		Vector3 targetDirection = new Vector3 (0,0,0);
+		
 		// Target direction relative to the camera
-		if(aggro)
-		{
-			targetDirection = player.transform.position - transform.position;
-		}
-		else
-		{
-			targetDirection= h * right + v * forward;
-		}
-
+		Vector3 targetDirection= h * right + v * forward;
 		//Debug.Log(targetDirection);
 		// Grounded controls
 		if (grounded)
@@ -161,7 +152,7 @@ public class chase : MonoBehaviour
 			// Choose target speed
 			//* We want to support analog input but make sure you cant walk faster diagonally than just forward or sideways
 			float targetSpeed= Mathf.Min(targetDirection.magnitude, 1.0f);
-			
+
 			moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, curSmooth);   
 			
 			// Reset walk time start when we slow down
@@ -169,7 +160,8 @@ public class chase : MonoBehaviour
 				walkTimeStart = Time.time;
 		}
 	}
-
+	
+	
 	void  ApplyJumping (){
 		// Prevent jumping too fast after each other
 		if (lastJumpTime + jumpRepeatTime > Time.time)
@@ -185,6 +177,7 @@ public class chase : MonoBehaviour
 			}
 		}
 	}
+	
 	
 	void  ApplyGravity ()
 	{
@@ -242,9 +235,27 @@ public class chase : MonoBehaviour
 		{
 			lastJumpButtonTime = Time.time;
 		}
-
-		aggro = IsAggroed (player.transform.position, transform.position);
+		
 		UpdateSmoothedMovementDirection();
+
+		float dist = Vector3.Distance(player.transform.position,transform.position);
+		if(dist<10 && playSound)
+		{
+			if(gameObject.name == "Shooter(Clone)" || gameObject.name == "Shooter")
+			{
+				audio.clip = shooterSound;
+				audio.loop = false;
+				audio.Play();
+				StartCoroutine(WaitForSound(3));
+			}
+			else if(gameObject.name == "Wanderer(Clone)" || gameObject.name == "Wanderer")
+			{
+				audio.clip = wandererSound;
+				audio.loop = false;
+				audio.Play();
+				StartCoroutine(WaitForSound(3));
+			}
+		}
 		
 		// Apply gravity
 		// - extra power jump modifies gravity
@@ -255,18 +266,7 @@ public class chase : MonoBehaviour
 		ApplyJumping ();
 		
 		// Calculate actual motion
-
-		Vector3 movement = new Vector3 (0,0,0);
-
-		if(aggro)
-		{
-			movement= moveDirection * moveSpeed*chaseSpeed + new Vector3 (0, verticalSpeed, 0) + inAirVelocity;
-		}
-		else
-		{
-			movement= moveDirection * moveSpeed*wanderSpeed + new Vector3 (0, verticalSpeed, 0) + inAirVelocity;
-		}
-
+		Vector3 movement= moveDirection * moveSpeed*wanderSpeed + new Vector3 (0, verticalSpeed, 0) + inAirVelocity;
 		movement *= Time.deltaTime;
 		
 		// Move the controller
@@ -305,28 +305,8 @@ public class chase : MonoBehaviour
 	
 	void OnControllerColliderHit(ControllerColliderHit hit)
 	{
-		if(hit.gameObject.tag == "Player" && playerState.power_up != PowerUp.INVULNERABLE)
-		{
-			playerState.DealDamage(1);
-		}
 		if (hit.moveDirection.y > 0.01f) 
 			return;
-	}
-
-	void OnTriggerEnter(Collider other)
-	{
-		if(other.gameObject.tag == "Player" && playerState.power_up != PowerUp.INVULNERABLE)
-		{
-			playerState.DealDamage(1);
-		}
-	}
-
-	void OnTriggerStay(Collider other)
-	{
-		if(other.gameObject.tag == "Player" && playerState.power_up != PowerUp.INVULNERABLE)
-		{
-			playerState.DealDamage(1);
-		}
 	}
 	
 	public float GetSpeed ()
@@ -385,15 +365,10 @@ public class chase : MonoBehaviour
 		return;
 	}
 
-	private bool IsAggroed(Vector3 player_pos, Vector3 enemy_pos)
-	{
-		float mod_aggro_range = aggro_range;
-		
-		if (player.GetComponent<PlayerState> ().power_up == PowerUp.INVISIBILITY) 
-		{
-			mod_aggro_range = 0.0f;
-		}
-		return ((player_pos - enemy_pos).magnitude < mod_aggro_range);
+	IEnumerator WaitForSound(float waitTime) {
+		playSound = false;
+		yield return new WaitForSeconds(waitTime);
+		playSound = true;
 	}
 	
 }

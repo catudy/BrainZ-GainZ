@@ -4,7 +4,7 @@ using System.Collections;
 public class GunAttack : MonoBehaviour {
 
 	public float speed;
-	private float delay = 1.0f;
+	private float delay = 2.0f;
 	private GameState gameState;
 	private UpgradeGUI upgradeGUI;
 

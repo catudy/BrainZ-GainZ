@@ -130,7 +130,7 @@ public class GameState : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if((!cutsceneAnim.isPlaying && !gameStarted) || Input.GetKey("space"))
+		if((!cutsceneAnim.isPlaying && !gameStarted) || Input.GetKey("enter"))
 		   {
 			gameStarted = true;
 			playcutscene = false;

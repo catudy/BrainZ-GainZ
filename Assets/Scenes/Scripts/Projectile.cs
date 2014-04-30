@@ -10,7 +10,8 @@ public class Projectile : MonoBehaviour {
 	private Vector3 start; 
 	private Vector3 velocity;
 	private GameState gameState;
-
+	public AudioClip explosionSound;
+	
 	// Use this for initialization
 	void Start () {
 		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
@@ -41,7 +42,7 @@ public class Projectile : MonoBehaviour {
 		Instantiate( explosion, obj.transform.position, rotation);
 		GameObject f = (GameObject)Instantiate (fire, obj.transform.position, rotation);
 		Destroy (f, 60.0f);
-
+		AudioSource.PlayClipAtPoint(explosionSound,transform.position);
 		Destroy (obj);
 	}
 	
