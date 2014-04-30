@@ -228,7 +228,7 @@ public class WeaponSystem : MonoBehaviour {
 						pulse.collider.enabled = true;
 					}
 					StartCoroutine(WaitForAttack(1.0f));
-					if(pulseAmmo == 0)
+					if(pulseAmmo == 0 && canAttack)
 					{
 						StartCoroutine(WaitForAttack(0.5f));
 						activeWeaponList[(int)currentWeapon] = false;

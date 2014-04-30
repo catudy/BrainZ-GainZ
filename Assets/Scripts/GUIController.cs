@@ -333,7 +333,10 @@ public class GUIController : MonoBehaviour
 				gameState.paused = false;
 			}
 
-			if(gameState.paused)
+			if(gameState.paused && gameState.playcutscene)
+			{
+			}
+			else if(gameState.paused)
 			{
 				GUI.Box(new Rect(170,140,300,200),"PAUSED");
 				if(GUI.Button( new Rect(270,240,100,50), "Quit"))

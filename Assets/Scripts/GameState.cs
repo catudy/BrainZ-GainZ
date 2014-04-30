@@ -112,20 +112,36 @@ public class GameState : MonoBehaviour {
 	private GameObject player;
 	private PlayerState playerState;
 	public int baseTimePerLevel = 30;
-
+	public bool playcutscene = true;
+	private Animation cutsceneAnim;
+	public GameObject cutsceneCam;
+	private bool gameStarted = false;
 	// Use this for initialization
 	void Start () {
 
 		player = GameObject.Find ("Player");
 		playerState = player.GetComponent<PlayerState> ();
+		cutsceneAnim = GameObject.Find ("CutsceneCam").GetComponentInChildren<Animation> ();
+	
 		InitializeLevel ();
+		paused = true;
 	}
 
 	// Update is called once per frame
 	void Update () {
+
+		if((!cutsceneAnim.isPlaying && !gameStarted) || Input.GetKey("space"))
+		   {
+			gameStarted = true;
+			playcutscene = false;
+			paused = false;
+			cutsceneCam.SetActive(false);
+		}
+		//if(paused &&
 		if (paused) {
 			return;
 		}
+
 
 		UpdateObjectives ();
 		 
