@@ -696,6 +696,7 @@ public class UpgradeGUI : MonoBehaviour
 					playerState.power_up_time_remaining = 0.0f;
 					GameObject.Find("baseMale").GetComponent<SkinnedMeshRenderer>().enabled = true;
 					gameState.InitializeLevel();
+					weaponSystem.currentWeapon = Weapon.MELEE;
 					showUpgradeMenu = false;
 				}
 			}

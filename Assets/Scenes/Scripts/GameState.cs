@@ -159,7 +159,8 @@ public class GameState : MonoBehaviour {
 
 	public void InitializePlayer(){
 		playerState.stamina = playerState.playerStats.max_stamina;
-		playerState.health = playerState.playerStats.max_health;
+		if(level == 1)
+			playerState.health = playerState.playerStats.max_health;
 	}
 
 	public void InitializePlayerPosition(){
