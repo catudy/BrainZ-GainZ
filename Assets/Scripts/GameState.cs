@@ -116,8 +116,9 @@ public class GameState : MonoBehaviour {
 	private Animation cutsceneAnim;
 	public GameObject cutsceneCam;
 	private bool gameStarted = false;
-
 	public GUIText guitext;
+	public int a,b,c,d = 0;
+	public GUISkin skin;
 
 	// Use this for initialization
 	void Start () {
@@ -129,7 +130,7 @@ public class GameState : MonoBehaviour {
 		InitializeLevel ();
 		paused = true;
 
-		guitext.text = "Press 'S' to Skip";
+
 	}
 
 	// Update is called once per frame
@@ -141,7 +142,6 @@ public class GameState : MonoBehaviour {
 			playcutscene = false;
 			paused = false;
 			cutsceneCam.SetActive(false);
-			Destroy(guitext);
 		}
 		//if(paused &&
 		if (paused) {
@@ -233,6 +233,13 @@ public class GameState : MonoBehaviour {
 	public void SpendBrainzNGainz(int b, int g){
 		brainz = brainz - b;
 		gainz = gainz - g;
+	}
+
+	void OnGUI()
+	{
+		GUI.skin = skin;
+		if(!gameStarted)
+		GUI.Label(new Rect(286,27,187,63), "Press 'S' to Skip");
 	}
 }
 
