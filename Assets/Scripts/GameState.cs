@@ -116,6 +116,9 @@ public class GameState : MonoBehaviour {
 	private Animation cutsceneAnim;
 	public GameObject cutsceneCam;
 	private bool gameStarted = false;
+
+	public GUIText guitext;
+
 	// Use this for initialization
 	void Start () {
 
@@ -125,17 +128,20 @@ public class GameState : MonoBehaviour {
 	
 		InitializeLevel ();
 		paused = true;
+
+		guitext.text = "Press 'S' to Skip";
 	}
 
 	// Update is called once per frame
 	void Update () {
 
-		if((!cutsceneAnim.isPlaying && !gameStarted) || Input.GetKey("enter"))
+		if((!cutsceneAnim.isPlaying && !gameStarted) || Input.GetKey("s"))
 		   {
 			gameStarted = true;
 			playcutscene = false;
 			paused = false;
 			cutsceneCam.SetActive(false);
+			Destroy(guitext);
 		}
 		//if(paused &&
 		if (paused) {
