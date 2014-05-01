@@ -31,49 +31,49 @@ public class UpgradeGUI : MonoBehaviour
 	public bool startNextLevel = false;
 	public bool gameCompleted = false;
 
-	private int upgrade_health_brain_cost = 10;
+	private int upgrade_health_brain_cost = 15;
 	private int upgrade_health_gain_cost = 0; 
-	private int health_cost_increase_rate = 35;
+	private int health_cost_increase_rate = 45;
 
 	private int upgrade_stamina_brain_cost = 0;
-	private int upgrade_stamina_gain_cost = 10;
-	private int stamina_cost_increase_rate = 35;
+	private int upgrade_stamina_gain_cost = 15;
+	private int stamina_cost_increase_rate = 45;
 
 	private int melee_speed_brain_cost = 0;
-	private int melee_speed_gain_cost = 10;
-	private int melee_speed_increase_rate = 35;
+	private int melee_speed_gain_cost = 15;
+	private int melee_speed_increase_rate = 45;
 
 	private int gun_speed_brain_cost = 0;
-	private int gun_speed_gain_cost = 10;
-	private int gun_speed_increase_rate = 35;
+	private int gun_speed_gain_cost = 15;
+	private int gun_speed_increase_rate = 45;
 
-	private int gun_ammo_brain_cost = 10;
+	private int gun_ammo_brain_cost = 15;
 	private int gun_ammo_gain_cost = 0;
-	private int gun_ammo_increase_rate = 35;
+	private int gun_ammo_increase_rate = 45;
 
 	private int pulse_range_brain_cost = 0;
-	private int pulse_range_gain_cost = 10;
-	private int pulse_range_increase_rate = 35;
+	private int pulse_range_gain_cost = 15;
+	private int pulse_range_increase_rate = 45;
 
-	private int pulse_ammo_brain_cost = 10;
+	private int pulse_ammo_brain_cost = 15;
 	private int pulse_ammo_gain_cost = 0;
-	private int pulse_ammo_increase_rate = 35;
+	private int pulse_ammo_increase_rate = 45;
 
-	private int ft_ammo_brain_cost = 10;
+	private int ft_ammo_brain_cost = 15;
 	private int ft_ammo_gain_cost = 0;
-	private int ft_ammo_increase_rate = 35;
+	private int ft_ammo_increase_rate = 45;
 
 	private int ft_range_brain_cost = 0;
-	private int ft_range_gain_cost = 10;
-	private int ft_range_increase_rate = 35;
+	private int ft_range_gain_cost = 15;
+	private int ft_range_increase_rate = 45;
 
-	private int fe_ammo_brain_cost = 10;
+	private int fe_ammo_brain_cost = 15;
 	private int fe_ammo_gain_cost = 0;
-	private int fe_ammo_increase_rate = 35;
+	private int fe_ammo_increase_rate = 45;
 	
 	private int fe_range_brain_cost = 0;
-	private int fe_range_gain_cost = 10;
-	private int fe_range_increase_rate = 35;
+	private int fe_range_gain_cost = 15;
+	private int fe_range_increase_rate = 45;
 
 	private int restorehp_brain_cost = 5;
 	private int restorehp_gain_cost = 5;
@@ -530,7 +530,7 @@ public class UpgradeGUI : MonoBehaviour
 				{
 					if(GUI.Button( new Rect(168,337,25,25), new GUIContent("", LevelupB2, "")))
 					{
-						gameState.SpendBrainzNGainz(pulse_range_brain_cost, pulse_range_brain_cost);
+						gameState.SpendBrainzNGainz(pulse_range_brain_cost, pulse_range_gain_cost);
 						//pulse_range_brain_cost += pulse_range_increase_rate;
 						pulse_range_gain_cost += pulse_range_increase_rate;
 						weaponSystem.pulse_radius_level++;
