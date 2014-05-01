@@ -400,7 +400,7 @@ public class UpgradeGUI : MonoBehaviour
 					GUI.Label( new Rect(500,177,0,0),"REFILL AMMO","Small"); 
 				}
 
-				GUI.Label( new Rect(442,129,0,0),"Walk: "+current_walk.ToString("F1")+" => "+next_walk.ToString("F1")+" | Run: "+current_run.ToString("F1")+" => "+next_run.ToString("F1") ,"Small");
+				GUI.Label( new Rect(420,129,0,0),"Walk: "+current_walk.ToString("F1")+" => "+next_walk.ToString("F1")+" | Run: "+current_run.ToString("F1")+" => "+next_run.ToString("F1") ,"Small");
 
 				//Draw costs of each upgrade
 				GUI.Label( new Rect(54,95,0,0),"BrainZ needed: "+upgrade_health_brain_cost, "Small");
