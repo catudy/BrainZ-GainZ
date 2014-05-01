@@ -33,47 +33,47 @@ public class UpgradeGUI : MonoBehaviour
 
 	private int upgrade_health_brain_cost = 10;
 	private int upgrade_health_gain_cost = 0; 
-	private int health_cost_increase_rate = 5;
+	private int health_cost_increase_rate = 35;
 
 	private int upgrade_stamina_brain_cost = 0;
 	private int upgrade_stamina_gain_cost = 10;
-	private int stamina_cost_increase_rate = 5;
+	private int stamina_cost_increase_rate = 35;
 
 	private int melee_speed_brain_cost = 0;
 	private int melee_speed_gain_cost = 10;
-	private int melee_speed_increase_rate = 5;
+	private int melee_speed_increase_rate = 35;
 
 	private int gun_speed_brain_cost = 0;
 	private int gun_speed_gain_cost = 10;
-	private int gun_speed_increase_rate = 5;
+	private int gun_speed_increase_rate = 35;
 
 	private int gun_ammo_brain_cost = 10;
 	private int gun_ammo_gain_cost = 0;
-	private int gun_ammo_increase_rate = 5;
+	private int gun_ammo_increase_rate = 35;
 
 	private int pulse_range_brain_cost = 0;
 	private int pulse_range_gain_cost = 10;
-	private int pulse_range_increase_rate = 5;
+	private int pulse_range_increase_rate = 35;
 
 	private int pulse_ammo_brain_cost = 10;
 	private int pulse_ammo_gain_cost = 0;
-	private int pulse_ammo_increase_rate = 5;
+	private int pulse_ammo_increase_rate = 35;
 
 	private int ft_ammo_brain_cost = 10;
 	private int ft_ammo_gain_cost = 0;
-	private int ft_ammo_increase_rate = 5;
+	private int ft_ammo_increase_rate = 35;
 
 	private int ft_range_brain_cost = 0;
 	private int ft_range_gain_cost = 10;
-	private int ft_range_increase_rate = 5;
+	private int ft_range_increase_rate = 35;
 
 	private int fe_ammo_brain_cost = 10;
 	private int fe_ammo_gain_cost = 0;
-	private int fe_ammo_increase_rate = 5;
+	private int fe_ammo_increase_rate = 35;
 	
 	private int fe_range_brain_cost = 0;
 	private int fe_range_gain_cost = 10;
-	private int fe_range_increase_rate = 5;
+	private int fe_range_increase_rate = 35;
 
 	private int restorehp_brain_cost = 5;
 	private int restorehp_gain_cost = 5;
