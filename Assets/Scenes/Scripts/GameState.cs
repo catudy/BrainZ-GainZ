@@ -142,7 +142,9 @@ public class GameState : MonoBehaviour {
 			return;
 		}
 
-
+		if (player.transform.position.y <=-2) {
+			game_over = true;
+				}
 		UpdateObjectives ();
 		 
 	}

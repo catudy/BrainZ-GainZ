@@ -145,6 +145,8 @@ public class PlayerCollision : MonoBehaviour
 			// Delete Powerup Object
 			gameState.RemoveObject(collision.gameObject);
 		} 
+
+			 
 	}
 	
 	// Use this for initialization

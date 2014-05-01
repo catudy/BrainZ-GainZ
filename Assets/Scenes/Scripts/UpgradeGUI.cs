@@ -86,13 +86,16 @@ public class UpgradeGUI : MonoBehaviour
 
 	public int a,b,c,d = 0;
 
-	
-	void Start()
+	void Awake()
 	{
 		playerState = GameObject.Find("Player").GetComponentInChildren<PlayerState>();
 		gameState = GameObject.Find("GameController").GetComponentInChildren<GameState>();
 		weaponSystem = GameObject.Find("Player").GetComponentInChildren<WeaponSystem>();
 		thirdPersonController = GameObject.Find("Player").GetComponentInChildren<ThirdPersonController>();
+	}
+	void Start()
+	{
+
 	}
 
 	void Update()
