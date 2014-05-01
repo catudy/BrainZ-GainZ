@@ -16,8 +16,8 @@ public class WeaponSystem : MonoBehaviour {
 	private GameState gameState;
 	private UpgradeGUI upgradeGUI;
 
-	private GameObject flamer;
-	private GameObject fe;
+	public GameObject flamer;
+	public GameObject fe;
 	public GameObject p_50;
 	public GameObject p_75;
 	public GameObject p_100;
@@ -114,7 +114,7 @@ public class WeaponSystem : MonoBehaviour {
 		gunAmmo_base = 10;
 		fireRate_base = 0.5f;
 		pulseAmmo_base = 3;
-		flameAmmo_base = 5.0f;
+		flameAmmo_base = 2.0f;
 		feAmmo_base = 5.0f;
 		pulse_radius_base = 50;
 		flamerange_base = 5.0f;
