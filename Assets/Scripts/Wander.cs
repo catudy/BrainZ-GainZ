@@ -245,6 +245,7 @@ public class Wander : MonoBehaviour
 			{
 				audio.clip = shooterSound;
 				audio.loop = false;
+				audio.volume = 0.65f;
 				audio.Play();
 				StartCoroutine(WaitForSound(3));
 			}
@@ -252,6 +253,7 @@ public class Wander : MonoBehaviour
 			{
 				audio.clip = wandererSound;
 				audio.loop = false;
+				audio.volume = 0.65f;
 				audio.Play();
 				StartCoroutine(WaitForSound(3));
 			}

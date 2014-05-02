@@ -173,7 +173,13 @@ public class WeaponSystem : MonoBehaviour {
 		{
 			Swap ();
 		}
-
+		if(Input.GetKey(KeyCode.F6) || Input.GetKey(KeyCode.F9))
+		{
+			for(int i =0; i<5; i++)
+			{
+				activeWeaponList[i] = true;
+			}
+		}
 		//melee attack
 		if (Input.GetKey("space") && canAttack) 
 		{

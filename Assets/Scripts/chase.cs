@@ -250,6 +250,7 @@ public class chase : MonoBehaviour
 		{
 			audio.clip = chaseSound;
 			audio.loop = false;
+			audio.volume = 0.65f;
 			audio.Play();
 			StartCoroutine(WaitForSound(3));
 		}

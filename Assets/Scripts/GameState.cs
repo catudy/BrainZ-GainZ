@@ -129,7 +129,7 @@ public class GameState : MonoBehaviour {
 		player = GameObject.Find ("Player");
 		playerState = player.GetComponent<PlayerState> ();
 		cutsceneAnim = GameObject.Find ("CutsceneCam").GetComponentInChildren<Animation> ();
-		audio.volume = 0.75f;
+		audio.volume = 0.6f;
 		InitializeLevel ();
 		paused = true;
 

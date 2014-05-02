@@ -9,6 +9,7 @@ public class meteor : MonoBehaviour {
 	private GameState gameState;
 	private Animation cutsceneAnim;
 	public AudioClip explosionSound;
+	public AudioClip evilSound;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +28,8 @@ public class meteor : MonoBehaviour {
 			if((dist <= 5 && !gameState.playcutscene) && (dist <= 5 && !gameState.paused))
 			{
 				playerState.DealDamage(100);
+				audio.Stop();
+				AudioSource.PlayClipAtPoint(evilSound,transform.position);
 			}
 			Destroy(gameObject);
 		}
