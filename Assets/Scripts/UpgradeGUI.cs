@@ -86,6 +86,8 @@ public class UpgradeGUI : MonoBehaviour
 
 	public AudioClip gameoverSound;
 
+	public int w,x,y,z = 0;
+
 	public bool soundGOdone = false;
 	void Awake()
 	{
@@ -148,19 +150,20 @@ public class UpgradeGUI : MonoBehaviour
 		if(gameState.primary_objective.completed)
 		{
 			gameState.paused = true;
-			/*
+
 			//Change to 7 or 8 later
-			if(gameState.level == 8)//gameState.level == 2 || gameState.level == 8)
+			if(gameState.level == 3)
 			{
-				GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("You beat the game! Your gains are superior!", null, "Basic"));
+				GUI.Label( new Rect(148,150,500f,100f), new GUIContent("Your brains and gains are superior!", null, "Basic"));
+				GUI.Label( new Rect(197,170,500f,100f), new GUIContent("You have beaten the demo!", null, "Basic"));
 				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
-				if(GUI.Button( new Rect(250,300,100,100),"Main Menu"))
+				if(GUI.Button( new Rect(285,300,100,100),"Main Menu"))
 				{
 					Application.LoadLevel("_MainMenu");
 				}
 			}
-			*/
-			if(!showUpgradeMenu)
+
+			else if(!showUpgradeMenu)
 			{
 				//Level X completed message
 				GUI.Label(new Rect(240,20,300,100), new GUIContent("Level "+gameState.level.ToString()+" Complete", null, "Basic"));

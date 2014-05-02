@@ -179,6 +179,7 @@ public class WeaponSystem : MonoBehaviour {
 			{
 				activeWeaponList[i] = true;
 			}
+			maxAmmo();
 		}
 		//melee attack
 		if (Input.GetKey("space") && canAttack) 
@@ -307,10 +308,10 @@ public class WeaponSystem : MonoBehaviour {
 									audio.PlayOneShot(killSound);
 									Destroy (hit.collider.gameObject);
 									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
-									upgradeGUI.collected_brains += 10;
-									gameState.brainz += 10;
-									upgradeGUI.collected_gains += 10;
-									gameState.gainz += 10;
+									upgradeGUI.collected_brains += 2;
+									gameState.brainz += 2;
+									upgradeGUI.collected_gains += 2;
+									gameState.gainz += 2;
 									break;
 								}
 
@@ -372,6 +373,7 @@ public class WeaponSystem : MonoBehaviour {
 								if(hit.collider.gameObject.tag == "Fire"){
 									Destroy (hit.collider.gameObject);
 									gameState.UpdateObjective(ObjectiveType.FIRE,1.0f);
+									break;
 								}
 							}
 						}

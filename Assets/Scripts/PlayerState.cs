@@ -76,6 +76,12 @@ public class PlayerState : MonoBehaviour
 			ProcessAbilityInput();
 		}
 
+		if(Input.GetKey(KeyCode.F6) || Input.GetKey(KeyCode.F9))
+		{
+			health = playerStats.max_health;
+			stamina = playerStats.max_stamina;
+		}
+
 	}
 
 	void UpdateTimers()

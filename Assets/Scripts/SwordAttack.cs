@@ -18,10 +18,10 @@ public class SwordAttack : MonoBehaviour {
 		{
 			audio.PlayOneShot(killSound);
 			gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
-			upgradeGUI.collected_brains += 10;
-			upgradeGUI.collected_gains += 10;
-			gameState.brainz += 10;
-			gameState.gainz += 10;
+			upgradeGUI.collected_brains += 2;
+			upgradeGUI.collected_gains += 2;
+			gameState.brainz += 2;
+			gameState.gainz += 2;
 			Destroy (other.gameObject);
 		}
 	}

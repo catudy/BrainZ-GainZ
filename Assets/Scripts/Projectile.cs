@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour {
 		Quaternion rotation = new Quaternion ();
 		Instantiate( explosion, obj.transform.position, rotation);
 		GameObject f = (GameObject)Instantiate (fire, obj.transform.position, rotation);
-		Destroy (f, 60.0f);
+		Destroy (f, 7.0f);
 		AudioSource.PlayClipAtPoint(explosionSound,transform.position);
 		Destroy (obj);
 	}

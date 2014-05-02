@@ -196,10 +196,10 @@ public class GameState : MonoBehaviour {
 		for(int i=0; i<num_objectives; i++){
 			secondary_objectives[i] = new Objective();
 		}
-		secondary_objectives[0].SetObjective(ObjectiveType.DAMAGE, ObjectiveReward.GAINZ, Random.Range(level * 2, level * 5),Random.Range(level *20, level * 50));
-		secondary_objectives[1].SetObjective(ObjectiveType.KILL, ObjectiveReward.BRAINZ, Random.Range (level * 5, level * 10),Random.Range(level *20, level * 50));
-		secondary_objectives [2].SetObjective (ObjectiveType.FIRE, ObjectiveReward.BRAINZ, Random.Range (level * 5, level * 10), Random.Range (level * 20, level * 50));
-		secondary_objectives [3].SetObjective (ObjectiveType.SCAVENGER, ObjectiveReward.BRAINZ, Random.Range (1, level), Random.Range (level * 20, level * 50));
+		secondary_objectives[0].SetObjective(ObjectiveType.DAMAGE, ObjectiveReward.GAINZ, Random.Range(2,5),Random.Range(20, 40));
+		secondary_objectives[1].SetObjective(ObjectiveType.KILL, ObjectiveReward.GAINZ, Random.Range (level * 2, level * 5),Random.Range(15, 30));
+		secondary_objectives [2].SetObjective (ObjectiveType.FIRE, ObjectiveReward.BRAINZ, Random.Range (level * 2, level * 5), Random.Range (15, 30));
+		secondary_objectives [3].SetObjective (ObjectiveType.SCAVENGER, ObjectiveReward.BRAINZ, Random.Range (5,10), Random.Range (20, 40));
 
 	}
 
