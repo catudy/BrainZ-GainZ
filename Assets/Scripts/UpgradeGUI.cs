@@ -106,7 +106,7 @@ public class UpgradeGUI : MonoBehaviour
 
 		if(gameState.primary_objective.completed)
 		{
-			//Despawn();
+			Despawn();
 
 			//Toggle background plane for upgrade menu
 			upgradeBG.SetActive(true);
@@ -744,6 +744,9 @@ public class UpgradeGUI : MonoBehaviour
 			Destroy(o);
 		}
 		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("Gainz")){
+			Destroy(o);
+		}
+		foreach (GameObject o in GameObject.FindGameObjectsWithTag ("meteor")){
 			Destroy(o);
 		}
 	}

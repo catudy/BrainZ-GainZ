@@ -49,8 +49,16 @@ public class Spawner : MonoBehaviour
 
 	void Spawn(Vector3 position, GameObject obj)
 	{
+		Debug.Log(obj.name);
+		if(obj.name == "Meteor(Clone)")
+		{
+			Quaternion rotation = Quaternion.Euler(180,0,0);
+			Instantiate(obj, position, rotation);
+		}
+		else{
 		Quaternion rotation = new Quaternion ();
 		Instantiate(obj, position, rotation);
+		}
 	}
 
 	// Returns a Valid Spawn Point based on level params

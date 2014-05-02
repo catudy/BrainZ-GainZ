@@ -153,7 +153,7 @@ public class GameState : MonoBehaviour {
 			playcutscene = false;
 			paused = false;
 			cutsceneCam.SetActive(false);
-			RenderSettings.fog = true;
+			//RenderSettings.fog = true;
 		}
 		//if(paused &&
 		if (paused) {

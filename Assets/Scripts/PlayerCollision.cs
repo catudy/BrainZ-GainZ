@@ -146,6 +146,11 @@ public class PlayerCollision : MonoBehaviour
 			gameState.RemoveObject(collision.gameObject);
 		} 
 
+		else if(collision.gameObject.tag == "meteor")
+		{
+			playerState.DealDamage(100);
+		}
+
 			 
 	}
 	
