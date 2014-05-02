@@ -223,17 +223,22 @@ public class UpgradeGUI : MonoBehaviour
 					yy += offset_y;
 
 				}
-
+				
+				GUI.Label(new Rect(115,170+yy,100,100),"Level Completed Rewards: 15 BrainZ and GainZ","Basic");
+			
+				yy+= offset_y;
 				GUI.Label(new Rect(115,170+yy,100,100),"Collected BrainZ: "+collected_brains,"Basic");
 				yy+= offset_y;
 				GUI.Label(new Rect(115,170+yy,100,100),"Collected GainZ: "+collected_gains,"Basic");
 
-				GUI.Label(new Rect(115,400,100,100),"GainZ earned: "+(collected_gains+gainz_earned).ToString(),"Big");
-				GUI.Label(new Rect(115,425,100,100),"BrainZ earned: "+(collected_brains+brainz_earned).ToString(),"Big");
+				GUI.Label(new Rect(115,400,100,100),"GainZ earned: "+(collected_gains+gainz_earned+15).ToString(),"Big");
+				GUI.Label(new Rect(115,425,100,100),"BrainZ earned: "+(collected_brains+brainz_earned+15).ToString(),"Big");
 
 				//Insert score screen code (completed objectives and current brainZ and gainZ acquired
 				if(GUI.Button( new Rect(556,441,77,30),"Continue")) 
 				{
+					gameState.brainz += 15;
+					gameState.gainz += 15;
 					showUpgradeMenu = true;
 				}
 			}
@@ -526,7 +531,7 @@ public class UpgradeGUI : MonoBehaviour
 				}
 
 				//Pulse attack radius upgrade
-				if(gameState.brainz >= pulse_range_brain_cost && gameState.gainz >= pulse_range_brain_cost && weaponSystem.pulse_radius_level < weaponSystem.weaponLevelCap)
+				if(gameState.brainz >= pulse_range_brain_cost && gameState.gainz >= pulse_range_gain_cost && weaponSystem.pulse_radius_level < weaponSystem.weaponLevelCap)
 				{
 					if(GUI.Button( new Rect(168,337,25,25), new GUIContent("", LevelupB2, "")))
 					{
@@ -688,7 +693,7 @@ public class UpgradeGUI : MonoBehaviour
 
 
 				//User is done applying upgrades
-				if(GUI.Button( new Rect(589f,440f,45f,32f), new GUIContent("Done", null, "")))
+				if(GUI.Button( new Rect(589f,440f,47f,32f), new GUIContent("Done", null, "")))
 				{
 					//Increment game level and set new primary objective
 					gameState.level++;
@@ -706,9 +711,10 @@ public class UpgradeGUI : MonoBehaviour
 		{
 			gameState.paused = true;
 
-			GUI.Label( new Rect(85f,100f,400f,100f), new GUIContent("You lose!", null, ""));
+			GUI.Label( new Rect(280,100f,400f,100f), new GUIContent("GAME OVER", null, ""));
+			GUI.Label( new Rect(251,130f,400f,100f), new GUIContent("LEVEL "+gameState.level+" REACHED", null, ""));
 			//Insert score screen code (completed objectives and current brainZ and gainZ acquired
-			if(GUI.Button( new Rect(250,300,100,100),"Main Menu"))
+			if(GUI.Button( new Rect(285,300,100,100),"Main Menu"))
 			{
 				Application.LoadLevel("_MainMenu");
 			}

@@ -116,9 +116,12 @@ public class GameState : MonoBehaviour {
 	private Animation cutsceneAnim;
 	public GameObject cutsceneCam;
 	private bool gameStarted = false;
-	public GUIText guitext;
-	public int a,b,c,d = 0;
 	public GUISkin skin;
+	//Resolution variables
+	private float originalWidth;
+	private float originalHeight;
+	private Vector3 scale;
+	public int a,b,c,d = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -136,12 +139,21 @@ public class GameState : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		//Get current resonlution
+		originalWidth = Screen.resolutions[0].width;
+		originalHeight = Screen.resolutions[0].height;
+
+		if(cutsceneAnim.isPlaying)
+		{
+			RenderSettings.fog = false;
+		}
 		if((!cutsceneAnim.isPlaying && !gameStarted) || Input.GetKey("s"))
 		   {
 			gameStarted = true;
 			playcutscene = false;
 			paused = false;
 			cutsceneCam.SetActive(false);
+			RenderSettings.fog = true;
 		}
 		//if(paused &&
 		if (paused) {
@@ -237,9 +249,19 @@ public class GameState : MonoBehaviour {
 
 	void OnGUI()
 	{
+		//Resize GUI based on resolution
+		scale.x = Screen.width/originalWidth;
+		scale.y = Screen.height/originalHeight;
+		scale.z = 1;
+		
+		Matrix4x4 svMat = GUI.matrix;
+		GUI.matrix = Matrix4x4.TRS(Vector3.zero,Quaternion.identity,scale);
+
 		GUI.skin = skin;
 		if(!gameStarted)
-		GUI.Label(new Rect(286,27,187,63), "Press 'S' to Skip");
+		GUI.Label(new Rect(236,46,217,100), "Press 'S' to Skip");
+
+		GUI.matrix = svMat;
 	}
 }
 

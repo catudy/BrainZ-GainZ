@@ -130,17 +130,17 @@ public class GUIController : MonoBehaviour
 
 			GUI.DrawTexture( new Rect(138,-90,400,400), bng_logo);
 			int offset = 0;
-			if(GUI.Button( new Rect(288,347+offset,100,20), "Start"))
+			if(GUI.Button( new Rect(288,347+offset,110,20), "Start"))
 			{
 				showInstructions = true;
 			}
 			offset+=40;
-			if(GUI.Button( new Rect(288,347+offset,100,20), "Instructions"))
+			if(GUI.Button( new Rect(288,347+offset,110,20), "Instructions"))
 			{
 				Application.LoadLevel("_Instructions");
 			}
 			offset+=40;
-			if(GUI.Button( new Rect(288,347+offset,100,20), "Quit"))
+			if(GUI.Button( new Rect(288,347+offset,110,20), "Quit"))
 			{
 				Application.Quit();
 			}
@@ -320,7 +320,7 @@ public class GUIController : MonoBehaviour
 			///////////////////////////
 			//////DRAWING BUTTONS//////
 			///////////////////////////
-			pauseButton = createButton(585,73,43,20, "PAUSE");
+			pauseButton = createButton(585,73,45,22, "PAUSE");
 			
 			//If the pause button is pressed open the pause menu (but for now just returns to main menu)
 			if(pauseButton && !gameState.paused)

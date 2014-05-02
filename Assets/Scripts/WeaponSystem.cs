@@ -178,9 +178,19 @@ public class WeaponSystem : MonoBehaviour {
 			//melee attack
 			if(currentWeapon == Weapon.MELEE)
 			{
+				if(playSound && meleeAttackSpeed_level == 5)
+				{
+					
+					audio.clip = flamersound;
+					audio.loop = false;
+					audio.Play();
+					StartCoroutine(WaitForSound(0.5f));
+				}
+				else{
 				audio.volume = 1;
 				audio.PlayOneShot(swordsound);
 				melee.animation.Play();
+				}
 				if(melee.animation.isPlaying)
 				{
 					melee.collider.enabled = true;
