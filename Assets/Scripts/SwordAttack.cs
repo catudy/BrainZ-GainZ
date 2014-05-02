@@ -5,6 +5,7 @@ public class SwordAttack : MonoBehaviour {
 	
 	private GameState gameState;
 	private UpgradeGUI upgradeGUI;
+	public AudioClip killSound;
 
 	void Start()
 	{
@@ -15,6 +16,7 @@ public class SwordAttack : MonoBehaviour {
 	{
 		if(other.tag == "Deadly")
 		{
+			audio.PlayOneShot(killSound);
 			gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
 			upgradeGUI.collected_brains += 10;
 			upgradeGUI.collected_gains += 10;

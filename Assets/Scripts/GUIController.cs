@@ -65,9 +65,10 @@ public class GUIController : MonoBehaviour
 
 	private bool showInstructions = false;
 
-	//TEST VARS
-	public float a,b,c,d =0;
+
 	public int w,x,y,z = 0;
+
+	public bool fogOn = true;
 	
 	void Start()
 	{
@@ -347,6 +348,25 @@ public class GUIController : MonoBehaviour
 				{
 					gameState.paused = false;
 				}
+				if(fogOn)
+				{
+					if(GUI.Button( new Rect(388,208,75,30), "Fog On"))
+					{
+						fogOn = false;
+						RenderSettings.fog = false;
+					}
+
+				}
+				else
+				{
+					if(GUI.Button( new Rect(388,208,75,30), "Fog Off"))
+					{
+						fogOn = true;
+						RenderSettings.fog = true;
+					}
+					
+				}
+
 			}
 
 		}

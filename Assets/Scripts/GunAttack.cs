@@ -7,6 +7,8 @@ public class GunAttack : MonoBehaviour {
 	private float delay = 2.0f;
 	private GameState gameState;
 	private UpgradeGUI upgradeGUI;
+	public AudioClip killSound;
+
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +26,7 @@ public class GunAttack : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "Deadly")
 		{
+			AudioSource.PlayClipAtPoint(killSound,transform.position);
 			gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
 			upgradeGUI.collected_brains += 10;
 			upgradeGUI.collected_gains += 10;

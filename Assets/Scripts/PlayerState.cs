@@ -36,6 +36,7 @@ public class PlayerState : MonoBehaviour
 	private float cooldown  = 0.0f;
 	private float damage_cooldown = 0.0f;
 	private GameState gameState;
+	public AudioClip damageSound;
 
 
 	// Use this for initialization
@@ -225,6 +226,7 @@ public class PlayerState : MonoBehaviour
 
 	public void DealDamage(int damage){
 		if(Time.time > damage_cooldown){
+			audio.PlayOneShot(damageSound);
 			health -= damage;
 			if(health <= 0){
 				gameState.game_over = true;

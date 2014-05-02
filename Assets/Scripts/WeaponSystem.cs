@@ -98,6 +98,8 @@ public class WeaponSystem : MonoBehaviour {
 
 	public bool playSound = true;
 
+	public AudioClip killSound;
+
 
 
 	// Use this for initialization
@@ -247,7 +249,7 @@ public class WeaponSystem : MonoBehaviour {
 						pulse.collider.enabled = true;
 					}
 					StartCoroutine(WaitForAttack(1.0f));
-					if(pulseAmmo == 0 && canAttack)
+					if(pulseAmmo == 0)
 					{
 						StartCoroutine(WaitForAttack(0.5f));
 						activeWeaponList[(int)currentWeapon] = false;
@@ -296,6 +298,7 @@ public class WeaponSystem : MonoBehaviour {
 							if(hit.distance < flamerange)
 							{
 								if(hit.collider.gameObject.tag == "Deadly"){
+									audio.PlayOneShot(killSound);
 									Destroy (hit.collider.gameObject);
 									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
 									upgradeGUI.collected_brains += 10;

@@ -5,6 +5,7 @@ public class pulseAttack : MonoBehaviour {
 
 	private GameState gameState;
 	private UpgradeGUI upgradeGUI;
+	public AudioClip killSound;
 
 	void Start()
 	{
@@ -17,6 +18,7 @@ public class pulseAttack : MonoBehaviour {
 		if(other.gameObject.tag == "Deadly")
 		{
 			gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
+			audio.PlayOneShot(killSound);
 			upgradeGUI.collected_brains += 10;
 			upgradeGUI.collected_gains += 10;
 			gameState.brainz += 10;
@@ -30,6 +32,7 @@ public class pulseAttack : MonoBehaviour {
 		if(other.gameObject.tag == "Deadly")
 		{
 			//gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
+			audio.PlayOneShot(killSound);
 			Destroy(other.gameObject);
 			Debug.Log ("pulse works");
 		}
@@ -40,6 +43,7 @@ public class pulseAttack : MonoBehaviour {
 		if(other.gameObject.tag == "Deadly")
 		{
 			//gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
+			audio.PlayOneShot(killSound);
 			Destroy(other.gameObject);
 			Debug.Log ("pulse works");
 		}
