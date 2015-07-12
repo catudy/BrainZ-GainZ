@@ -156,7 +156,7 @@ public class WeaponSystem : MonoBehaviour {
 		ferange = ferange_max;
 
 		activeWeaponList [0] = true;
-		melee.collider.enabled = false;
+		melee.GetComponent<Collider>().enabled = false;
 
 	
 	}
@@ -187,13 +187,13 @@ public class WeaponSystem : MonoBehaviour {
 			//melee attack
 			if(currentWeapon == Weapon.MELEE)
 			{
-				audio.volume = 1;
-				audio.PlayOneShot(swordsound);
-				melee.animation.Play();
+				GetComponent<AudioSource>().volume = 1;
+				GetComponent<AudioSource>().PlayOneShot(swordsound);
+				melee.GetComponent<Animation>().Play();
 
-				if(melee.animation.isPlaying)
+				if(melee.GetComponent<Animation>().isPlaying)
 				{
-					melee.collider.enabled = true;
+					melee.GetComponent<Collider>().enabled = true;
 				}
 				StartCoroutine(WaitForAttack (meleeAttackSpeed));
 			}
@@ -203,8 +203,8 @@ public class WeaponSystem : MonoBehaviour {
 			{
 				if(gunAmmo > 0)
 				{
-					audio.volume = 0.5f;
-					audio.PlayOneShot(gunsound);
+					GetComponent<AudioSource>().volume = 0.5f;
+					GetComponent<AudioSource>().PlayOneShot(gunsound);
 					Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation);
 					gunAmmo--;
 					StartCoroutine(WaitForAttack(fireRate));
@@ -222,38 +222,38 @@ public class WeaponSystem : MonoBehaviour {
 			{
 				if(pulseAmmo > 0)
 				{
-					audio.volume = 1;
-					audio.PlayOneShot(pulsesound);
+					GetComponent<AudioSource>().volume = 1;
+					GetComponent<AudioSource>().PlayOneShot(pulsesound);
 					if(pulse_radius_level == 1)
 					{
 						Instantiate(p_50, player.transform.position, new Quaternion());
-						pulse.animation.Play ("pulseAttack");
+						pulse.GetComponent<Animation>().Play ("pulseAttack");
 					}
 					else if(pulse_radius_level == 2)
 					{
 						Instantiate(p_75, player.transform.position, new Quaternion());
-						pulse.animation.Play ("pulseAttack_75");
+						pulse.GetComponent<Animation>().Play ("pulseAttack_75");
 					}
 					else if(pulse_radius_level == 3)
 					{
 						Instantiate(p_100, player.transform.position, new Quaternion());
-						pulse.animation.Play ("pulseAttack_100");
+						pulse.GetComponent<Animation>().Play ("pulseAttack_100");
 					}
 					else if(pulse_radius_level == 4)
 					{
 						Instantiate(p_125, player.transform.position, new Quaternion());
-						pulse.animation.Play ("pulseAttack_125");
+						pulse.GetComponent<Animation>().Play ("pulseAttack_125");
 					}
 					else if(pulse_radius_level == 5)
 					{
 						Instantiate(p_150, player.transform.position, new Quaternion());
-						pulse.animation.Play ("pulseAttack_150");
+						pulse.GetComponent<Animation>().Play ("pulseAttack_150");
 					}
 
 					pulseAmmo--;
-					if(pulse.animation.isPlaying)
+					if(pulse.GetComponent<Animation>().isPlaying)
 					{
-						pulse.collider.enabled = true;
+						pulse.GetComponent<Collider>().enabled = true;
 					}
 					StartCoroutine(WaitForAttack(1.0f));
 					if(pulseAmmo == 0)
@@ -273,9 +273,9 @@ public class WeaponSystem : MonoBehaviour {
 					if(playSound)
 					{
 
-						audio.clip = flamersound;
-							audio.loop = false;
-							audio.Play();
+						GetComponent<AudioSource>().clip = flamersound;
+							GetComponent<AudioSource>().loop = false;
+							GetComponent<AudioSource>().Play();
 							StartCoroutine(WaitForSound(0.5f));
 					}
 					RaycastHit hit;
@@ -305,7 +305,7 @@ public class WeaponSystem : MonoBehaviour {
 							if(hit.distance < flamerange)
 							{
 								if(hit.collider.gameObject.tag == "Deadly"){
-									audio.PlayOneShot(killSound);
+									GetComponent<AudioSource>().PlayOneShot(killSound);
 									Destroy (hit.collider.gameObject);
 									gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
 									upgradeGUI.collected_brains += 2;
@@ -339,9 +339,9 @@ public class WeaponSystem : MonoBehaviour {
 					if(playSound)
 					{
 						
-						audio.clip = fesound;
-						audio.loop = false;
-						audio.Play();
+						GetComponent<AudioSource>().clip = fesound;
+						GetComponent<AudioSource>().loop = false;
+						GetComponent<AudioSource>().Play();
 						StartCoroutine(WaitForSound(0.5f));
 					}
 					//audio.volume = 0.5f;
@@ -453,13 +453,13 @@ public class WeaponSystem : MonoBehaviour {
 
 	void DisableAttackCollider()
 	{
-		if(!melee.animation.isPlaying)
+		if(!melee.GetComponent<Animation>().isPlaying)
 		{
-			melee.collider.enabled = false;
+			melee.GetComponent<Collider>().enabled = false;
 		}
-		if(!pulse.animation.isPlaying)
+		if(!pulse.GetComponent<Animation>().isPlaying)
 		{
-			pulse.collider.enabled = false;
+			pulse.GetComponent<Collider>().enabled = false;
 		}
 	}
 

@@ -9,11 +9,11 @@ function Start () {
 }
 
 function Update () {
-	if(Input.GetMouseButtonDown(0) && guiTexture.HitTest(Input.mousePosition)){
+	if(Input.GetMouseButtonDown(0) && GetComponent.<GUITexture>().HitTest(Input.mousePosition)){
 		currentTextureID ++;
 		if(currentTextureID >= textureList.Length){
 			currentTextureID = 0;
 		}
-		guiTexture.texture = textureList[currentTextureID];
+		GetComponent.<GUITexture>().texture = textureList[currentTextureID];
 	}
 }

@@ -12,7 +12,7 @@ function Start () {
 
 function Update () {
 	if(Input.GetMouseButtonDown(0)){
-		if( guiTexture.HitTest(Input.mousePosition)){
+		if( GetComponent.<GUITexture>().HitTest(Input.mousePosition)){
 			flashStartTime = Time.time;
 		}
 	}
@@ -27,6 +27,6 @@ function Update () {
 		//Color.
 		var colorChange : float = 0.5 + changeCurve.Evaluate(elapsedTime) * 0.3;
 		var colorChangeBlue : float = 0.5 + changeCurve.Evaluate(elapsedTime) * 0.5;
-		guiTexture.color = Color(colorChange, colorChange, colorChangeBlue);
+		GetComponent.<GUITexture>().color = Color(colorChange, colorChange, colorChangeBlue);
 	}
 }

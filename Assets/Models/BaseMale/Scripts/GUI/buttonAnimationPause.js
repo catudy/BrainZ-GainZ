@@ -10,7 +10,7 @@ function Start () {
 }
 
 function Update () {
-	if(Input.GetMouseButtonDown(0) && guiTexture.HitTest(Input.mousePosition)){
+	if(Input.GetMouseButtonDown(0) && GetComponent.<GUITexture>().HitTest(Input.mousePosition)){
 		if(animationSpeedTarget > 0.9){
 			animationSpeedTarget = 0.0; 
 		}

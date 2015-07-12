@@ -13,7 +13,7 @@ function Start () {
 
 function Update () {
 	if(Input.GetMouseButtonDown(0)){
-		if( guiTexture.HitTest(Input.mousePosition)){
+		if( GetComponent.<GUITexture>().HitTest(Input.mousePosition)){
 			animationChange.CrossFade(animationName);
 			if(matchNormalizedTime){
 				animationChange[animationName].normalizedTime = animationChange[currentAnimation].normalizedTime;

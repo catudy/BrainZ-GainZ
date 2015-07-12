@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour {
 			return;
 		}
 		//transform.Translate (velocity * Time.deltaTime);
-		rigidbody.AddForce (velocity);
+		GetComponent<Rigidbody>().AddForce (velocity);
 		if(Time.time > start_time + 5.0f){
 			DestroyWithExplosion(transform.gameObject);
 		}

@@ -232,7 +232,7 @@ public class PlayerState : MonoBehaviour
 
 	public void DealDamage(int damage){
 		if(Time.time > damage_cooldown){
-			audio.PlayOneShot(damageSound);
+			GetComponent<AudioSource>().PlayOneShot(damageSound);
 			health -= damage;
 			if(health <= 0){
 				gameState.game_over = true;

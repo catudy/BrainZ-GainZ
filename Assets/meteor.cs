@@ -28,7 +28,7 @@ public class meteor : MonoBehaviour {
 			if((dist <= 5 && !gameState.playcutscene) && (dist <= 5 && !gameState.paused))
 			{
 				playerState.DealDamage(100);
-				audio.Stop();
+				GetComponent<AudioSource>().Stop();
 				AudioSource.PlayClipAtPoint(evilSound,transform.position);
 			}
 			Destroy(gameObject);

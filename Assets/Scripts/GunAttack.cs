@@ -12,7 +12,7 @@ public class GunAttack : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		rigidbody.velocity = transform.forward * speed;
+		GetComponent<Rigidbody>().velocity = transform.forward * speed;
 		gameState = GameObject.Find ("GameController").GetComponentInChildren<GameState> ();
 		upgradeGUI = GameObject.Find("GUIController").GetComponentInChildren<UpgradeGUI>();
 	}

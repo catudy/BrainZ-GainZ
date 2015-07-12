@@ -243,18 +243,18 @@ public class Wander : MonoBehaviour
 		{
 			if(gameObject.name == "Shooter(Clone)" || gameObject.name == "Shooter")
 			{
-				audio.clip = shooterSound;
-				audio.loop = false;
-				audio.volume = 0.65f;
-				audio.Play();
+				GetComponent<AudioSource>().clip = shooterSound;
+				GetComponent<AudioSource>().loop = false;
+				GetComponent<AudioSource>().volume = 0.65f;
+				GetComponent<AudioSource>().Play();
 				StartCoroutine(WaitForSound(3));
 			}
 			else if(gameObject.name == "Wanderer(Clone)" || gameObject.name == "Wanderer")
 			{
-				audio.clip = wandererSound;
-				audio.loop = false;
-				audio.volume = 0.65f;
-				audio.Play();
+				GetComponent<AudioSource>().clip = wandererSound;
+				GetComponent<AudioSource>().loop = false;
+				GetComponent<AudioSource>().volume = 0.65f;
+				GetComponent<AudioSource>().Play();
 				StartCoroutine(WaitForSound(3));
 			}
 		}

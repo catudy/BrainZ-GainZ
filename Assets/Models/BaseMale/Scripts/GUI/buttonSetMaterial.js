@@ -10,7 +10,7 @@ function Start () {
 
 function Update () {
 	if(Input.GetMouseButtonDown(0)){
-		if( guiTexture.HitTest(Input.mousePosition)){
+		if( GetComponent.<GUITexture>().HitTest(Input.mousePosition)){
 			currentMaterialID ++;
 			if(currentMaterialID >= pickMaterials.Length){
 				currentMaterialID = 0;

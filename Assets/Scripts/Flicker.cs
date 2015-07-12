@@ -17,7 +17,7 @@ public class Flicker : MonoBehaviour
 		
 		if (random_wait < 0.0f) 
 		{
-			light.intensity = Random.value * 2.0f;
+			GetComponent<Light>().intensity = Random.value * 2.0f;
 		}
 
 		random_wait = Random.value * 5.0f;

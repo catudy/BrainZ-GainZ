@@ -718,14 +718,14 @@ public class UpgradeGUI : MonoBehaviour
 			GUI.Label( new Rect(280,100f,400f,100f), new GUIContent("GAME OVER", null, ""));
 			GUI.Label( new Rect(251,130f,400f,100f), new GUIContent("LEVEL "+gameState.level+" REACHED", null, ""));
 			//Insert score screen code (completed objectives and current brainZ and gainZ acquired
-			gameState.audio.Stop();
+			gameState.GetComponent<AudioSource>().Stop();
 			//audio.clip = gameoverSound;
 			//audio.volume = 1;
 			//audio.loop = true;
 			//audio.Play ();
 			if(!soundGOdone)
 			{
-				audio.PlayOneShot(gameoverSound);
+				GetComponent<AudioSource>().PlayOneShot(gameoverSound);
 				soundGOdone = true;
 			}
 			if(GUI.Button( new Rect(285,300,100,100),"Main Menu"))

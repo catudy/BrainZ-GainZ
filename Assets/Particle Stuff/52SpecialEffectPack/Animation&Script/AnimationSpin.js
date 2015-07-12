@@ -1,4 +1,4 @@
 
 function Update() {
-    animation.Play();
+    GetComponent.<Animation>().Play();
 }

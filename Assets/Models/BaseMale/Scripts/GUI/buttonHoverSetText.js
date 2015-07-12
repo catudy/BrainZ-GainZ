@@ -10,7 +10,7 @@ function Start () {
 }
 
 function Update () {
-	if(guiTexture.HitTest(Input.mousePosition)){
+	if(GetComponent.<GUITexture>().HitTest(Input.mousePosition)){
 		chooseText.text = textValue;
 		chooseText.pixelOffset.x = Input.mousePosition.x + offset;
 		chooseText.pixelOffset.y = Input.mousePosition.y;

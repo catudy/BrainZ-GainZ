@@ -248,10 +248,10 @@ public class chase : MonoBehaviour
 	
 		if(aggro && playSound)
 		{
-			audio.clip = chaseSound;
-			audio.loop = false;
-			audio.volume = 0.65f;
-			audio.Play();
+			GetComponent<AudioSource>().clip = chaseSound;
+			GetComponent<AudioSource>().loop = false;
+			GetComponent<AudioSource>().volume = 0.65f;
+			GetComponent<AudioSource>().Play();
 			StartCoroutine(WaitForSound(3));
 		}
 

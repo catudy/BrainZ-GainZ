@@ -9,7 +9,7 @@ private var buffer : float = 0.02;
 
 
 function Start(){
-	renderer.enabled = true;
+	GetComponent.<Renderer>().enabled = true;
 	castingPoint = transform.Find("castingPoint");
 	castingPoint.parent = transform.parent;
 	transform.parent = transform.root;
@@ -47,6 +47,6 @@ function LateUpdate () {
 		opacity = 0.0;
 	}
 	opacity *= multiplier;
-	renderer.material.color.a = opacity;
+	GetComponent.<Renderer>().material.color.a = opacity;
 	//renderer.material.GetColor("_Color").a = opacity;
 }

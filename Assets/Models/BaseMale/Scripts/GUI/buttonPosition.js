@@ -14,17 +14,17 @@ function Start () {
 
 function Update () {
 	if(xPositionFromRight){
-		guiTexture.pixelInset.x = Screen.width - buttonPosition.x - guiTexture.texture.width * .5 * buttonSize;
+		GetComponent.<GUITexture>().pixelInset.x = Screen.width - buttonPosition.x - GetComponent.<GUITexture>().texture.width * .5 * buttonSize;
 	}
 	else{
-		guiTexture.pixelInset.x = buttonPosition.x - guiTexture.texture.width * .5 * buttonSize;
+		GetComponent.<GUITexture>().pixelInset.x = buttonPosition.x - GetComponent.<GUITexture>().texture.width * .5 * buttonSize;
 	}
 	if(yPositionFromTop){
-		guiTexture.pixelInset.y = Screen.height - buttonPosition.y - guiTexture.texture.height * .5 * buttonSize;
+		GetComponent.<GUITexture>().pixelInset.y = Screen.height - buttonPosition.y - GetComponent.<GUITexture>().texture.height * .5 * buttonSize;
 	}
 	else{
-		guiTexture.pixelInset.y = buttonPosition.y - guiTexture.texture.height * .5 * buttonSize;
+		GetComponent.<GUITexture>().pixelInset.y = buttonPosition.y - GetComponent.<GUITexture>().texture.height * .5 * buttonSize;
 	}
-	guiTexture.pixelInset.width = guiTexture.texture.width * buttonSize;
-	guiTexture.pixelInset.height = guiTexture.texture.height * buttonSize;
+	GetComponent.<GUITexture>().pixelInset.width = GetComponent.<GUITexture>().texture.width * buttonSize;
+	GetComponent.<GUITexture>().pixelInset.height = GetComponent.<GUITexture>().texture.height * buttonSize;
 }

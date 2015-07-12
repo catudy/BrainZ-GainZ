@@ -18,7 +18,7 @@ public class pulseAttack : MonoBehaviour {
 		if(other.gameObject.tag == "Deadly")
 		{
 			gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
-			audio.PlayOneShot(killSound);
+			GetComponent<AudioSource>().PlayOneShot(killSound);
 			upgradeGUI.collected_brains += 2;
 			upgradeGUI.collected_gains += 2;
 			gameState.brainz += 2;
@@ -32,7 +32,7 @@ public class pulseAttack : MonoBehaviour {
 		if(other.gameObject.tag == "Deadly")
 		{
 			//gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
-			audio.PlayOneShot(killSound);
+			GetComponent<AudioSource>().PlayOneShot(killSound);
 			Destroy(other.gameObject);
 			Debug.Log ("pulse works");
 		}
@@ -43,7 +43,7 @@ public class pulseAttack : MonoBehaviour {
 		if(other.gameObject.tag == "Deadly")
 		{
 			//gameState.UpdateObjective(ObjectiveType.KILL,1.0f);
-			audio.PlayOneShot(killSound);
+			GetComponent<AudioSource>().PlayOneShot(killSound);
 			Destroy(other.gameObject);
 			Debug.Log ("pulse works");
 		}

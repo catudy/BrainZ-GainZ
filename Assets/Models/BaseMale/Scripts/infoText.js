@@ -17,15 +17,15 @@ function Update () {
 	}
 	if(Input.GetMouseButton(0) || Input.GetMouseButton(1)){
 		if(Time.time > lastClickTime + acknowledgeDuration){
-			guiText.text = "";
+			GetComponent.<GUIText>().text = "";
 			Destroy(this.gameObject);
 		}
 	}
 	if(Time.time > provideHelpTime){
-		guiText.text = helpText;
+		GetComponent.<GUIText>().text = helpText;
 	}
 	else{
-		guiText.text = "";
+		GetComponent.<GUIText>().text = "";
 	}
 	
 }

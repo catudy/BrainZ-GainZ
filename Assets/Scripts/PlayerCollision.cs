@@ -45,7 +45,7 @@ public class PlayerCollision : MonoBehaviour
 
 		else if(collision.gameObject.tag == "Brainz")
 		{
-			audio.PlayOneShot(pickupSound);
+			GetComponent<AudioSource>().PlayOneShot(pickupSound);
 			Destroy(collision.gameObject);
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
 			upgradeGUI.collected_brains+=10;
@@ -55,7 +55,7 @@ public class PlayerCollision : MonoBehaviour
 
 		else if(collision.gameObject.tag == "Gainz")
 		{
-			audio.PlayOneShot(pickupSound);
+			GetComponent<AudioSource>().PlayOneShot(pickupSound);
 			Destroy(collision.gameObject);
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
 			upgradeGUI.collected_gains+=10;
@@ -64,7 +64,7 @@ public class PlayerCollision : MonoBehaviour
 
 		else if(collision.gameObject.tag == "ammopack")
 		{
-			audio.PlayOneShot(pickupSound);
+			GetComponent<AudioSource>().PlayOneShot(pickupSound);
 			Destroy(collision.gameObject);
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
 			weaponSystem.gunAmmo = weaponSystem.gunAmmo_max;
@@ -75,7 +75,7 @@ public class PlayerCollision : MonoBehaviour
 
 		else if(collision.gameObject.tag == "healthpack")
 		{
-			audio.PlayOneShot(pickupSound);
+			GetComponent<AudioSource>().PlayOneShot(pickupSound);
 			Destroy(collision.gameObject);
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
 			if(playerState.health >= playerState.playerStats.max_health)
@@ -90,7 +90,7 @@ public class PlayerCollision : MonoBehaviour
 
 		else if(collision.gameObject.tag == "gun")
 		{
-			audio.PlayOneShot(pickupSound);
+			GetComponent<AudioSource>().PlayOneShot(pickupSound);
 			Destroy(collision.gameObject);
 			weaponSystem.activeWeaponList[1] = true;
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
@@ -102,7 +102,7 @@ public class PlayerCollision : MonoBehaviour
 
 		else if(collision.gameObject.tag == "pulse")
 		{
-			audio.PlayOneShot(pickupSound);
+			GetComponent<AudioSource>().PlayOneShot(pickupSound);
 			Destroy(collision.gameObject);
 			weaponSystem.activeWeaponList[2] = true;
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
@@ -114,7 +114,7 @@ public class PlayerCollision : MonoBehaviour
 
 		else if(collision.gameObject.tag == "flame")
 		{
-			audio.PlayOneShot(pickupSound);
+			GetComponent<AudioSource>().PlayOneShot(pickupSound);
 			Destroy(collision.gameObject);
 			weaponSystem.activeWeaponList[3] = true;
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
@@ -126,7 +126,7 @@ public class PlayerCollision : MonoBehaviour
 
 		else if(collision.gameObject.tag == "extinguish")
 		{
-			audio.PlayOneShot(pickupSound);
+			GetComponent<AudioSource>().PlayOneShot(pickupSound);
 			Destroy(collision.gameObject);
 			weaponSystem.activeWeaponList[4] = true;
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);
@@ -137,7 +137,7 @@ public class PlayerCollision : MonoBehaviour
 		}
 
 		else if (collision.gameObject.tag == "Powerup") {
-			audio.PlayOneShot(pickupSound);
+			GetComponent<AudioSource>().PlayOneShot(pickupSound);
 			// Takes current powerup away
 			playerState.DeletePowerup();
 			gameState.UpdateObjective(ObjectiveType.SCAVENGER,1.0f);

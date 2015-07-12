@@ -5,5 +5,5 @@ function Start () {
 }
 
 function Update () {
-	guiText.text = "";
+	GetComponent.<GUIText>().text = "";
 }
